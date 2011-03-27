@@ -190,13 +190,4 @@ public abstract class Random {
 		return -Math.log(randomDouble());
 	}
 	
-	
-	/**
-	 * Returns this random number generator wrapped as a {@code java.util.Random} instance.
-	 * <p>Actions performed on the returned object will affect this object, and vice versa.</p>
-	 */
-	public java.util.Random asJavaRandom() {
-		return new JavaRandomAdapter(this);
-	}
-	
 }
