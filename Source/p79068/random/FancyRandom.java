@@ -9,12 +9,6 @@ public final class FancyRandom implements Random {
 	private static final float floatScaler = 1.0F / (1 << 24);
 	
 	
-	/**
-	 * Multiplying a 53-bit integer with this constant yields a {@code double} in [0, 1). This value is chosen so that all the mantissa bits in the {@code double} may be non-zero when the magnitude is in [0.5, 1).
-	 */
-	private static final double doubleScaler = 1.0D / (1L << 53);
-	
-	
 	
 	private final Random random;
 	
