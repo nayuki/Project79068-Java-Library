@@ -43,13 +43,13 @@ public interface Random {
 	
 	
 	/**
-	 * Places random, uniformly distributed {@code byte} values into the specified array.
+	 * Stores random, uniformly distributed {@code byte} values into the specified array.
 	 */
 	public void uniformBytes(byte[] b);
 	
 	
 	/**
-	 * Places random, uniformly distributed {@code byte} values into the specified array.
+	 * Stores random, uniformly distributed {@code byte} values into the specified array.
 	 */
 	public void uniformBytes(byte[] b, int off, int len);
 	

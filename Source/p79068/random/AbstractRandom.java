@@ -65,7 +65,7 @@ public abstract class AbstractRandom implements Random {
 	
 	
 	/**
-	 * Places random, uniformly distributed {@code byte} values into the specified array.
+	 * Stores random, uniformly distributed {@code byte} values into the specified array.
 	 */
 	public void uniformBytes(byte[] b) {
 		uniformBytes(b, 0, b.length);
@@ -73,7 +73,7 @@ public abstract class AbstractRandom implements Random {
 	
 	
 	/**
-	 * Places random, uniformly distributed {@code byte} values into the specified array.
+	 * Stores random, uniformly distributed {@code byte} values into the specified array.
 	 */
 	public void uniformBytes(byte[] b, int off, int len) {
 		BoundsChecker.check(b.length, off, len);

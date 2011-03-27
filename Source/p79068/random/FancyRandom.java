@@ -107,13 +107,16 @@ public final class FancyRandom implements Random {
 	}
 	
 	
+	/**
+	 * Stores random, uniformly distributed {@code byte} values into the specified array.
+	 */
 	public void uniformBytes(byte[] b) {
 		random.uniformBytes(b);
 	}
 	
 	
 	/**
-	 * Places random, uniformly distributed {@code byte} values into the specified array.
+	 * Stores random, uniformly distributed {@code byte} values into the specified array.
 	 */
 	public void uniformBytes(byte[] b, int off, int len) {
 		random.uniformBytes(b, off, len);
