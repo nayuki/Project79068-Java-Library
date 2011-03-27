@@ -10,6 +10,7 @@ public final class Sum32Test {
 	@Test
 	public void testSum32() {
 		HashUtils.testAscii(Sum32.FUNCTION, "", "00000000");
+		HashUtils.testAscii(Sum32.FUNCTION, "1", "00000031");
 		HashUtils.testAscii(Sum32.FUNCTION, "abcdef", "00000255");
 		HashUtils.testAscii(Sum32.FUNCTION, "fbdcea", "00000255");
 		HashUtils.testAscii(Sum32.FUNCTION, "555", "0000009F");
