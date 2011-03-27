@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import p79068.random.MersenneTwister;
-import p79068.random.Random;
+import p79068.random.AbstractRandom;
 
 
 public final class MersenneTwisterTest {
@@ -116,7 +116,7 @@ public final class MersenneTwisterTest {
 	
 	@Test
 	public void testMersenneTwister() {
-		Random r = new MersenneTwister(new int[]{0x123, 0x234, 0x345, 0x456});
+		AbstractRandom r = new MersenneTwister(new int[]{0x123, 0x234, 0x345, 0x456});
 		for (int i = 0; i < output.length; i++)
 			assertEquals(r.randomInt(), (int)output[i]);
 	}

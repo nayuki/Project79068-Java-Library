@@ -11,7 +11,7 @@ import java.util.NoSuchElementException;
 import org.junit.Test;
 import p79068.math.ArithmeticOverflowException;
 import p79068.math.IntegerMath;
-import p79068.random.Random;
+import p79068.random.AbstractRandom;
 
 
 public final class DateTest {
@@ -276,12 +276,12 @@ public final class DateTest {
 	@Test
 	public void testCompareRandomly() {
 		for (int i = 0; i < 1000; i++) {
-			int y0 = Random.DEFAULT.randomInt(10000000) - 5000000;
-			int m0 = Random.DEFAULT.randomInt(12) + 1;
-			int d0 = Random.DEFAULT.randomInt(28) + 1;
-			int y1 = Random.DEFAULT.randomInt(10000000) - 5000000;
-			int m1 = Random.DEFAULT.randomInt(12) + 1;
-			int d1 = Random.DEFAULT.randomInt(28) + 1;
+			int y0 = AbstractRandom.DEFAULT.randomInt(10000000) - 5000000;
+			int m0 = AbstractRandom.DEFAULT.randomInt(12) + 1;
+			int d0 = AbstractRandom.DEFAULT.randomInt(28) + 1;
+			int y1 = AbstractRandom.DEFAULT.randomInt(10000000) - 5000000;
+			int m1 = AbstractRandom.DEFAULT.randomInt(12) + 1;
+			int d1 = AbstractRandom.DEFAULT.randomInt(28) + 1;
 			
 			int refComp;
 			if (y0 != y1)

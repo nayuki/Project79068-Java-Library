@@ -5,7 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
-import p79068.random.Random;
+import p79068.random.AbstractRandom;
 
 
 public final class DoubleBitMathTest {
@@ -72,7 +72,7 @@ public final class DoubleBitMathTest {
 		assertTrue(checkRelation(-Math.PI));
 		assertTrue(checkRelation(-Math.E));
 		for (int i = 0; i < 1000; i++)
-			assertTrue(checkRelation(Random.DEFAULT.randomDouble()));
+			assertTrue(checkRelation(AbstractRandom.DEFAULT.randomDouble()));
 	}
 	
 	

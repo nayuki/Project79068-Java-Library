@@ -14,9 +14,9 @@ package p79068.random;
  * The Mersenne Twister pseudorandom number generator.
  * <p>Mutability: <em>Mutable</em><br>
  * Thread safety: <em>Unsafe</em></p>
- * @see Random
+ * @see AbstractRandom
  */
-public final class MersenneTwister extends Random {
+public final class MersenneTwister extends AbstractRandom {
 	
 	private int[] state;
 	

@@ -10,14 +10,14 @@ import p79068.math.IntegerMath;
  * <p>Mutability: <em>Mutable</em><br>
  * Thread safety: <em>Unsafe</em>, unless otherwise specified</p>
  * <p>One usage example:</p>
- * <p>{@code int i = Random.DEFAULT.randomInt(10);  // Returns a number from 0 to 9 (inclusive) }</p>
+ * <p>{@code int i = AbstractRandom.DEFAULT.randomInt(10);  // Returns a number from 0 to 9 (inclusive) }</p>
  */
-public abstract class Random {
+public abstract class AbstractRandom {
 	
 	/**
 	 * A default, thread-safe instance provided for convenience.
 	 */
-	public static final Random DEFAULT = new SynchronizedRandom(new MersenneTwister());
+	public static final AbstractRandom DEFAULT = new SynchronizedRandom(new MersenneTwister());
 	
 	
 	/**
@@ -36,7 +36,7 @@ public abstract class Random {
 	/**
 	 * Returns a new random number generator instance from a default algorithm.
 	 */
-	public static Random newInstance() {
+	public static AbstractRandom newInstance() {
 		return new MersenneTwister();
 	}
 	
@@ -48,7 +48,7 @@ public abstract class Random {
 	
 	
 	
-	public Random() {
+	public AbstractRandom() {
 		nextGaussian = Double.NaN;
 		hasNextGaussian = false;
 	}

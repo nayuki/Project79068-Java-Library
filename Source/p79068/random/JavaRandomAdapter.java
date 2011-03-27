@@ -4,11 +4,11 @@ package p79068.random;
 @SuppressWarnings("serial")
 public final class JavaRandomAdapter extends java.util.Random {
 	
-	private Random random;
+	private AbstractRandom random;
 	
 	
 	
-	public JavaRandomAdapter(Random rand) {
+	public JavaRandomAdapter(AbstractRandom rand) {
 		random = rand;
 	}
 	
