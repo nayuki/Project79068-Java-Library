@@ -122,7 +122,7 @@ public final class FancyRandom implements Random {
 	
 	/**
 	 * Returns a random {@code double} with an exponential distribution of mean 1.
-	 * <p>To obtain a exponentially distributed value with mean {@code lambda}, use this expression: {@code randomExponential() / lambda}</p>
+	 * <p>To obtain a exponentially distributed value with mean {@code lambda}, use this expression: {@code randomExponential() * lambda}</p>
 	 * @return a {@code double} with an exponential distribution of mean 1.
 	 */
 	public double randomExponential() {
