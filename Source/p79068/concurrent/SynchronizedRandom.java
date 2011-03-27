@@ -1,13 +1,12 @@
 package p79068.concurrent;
 
-import p79068.random.AbstractRandom;
 import p79068.random.Random;
 
 
 /**
  * Wraps a {@link Random} with a monitor.
  */
-public final class SynchronizedRandom extends AbstractRandom {
+public final class SynchronizedRandom implements Random {
 	
 	/** The underlying random number generator. */
 	private Random random;
