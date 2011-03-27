@@ -110,12 +110,12 @@ public final class HashValue implements Comparable<HashValue> {
 	
 	
 	/**
-	 * Returns a string representation of this hash value. Currently, the hexadecimal hash value is returned. The string's format is subjected to change.
+	 * Returns a string representation of this hash value. The string's format is subjected to change.
 	 * @return a string representation of this hash value
 	 */
 	@Override
 	public String toString() {
-		return toHexString();
+		return String.format("%s (%d)", toHexString(), getLength());
 	}
 	
 	
