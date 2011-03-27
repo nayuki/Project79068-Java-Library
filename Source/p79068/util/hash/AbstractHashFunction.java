@@ -10,16 +10,16 @@ import p79068.lang.NullChecker;
 /**
  * Computes the hash value of byte sequences and produces {@link Hasher Hashers}.
  * <p>Mutability: <em>Immutable</em> unless otherwise noted</p>
- * <p>One-shot hashing usage example:</p>
+ * <p>Example - one-shot hashing:</p>
  * <pre>byte[] b = <i>getWholeMessage</i>();
  *byte[] hash = Sha1.FUNCTION.getHash(b).toBytes();</pre>
- * <p>Incremental hashing usage example:</p>
+ * <p>Example - incremental hashing:</p>
  * <pre>Hasher hasher = Crc.CRC32_FUNCTION.newHasher();
  *while (<i>more data available</i>) {
  *  byte[] b = <i>readSomeMore</i>();
  *  hasher.update(b);
  *}
- * String hash = hasher.getHash().toHexString();</pre>
+ *String hash = hasher.getHash().toHexString();</pre>
  * <p>Although some hash function can operate on messages of bits rather than bytes, this is not supported at the moment.</p>
  * @see Hasher
  * @see HashValue
@@ -29,13 +29,13 @@ public abstract class AbstractHashFunction implements HashFunction {
 	/**
 	 * The name of this hash function.
 	 */
-	private String name;
+	private final String name;
 	
 	
 	/**
 	 * The length of the hash values produced by this hash function, in bytes.
 	 */
-	private int hashLength;
+	private final int hashLength;
 	
 	
 	
@@ -66,7 +66,7 @@ public abstract class AbstractHashFunction implements HashFunction {
 	}
 	
 	
-	// Concrete methods
+	// Concrete non-final methods
 	
 	/**
 	 * Computes and returns the hash value of the specified byte array.
