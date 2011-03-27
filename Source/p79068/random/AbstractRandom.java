@@ -14,38 +14,14 @@ import p79068.math.IntegerMath;
 public abstract class AbstractRandom implements Random {
 	
 	/**
-	 * Multiplying a 24-bit integer with this constant yields a {@code float} in [0, 1). This value is chosen so that all the mantissa bits in the {@code float} may be non-zero when the magnitude is in [0.5, 1).
-	 */
-	protected static final float floatScaler = 1.0F / (1 << 24);
-	
-	
-	/**
 	 * Multiplying a 53-bit integer with this constant yields a {@code double} in [0, 1). This value is chosen so that all the mantissa bits in the {@code double} may be non-zero when the magnitude is in [0.5, 1).
 	 */
 	protected static final double doubleScaler = 1.0D / (1L << 53);
 	
 	
 	
-	private boolean hasNextGaussian;
+	protected AbstractRandom() {}
 	
-	private double nextGaussian;
-	
-	
-	
-	public AbstractRandom() {
-		hasNextGaussian = false;
-		nextGaussian = Double.NaN;
-	}
-	
-	
-	
-	/**
-	 * Returns a random, uniformly distributed {@code boolean} value.
-	 * @return <samp>true</samp> or <samp>false</samp>, each with equal probability
-	 */
-	public boolean randomBoolean() {
-		return (randomInt() & 1) != 0;
-	}
 	
 	
 	/**
@@ -76,15 +52,6 @@ public abstract class AbstractRandom implements Random {
 	 */
 	public int randomInt() {
 		return (int)randomLong();
-	}
-	
-	
-	/**
-	 * Returns a random {@code float} value uniformly distributed between 0.0 (inclusive) and 1.0 (exclusive). The granularity is unspecified.
-	 * @return a {@code float} in the range [0, 1), each with equal probability
-	 */
-	public float randomFloat() {
-		return (randomInt() & 0xFFFFFF) * floatScaler;
 	}
 	
 	
@@ -130,43 +97,6 @@ public abstract class AbstractRandom implements Random {
 		int end = off + len;
 		for (long rand = randomLong(); off < end; off++, rand >>>= 8)
 			b[off] = (byte)rand;
-	}
-	
-	
-	/**
-	 * Returns a random {@code double} with a Gaussian (<q>normal</q>) distribution of mean 0.0 and standard deviation 1.0.
-	 * <p>To obtain a Gaussian-distributed value with mean {@code m} and standard deviation {@code s}, use this expression: {@code randomGaussian()*s + m}</p>
-	 * <p>Note that the probability of producing a number outside of [&minus;10, 10] is 10<sup>&minus;23</sup>; the probability of producing a number outside of [&minus;15, 15] is 10<sup>&minus;50</sup> (i.e., effectively impossible). (Assuming that the underlying random number generator is unbiased.)</p>
-	 * @return a {@code double} with a Gaussian distribution of mean 0.0 and standard deviation 1.0
-	 */
-	public double randomGaussian() {  // Uses the Box-Muller transform
-		if (!hasNextGaussian) {
-			double x, y;
-			double magsqr;
-			// Use rejection sampling to pick a point uniformly distributed in the unit circle
-			do {
-				x = randomDouble() * 2 - 1;
-				y = randomDouble() * 2 - 1;
-				magsqr = x * x + y * y;
-			} while (magsqr >= 1 || magsqr == 0);
-			double temp = Math.sqrt(-2 * Math.log(magsqr) / magsqr);
-			nextGaussian = y * temp;
-			hasNextGaussian = true;
-			return x * temp;
-		} else {
-			hasNextGaussian = false;
-			return nextGaussian;
-		}
-	}
-	
-	
-	/**
-	 * Returns a random {@code double} with an exponential distribution of mean 1.
-	 * <p>To obtain a exponentially distributed value with mean {@code lambda}, use this expression: {@code randomExponential() * lambda}</p>
-	 * @return a {@code double} with an exponential distribution of mean 1.
-	 */
-	public double randomExponential() {
-		return -Math.log(randomDouble());
 	}
 	
 }
