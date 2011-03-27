@@ -1,11 +1,7 @@
 package p79068.crypto.hash;
 
 import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.fail;
-import p79068.crypto.CryptoUtils;
-import p79068.crypto.Zeroizable;
 import p79068.util.hash.HashFunction;
-import p79068.util.hash.Hasher;
 
 
 public final class HashUtils {
@@ -17,8 +13,8 @@ public final class HashUtils {
 	 * @param expectedHash the expected hash, in hexadecimal
 	 */
 	public static void testAscii(HashFunction hashFunc, String message, String expectedHash) {
-		byte[] hash1 = CryptoUtils.hexToBytes(expectedHash);
-		byte[] msg = CryptoUtils.asciiToBytes(message);
+		byte[] hash1 = hexToBytes(expectedHash);
+		byte[] msg = asciiToBytes(message);
 		byte[] hash0 = hashFunc.getHash(msg).toBytes();
 		assertArrayEquals(hashFunc.toString(), hash1, hash0);
 	}
@@ -31,29 +27,32 @@ public final class HashUtils {
 	 * @param expectedHash the expected hash, in hexadecimal
 	 */
 	public static void testHex(HashFunction hashFunc, String message, String expectedHash) {
-		byte[] hash1 = CryptoUtils.hexToBytes(expectedHash);
-		byte[] msg = CryptoUtils.hexToBytes(message);
+		byte[] hash1 = hexToBytes(expectedHash);
+		byte[] msg = hexToBytes(message);
 		byte[] hash0 = hashFunc.getHash(msg).toBytes();
 		assertArrayEquals(hashFunc.toString(), hash1, hash0);
 	}
 	
 	
-	public static void testZeroization(HashFunction hashFunc) {
-		Hasher hasher = hashFunc.newHasher();
-		hasher.update(new byte[200]);
-		if (!(hasher instanceof Zeroizable))
-			fail();
-		else {
-			try {
-				((Zeroizable)hasher).zeroize();
-			} catch (IllegalStateException e) {
-				fail();
-			}
-			try {
-				((Zeroizable)hasher).zeroize();
-				fail();
-			} catch (IllegalStateException e) {}  // Pass
+	public static byte[] hexToBytes(String s) {
+		if (s.length() % 2 != 0)
+			throw new IllegalArgumentException();
+		byte[] b = new byte[s.length() / 2];
+		for (int i = 0; i < b.length; i++)
+			b[i] = (byte)Integer.parseInt(s.substring(i * 2, (i + 1) * 2), 16);
+		return b;
+	}
+	
+	
+	public static byte[] asciiToBytes(String s) {
+		byte[] b = new byte[s.length()];
+		for (int i = 0; i < b.length; i++) {
+			char c = s.charAt(i);
+			if (c >= 0x80)
+				c = '?';
+			b[i] = (byte)c;
 		}
+		return b;
 	}
 	
 	
