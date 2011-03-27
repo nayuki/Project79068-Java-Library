@@ -26,24 +26,15 @@ public abstract class AbstractRandom implements FancyRandom {
 	
 	
 	
-	/**
-	 * Returns a new random number generator instance from a default algorithm.
-	 */
-	public static Random newInstance() {
-		return new MersenneTwister();
-	}
-	
-	
+	private boolean hasNextGaussian;
 	
 	private double nextGaussian;
-	
-	private boolean hasNextGaussian;
 	
 	
 	
 	public AbstractRandom() {
-		nextGaussian = Double.NaN;
 		hasNextGaussian = false;
+		nextGaussian = Double.NaN;
 	}
 	
 	
@@ -55,13 +46,6 @@ public abstract class AbstractRandom implements FancyRandom {
 	public boolean randomBoolean() {
 		return (randomInt() & 1) != 0;
 	}
-	
-	
-	/**
-	 * Returns a random, uniformly distributed {@code int} value.
-	 * @return a value in the range of {@code int}, each with equal probability
-	 */
-	public abstract int randomInt();
 	
 	
 	/**
@@ -87,11 +71,11 @@ public abstract class AbstractRandom implements FancyRandom {
 	
 	
 	/**
-	 * Returns a random, uniformly distributed {@code long} value.
-	 * @return a value in the range of {@code long}, each with equal probability
+	 * Returns a random, uniformly distributed {@code int} value.
+	 * @return a value in the range of {@code int}, each with equal probability
 	 */
-	public long randomLong() {
-		return (long)randomInt() << 32 | randomInt() & 0xFFFFFFFFL;
+	public int randomInt() {
+		return (int)randomLong();
 	}
 	
 	
@@ -109,7 +93,7 @@ public abstract class AbstractRandom implements FancyRandom {
 	 * @return a {@code double} in the range [0, 1), each with equal probability
 	 */
 	public double randomDouble() {
-		return ((randomInt() & 0xFFFFFFFFL) << 21 | randomInt() & 0x1FFFFFL) * doubleScaler;
+		return (randomLong() & 0x1FFFFFFFFFFFFFL) * doubleScaler;
 	}
 	
 	
@@ -126,23 +110,25 @@ public abstract class AbstractRandom implements FancyRandom {
 	 */
 	public void randomBytes(byte[] b, int off, int len) {
 		BoundsChecker.check(b.length, off, len);
-		int end = off + len;
 		
-		// Fill until off is a multiple of 4, if necessary (fewer than 4 iterations)
-		for (int rand = randomInt(); off % 4 != 0; off++, rand >>>= 8)
-			b[off] = (byte)rand;
-		
-		// Fill efficiently, 4 bytes at a time
-		for (int end4 = end / 4 * 4; off < end4; off += 4) {
-			int rand = randomInt();
-			b[off | 0] = (byte)(rand >>> 24);
-			b[off | 1] = (byte)(rand >>> 16);
-			b[off | 2] = (byte)(rand >>>  8);
-			b[off | 3] = (byte)(rand >>>  0);
+		// Fill efficiently, 8 bytes at a time
+		int templen = len / 8 * 8;
+		for (int end = off + templen; off < end; off += 8) {
+			long rand = randomLong();
+			b[off + 0] = (byte)(rand >>> 56);
+			b[off + 1] = (byte)(rand >>> 48);
+			b[off + 2] = (byte)(rand >>> 40);
+			b[off + 3] = (byte)(rand >>> 32);
+			b[off + 4] = (byte)(rand >>> 24);
+			b[off + 5] = (byte)(rand >>> 16);
+			b[off + 6] = (byte)(rand >>>  8);
+			b[off + 7] = (byte)(rand >>>  0);
 		}
+		len -= templen;
 		
-		// Fill the last few bytes (fewer than 4 iterations)
-		for (int rand = randomInt(); off < end; off++, rand >>>= 8)
+		// Fill the last few bytes (fewer than 8 iterations)
+		int end = off + len;
+		for (long rand = randomLong(); off < end; off++, rand >>>= 8)
 			b[off] = (byte)rand;
 	}
 	
@@ -176,7 +162,7 @@ public abstract class AbstractRandom implements FancyRandom {
 	
 	/**
 	 * Returns a random {@code double} with an exponential distribution of mean 1.
-	 * <p>To obtain a exponentially distributed value with mean {@code lambda}, use this expression: {@code randomExponential() / lambda}</p>
+	 * <p>To obtain a exponentially distributed value with mean {@code lambda}, use this expression: {@code randomExponential() * lambda}</p>
 	 * @return a {@code double} with an exponential distribution of mean 1.
 	 */
 	public double randomExponential() {
