@@ -38,7 +38,7 @@ public abstract class AbstractRandom implements Random {
 			int random;
 			int result;
 			do {
-				random = uniformInt() & 0x7FFFFFFF;
+				random = uniformInt() >>> 1;  // In the range [0, 2^31)
 				result = random % n;
 			} while (random - result + (n - 1) < 0);
 			return result;
