@@ -11,7 +11,7 @@ import p79068.math.IntegerMath;
  * <p>One usage example:</p>
  * <p>{@code int i = AbstractRandom.DEFAULT.randomInt(10);  // Returns a number from 0 to 9 (inclusive) }</p>
  */
-public abstract class AbstractRandom implements Random {
+public abstract class AbstractRandom implements FancyRandom {
 	
 	/**
 	 * Multiplying a 24-bit integer with this constant yields a {@code float} in [0, 1). This value is chosen so that all the mantissa bits in the {@code float} may be non-zero when the magnitude is in [0.5, 1).
