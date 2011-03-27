@@ -2,7 +2,7 @@ package p79068.random;
 
 
 @SuppressWarnings("serial")
-final class JavaRandomAdapter extends java.util.Random {
+public final class JavaRandomAdapter extends java.util.Random {
 	
 	private Random random;
 	
