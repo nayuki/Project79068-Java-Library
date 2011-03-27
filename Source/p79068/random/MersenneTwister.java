@@ -7,7 +7,7 @@
  */
 
 
-package p79068.util;
+package p79068.random;
 
 
 /**

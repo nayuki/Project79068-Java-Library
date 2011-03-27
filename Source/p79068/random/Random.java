@@ -1,4 +1,4 @@
-package p79068.util;
+package p79068.random;
 
 import p79068.concurrent.SynchronizedRandom;
 import p79068.lang.BoundsChecker;
