@@ -10,7 +10,6 @@ import p79068.math.LongBitMath;
  * Thread safety: <em>Unsafe</em></p>
  * <p>The general iteration is the following formula: <var>x</var><sub><var>i</var>+1</sub> = (<var>a</var> <var>x</var><sub><var>i</var></sub> + <var>b</var>) mod 2<sup><var>m</var></sup>, where <var>x</var> is the sequence of states, <var>a</var> is the multiplier, <var>b</var> is the increment, and <var>m</var> is the log of the modulus to the base 2.</p>
  * <p>Use the lower order bits produced by this generator with extreme caution.</p>
- * @see Random
  */
 public final class LcgRandom extends AbstractRandom {
 	
