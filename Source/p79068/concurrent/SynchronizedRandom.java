@@ -23,13 +23,6 @@ public final class SynchronizedRandom extends AbstractRandom {
 	
 	
 	
-	public boolean randomBoolean() {
-		synchronized (lock) {
-			return random.randomBoolean();
-		}
-	}
-	
-	
 	public int randomInt() {
 		synchronized (lock) {
 			return random.randomInt();
@@ -51,13 +44,6 @@ public final class SynchronizedRandom extends AbstractRandom {
 	}
 	
 	
-	public float randomFloat() {
-		synchronized (lock) {
-			return random.randomFloat();
-		}
-	}
-	
-	
 	public double randomDouble() {
 		synchronized (lock) {
 			return random.randomDouble();
@@ -75,20 +61,6 @@ public final class SynchronizedRandom extends AbstractRandom {
 	public void randomBytes(byte[] b, int off, int len) {
 		synchronized (lock) {
 			random.randomBytes(b, off, len);
-		}
-	}
-	
-	
-	public double randomGaussian() {
-		synchronized (lock) {
-			return random.randomGaussian();
-		}
-	}
-	
-	
-	public double randomExponential() {
-		synchronized (lock) {
-			return random.randomExponential();
 		}
 	}
 	
