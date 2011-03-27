@@ -9,15 +9,16 @@ import p79068.random.Random;
 public final class SynchronizedRandom implements Random {
 	
 	/** The underlying random number generator. */
-	private Random random;
+	private final Random random;
 	
 	/** A private lock, which prevents denial-of-service attacks. */
-	private Object lock = new Object();
+	private final Object lock;
 	
 	
 	
 	public SynchronizedRandom(Random rand) {
 		random = rand;
+		lock = new Object();
 	}
 	
 	
