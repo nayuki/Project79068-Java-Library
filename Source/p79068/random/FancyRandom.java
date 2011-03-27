@@ -35,6 +35,16 @@ public final class FancyRandom implements Random {
 	
 	
 	/**
+	 * Returns a random {@code boolean} value with the specified probability of being {@code true}.
+	 * @param p the probability of returning true
+	 * @return <samp>true</samp> with probability {@code p}, or <samp>false</samp> with probability 1 &minus; {@code p}
+	 */
+	public boolean bernoulliBoolean(double p) {
+		return random.uniformDouble() < p;
+	}
+	
+	
+	/**
 	 * Returns a random, uniformly distributed {@code int} value.
 	 * @return a value in the range of {@code int}, each with equal probability
 	 */
@@ -54,11 +64,59 @@ public final class FancyRandom implements Random {
 	
 	
 	/**
+	 * Returns a random integer from the binomial distribution with the specified number of trials and the specified success probability.
+	 * @param n the number of trials
+	 * @param p the success probability
+	 * @return a binomially distributed integer in the range [0, {@code n}]
+	 */
+	public int binomial(int n, double p) {
+		if (n < 0 || p < 0 || p > 1)
+			throw new IllegalArgumentException();
+		
+		int count = 0;
+		for (int i = 0; i < n; i++) {
+			if (random.uniformDouble() < p)
+				count++;
+		}
+		return count;
+	}
+	
+	
+	/**
+	 * Returns a random integer from the geometric distribution with the specified success probability. The probability of getting 0 is {@code p}, of getting 1 is (1&minus;{@code p})p, etc.
+	 * @param p the success probability
+	 * @return a geometrically distributed integer in the range [0, {@code Integer.MAX_VALUE}]
+	 */
+	public int geometric(double p) {
+		if (p < 0 || p > 1)
+			throw new IllegalArgumentException();
+		
+		int count = 0;
+		while (random.uniformDouble() < p && count != Integer.MAX_VALUE)
+			count++;
+		return count;
+	}
+	
+	
+	/**
 	 * Returns a random, uniformly distributed {@code long} value.
 	 * @return a value in the range of {@code long}, each with equal probability
 	 */
 	public long uniformLong() {
 		return random.uniformInt();
+	}
+	
+	
+	public void uniformBytes(byte[] b) {
+		random.uniformBytes(b);
+	}
+	
+	
+	/**
+	 * Places random, uniformly distributed {@code byte} values into the specified array.
+	 */
+	public void uniformBytes(byte[] b, int off, int len) {
+		random.uniformBytes(b, off, len);
 	}
 	
 	
@@ -80,16 +138,13 @@ public final class FancyRandom implements Random {
 	}
 	
 	
-	public void uniformBytes(byte[] b) {
-		random.uniformBytes(b);
-	}
-	
-	
 	/**
-	 * Places random, uniformly distributed {@code byte} values into the specified array.
+	 * Returns a random {@code double} with an exponential distribution of mean 1.
+	 * <p>To obtain a exponentially distributed value with mean {@code lambda}, use this expression: {@code exponential() * lambda}</p>
+	 * @return a {@code double} with an exponential distribution of mean 1.
 	 */
-	public void uniformBytes(byte[] b, int off, int len) {
-		random.uniformBytes(b, off, len);
+	public double exponential() {
+		return -Math.log(random.uniformDouble());
 	}
 	
 	
@@ -117,16 +172,6 @@ public final class FancyRandom implements Random {
 			hasNextGaussian = false;
 			return nextGaussian;
 		}
-	}
-	
-	
-	/**
-	 * Returns a random {@code double} with an exponential distribution of mean 1.
-	 * <p>To obtain a exponentially distributed value with mean {@code lambda}, use this expression: {@code exponential() * lambda}</p>
-	 * @return a {@code double} with an exponential distribution of mean 1.
-	 */
-	public double exponential() {
-		return -Math.log(random.uniformDouble());
 	}
 	
 }
