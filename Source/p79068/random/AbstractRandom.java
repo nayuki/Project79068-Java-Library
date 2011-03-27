@@ -1,6 +1,5 @@
 package p79068.random;
 
-import p79068.concurrent.SynchronizedRandom;
 import p79068.lang.BoundsChecker;
 import p79068.math.IntegerMath;
 
@@ -12,13 +11,7 @@ import p79068.math.IntegerMath;
  * <p>One usage example:</p>
  * <p>{@code int i = AbstractRandom.DEFAULT.randomInt(10);  // Returns a number from 0 to 9 (inclusive) }</p>
  */
-public abstract class AbstractRandom {
-	
-	/**
-	 * A default, thread-safe instance provided for convenience.
-	 */
-	public static final AbstractRandom DEFAULT = new SynchronizedRandom(new MersenneTwister());
-	
+public abstract class AbstractRandom implements Random {
 	
 	/**
 	 * Multiplying a 24-bit integer with this constant yields a {@code float} in [0, 1). This value is chosen so that all the mantissa bits in the {@code float} may be non-zero when the magnitude is in [0.5, 1).
@@ -36,7 +29,7 @@ public abstract class AbstractRandom {
 	/**
 	 * Returns a new random number generator instance from a default algorithm.
 	 */
-	public static AbstractRandom newInstance() {
+	public static Random newInstance() {
 		return new MersenneTwister();
 	}
 	

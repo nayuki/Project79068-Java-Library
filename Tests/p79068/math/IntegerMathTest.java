@@ -5,12 +5,12 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
-import p79068.random.AbstractRandom;
+import p79068.random.Random;
 
 
 public final class IntegerMathTest {
 	
-	private static AbstractRandom RANDOM = AbstractRandom.DEFAULT;
+	private static Random RANDOM = Random.DEFAULT;
 	
 	
 	

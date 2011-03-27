@@ -1,22 +1,23 @@
 package p79068.concurrent;
 
 import p79068.random.AbstractRandom;
+import p79068.random.Random;
 
 
 /**
- * Wraps a {@link AbstractRandom} with a monitor.
+ * Wraps a {@link Random} with a monitor.
  */
 public final class SynchronizedRandom extends AbstractRandom {
 	
 	/** The underlying random number generator. */
-	private AbstractRandom random;
+	private Random random;
 	
 	/** A private lock, which prevents denial-of-service attacks. */
 	private Object lock = new Object();
 	
 	
 	
-	public SynchronizedRandom(AbstractRandom rand) {
+	public SynchronizedRandom(Random rand) {
 		random = rand;
 	}
 	
