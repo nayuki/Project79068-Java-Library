@@ -1,4 +1,6 @@
-package p79068.util;
+package p79068.concurrent;
+
+import p79068.util.Random;
 
 
 /**
