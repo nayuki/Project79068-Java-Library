@@ -103,17 +103,11 @@ public final class LcgRandom extends AbstractRandom {
 	public int uniformInt(int n) {
 		if (n <= 0)
 			throw new IllegalArgumentException();
-		if (IntegerMath.isPowerOf2(n))
-			return (int)(((uniformInt() & 0xFFFFFFFFL) * n) >>> 32);  // Shift the wanted number of upper bits into the high region, then shift the high region down.
-		else {  // Unbiased
-			int random;
-			int result;
-			do {
-				random = uniformInt() >>> 1;  // In the range [0, 2^31)
-				result = random % n;
-			} while (random - result + (n - 1) < 0);
-			return result;
-		}
+		if (IntegerMath.isPowerOf2(n)) {
+			// Shift the wanted number of upper bits into the high region, then shift the high region down
+			return (int)(((uniformInt() & 0xFFFFFFFFL) * n) >>> 32);
+		} else
+			return super.uniformInt(n);
 	}
 	
 }
