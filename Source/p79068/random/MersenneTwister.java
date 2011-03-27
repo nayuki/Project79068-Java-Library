@@ -57,6 +57,12 @@ public final class MersenneTwister extends AbstractRandom {
 	}
 	
 	
+	@Override
+	public long randomLong() {
+		return (long)randomInt() << 32 | (randomInt() & 0xFFFFFFFFL);
+	}
+	
+	
 	private void setSeed(int seed) {
 		if (state == null)
 			state = new int[624];

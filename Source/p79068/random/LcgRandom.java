@@ -103,6 +103,12 @@ public final class LcgRandom extends AbstractRandom {
 	
 	
 	@Override
+	public long randomLong() {
+		return (long)randomInt() << 32 | (randomInt() & 0xFFFFFFFFL);
+	}
+	
+	
+	@Override
 	public int randomInt(int n) {
 		if (n <= 0)
 			throw new IllegalArgumentException();
