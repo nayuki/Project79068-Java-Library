@@ -1,7 +1,6 @@
 package p79068.util.hash;
 
 import org.junit.Test;
-import p79068.crypto.hash.HashUtils;
 
 
 public final class Xor8Test {

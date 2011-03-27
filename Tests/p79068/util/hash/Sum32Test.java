@@ -3,7 +3,6 @@ package p79068.util.hash;
 import java.util.Arrays;
 
 import org.junit.Test;
-import p79068.crypto.hash.HashUtils;
 
 
 public final class Sum32Test {

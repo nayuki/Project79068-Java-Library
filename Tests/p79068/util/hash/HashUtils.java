@@ -1,4 +1,4 @@
-package p79068.crypto.hash;
+package p79068.util.hash;
 
 import static org.junit.Assert.assertArrayEquals;
 import p79068.util.hash.HashFunction;
