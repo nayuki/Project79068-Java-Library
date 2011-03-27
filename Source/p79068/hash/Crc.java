@@ -1,4 +1,4 @@
-package p79068.util.hash;
+package p79068.hash;
 
 import p79068.util.HashCoder;
 

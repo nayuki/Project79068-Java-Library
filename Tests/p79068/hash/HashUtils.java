@@ -1,7 +1,6 @@
-package p79068.util.hash;
+package p79068.hash;
 
 import static org.junit.Assert.assertArrayEquals;
-import p79068.util.hash.HashFunction;
 
 
 public final class HashUtils {

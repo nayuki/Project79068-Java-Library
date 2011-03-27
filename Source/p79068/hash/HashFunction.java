@@ -1,4 +1,4 @@
-package p79068.util.hash;
+package p79068.hash;
 
 import java.io.File;
 import java.io.IOException;
