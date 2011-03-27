@@ -15,7 +15,6 @@ public final class LcgRandom extends AbstractRandom {
 	
 	private long a;
 	private long b;
-	private int m;      // m = log2(modulus); modulus = 2^m (^ is exponentiation)
 	private int shift;  // Equal to log2(m) - 32
 	
 	private long x;
@@ -81,18 +80,10 @@ public final class LcgRandom extends AbstractRandom {
 			throw new IllegalArgumentException();
 		this.a = a;
 		this.b = b;
-		this.m = m;
 		this.shift = m - 32;
 		this.x = seed;
 	}
 	
-	
-	
-	@Override
-	public boolean randomBoolean() {
-		x = x * a + b;
-		return (x & (1L << (m - 1))) != 0;  // Extract the highest bit
-	}
 	
 	
 	@Override
