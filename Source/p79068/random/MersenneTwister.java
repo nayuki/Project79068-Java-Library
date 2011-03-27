@@ -45,7 +45,7 @@ public final class MersenneTwister extends AbstractRandom {
 	
 	
 	@Override
-	public int randomInt() {
+	public int uniformInt() {
 		if (index == 624)
 			nextState();
 		int x = state[index];
@@ -58,8 +58,8 @@ public final class MersenneTwister extends AbstractRandom {
 	
 	
 	@Override
-	public long randomLong() {
-		return (long)randomInt() << 32 | (randomInt() & 0xFFFFFFFFL);
+	public long uniformLong() {
+		return (long)uniformInt() << 32 | (uniformInt() & 0xFFFFFFFFL);
 	}
 	
 	

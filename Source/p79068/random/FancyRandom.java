@@ -30,7 +30,7 @@ public final class FancyRandom implements Random {
 	 * @return <samp>true</samp> or <samp>false</samp>, each with equal probability
 	 */
 	public boolean randomBoolean() {
-		return (random.randomInt() & 1) != 0;
+		return (random.uniformInt() & 1) != 0;
 	}
 	
 	
@@ -38,8 +38,8 @@ public final class FancyRandom implements Random {
 	 * Returns a random, uniformly distributed {@code int} value.
 	 * @return a value in the range of {@code int}, each with equal probability
 	 */
-	public int randomInt() {
-		return random.randomInt();
+	public int uniformInt() {
+		return random.uniformInt();
 	}
 	
 	
@@ -48,8 +48,8 @@ public final class FancyRandom implements Random {
 	 * @return an integer in the range [0, {@code n}), each with equal probability
 	 * @throws IllegalArgumentException if {@code n} &le; 0
 	 */
-	public int randomInt(int n) {
-		return random.randomInt(n);
+	public int uniformInt(int n) {
+		return random.uniformInt(n);
 	}
 	
 	
@@ -57,8 +57,8 @@ public final class FancyRandom implements Random {
 	 * Returns a random, uniformly distributed {@code long} value.
 	 * @return a value in the range of {@code long}, each with equal probability
 	 */
-	public long randomLong() {
-		return random.randomInt();
+	public long uniformLong() {
+		return random.uniformInt();
 	}
 	
 	
@@ -67,7 +67,7 @@ public final class FancyRandom implements Random {
 	 * @return a {@code float} in the range [0, 1), each with equal probability
 	 */
 	public float randomFloat() {
-		return (random.randomInt() & 0xFFFFFF) * floatScaler;
+		return (random.uniformInt() & 0xFFFFFF) * floatScaler;
 	}
 	
 	
@@ -75,21 +75,21 @@ public final class FancyRandom implements Random {
 	 * Returns a random {@code double} value uniformly distributed between 0.0 (inclusive) and 1.0 (exclusive). The granularity is unspecified.
 	 * @return a {@code double} in the range [0, 1), each with equal probability
 	 */
-	public double randomDouble() {
-		return random.randomDouble();
+	public double uniformDouble() {
+		return random.uniformDouble();
 	}
 	
 	
-	public void randomBytes(byte[] b) {
-		random.randomBytes(b);
+	public void uniformBytes(byte[] b) {
+		random.uniformBytes(b);
 	}
 	
 	
 	/**
 	 * Places random, uniformly distributed {@code byte} values into the specified array.
 	 */
-	public void randomBytes(byte[] b, int off, int len) {
-		random.randomBytes(b, off, len);
+	public void uniformBytes(byte[] b, int off, int len) {
+		random.uniformBytes(b, off, len);
 	}
 	
 	
@@ -105,8 +105,8 @@ public final class FancyRandom implements Random {
 			double magsqr;
 			// Use rejection sampling to pick a point uniformly distributed in the unit circle
 			do {
-				x = random.randomDouble() * 2 - 1;
-				y = random.randomDouble() * 2 - 1;
+				x = random.uniformDouble() * 2 - 1;
+				y = random.uniformDouble() * 2 - 1;
 				magsqr = x * x + y * y;
 			} while (magsqr >= 1 || magsqr == 0);
 			double temp = Math.sqrt(-2 * Math.log(magsqr) / magsqr);
@@ -126,7 +126,7 @@ public final class FancyRandom implements Random {
 	 * @return a {@code double} with an exponential distribution of mean 1.
 	 */
 	public double randomExponential() {
-		return -Math.log(random.randomDouble());
+		return -Math.log(random.uniformDouble());
 	}
 	
 }

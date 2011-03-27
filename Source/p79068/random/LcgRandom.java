@@ -87,29 +87,29 @@ public final class LcgRandom extends AbstractRandom {
 	
 	
 	@Override
-	public int randomInt() {
+	public int uniformInt() {
 		x = x * a + b;
 		return (int)(x >>> shift);
 	}
 	
 	
 	@Override
-	public long randomLong() {
-		return (long)randomInt() << 32 | (randomInt() & 0xFFFFFFFFL);
+	public long uniformLong() {
+		return (long)uniformInt() << 32 | (uniformInt() & 0xFFFFFFFFL);
 	}
 	
 	
 	@Override
-	public int randomInt(int n) {
+	public int uniformInt(int n) {
 		if (n <= 0)
 			throw new IllegalArgumentException();
 		if (IntegerMath.isPowerOf2(n))
-			return (int)(((randomInt() & 0xFFFFFFFFL) * n) >>> 32);  // Shift the wanted number of upper bits into the high region, then shift the high region down.
+			return (int)(((uniformInt() & 0xFFFFFFFFL) * n) >>> 32);  // Shift the wanted number of upper bits into the high region, then shift the high region down.
 		else {  // Unbiased
 			int random;
 			int result;
 			do {
-				random = randomInt() >>> 1;  // In the range [0, 2^31)
+				random = uniformInt() >>> 1;  // In the range [0, 2^31)
 				result = random % n;
 			} while (random - result + (n - 1) < 0);
 			return result;

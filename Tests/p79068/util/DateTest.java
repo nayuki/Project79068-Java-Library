@@ -276,12 +276,12 @@ public final class DateTest {
 	@Test
 	public void testCompareRandomly() {
 		for (int i = 0; i < 1000; i++) {
-			int y0 = Random.DEFAULT.randomInt(10000000) - 5000000;
-			int m0 = Random.DEFAULT.randomInt(12) + 1;
-			int d0 = Random.DEFAULT.randomInt(28) + 1;
-			int y1 = Random.DEFAULT.randomInt(10000000) - 5000000;
-			int m1 = Random.DEFAULT.randomInt(12) + 1;
-			int d1 = Random.DEFAULT.randomInt(28) + 1;
+			int y0 = Random.DEFAULT.uniformInt(10000000) - 5000000;
+			int m0 = Random.DEFAULT.uniformInt(12) + 1;
+			int d0 = Random.DEFAULT.uniformInt(28) + 1;
+			int y1 = Random.DEFAULT.uniformInt(10000000) - 5000000;
+			int m1 = Random.DEFAULT.uniformInt(12) + 1;
+			int d1 = Random.DEFAULT.uniformInt(28) + 1;
 			
 			int refComp;
 			if (y0 != y1)

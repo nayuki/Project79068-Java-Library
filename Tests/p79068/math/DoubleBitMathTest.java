@@ -72,7 +72,7 @@ public final class DoubleBitMathTest {
 		assertTrue(checkRelation(-Math.PI));
 		assertTrue(checkRelation(-Math.E));
 		for (int i = 0; i < 1000; i++)
-			assertTrue(checkRelation(Random.DEFAULT.randomDouble()));
+			assertTrue(checkRelation(Random.DEFAULT.uniformDouble()));
 	}
 	
 	

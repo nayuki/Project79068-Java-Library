@@ -16,17 +16,17 @@ public final class JavaRandomAdapter extends java.util.Random {
 	
 	@Override
 	protected int next(int bits) {
-		return random.randomInt() >>> (32 - bits);
+		return random.uniformInt() >>> (32 - bits);
 	}
 	
 	@Override
 	public int nextInt() {
-		return random.randomInt();
+		return random.uniformInt();
 	}
 	
 	@Override
 	public long nextLong() {
-		return random.randomLong();
+		return random.uniformLong();
 	}
 	
 	@Override

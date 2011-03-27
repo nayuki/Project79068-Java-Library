@@ -118,7 +118,7 @@ public final class MersenneTwisterTest {
 	public void testMersenneTwister() {
 		Random r = new MersenneTwister(new int[]{0x123, 0x234, 0x345, 0x456});
 		for (int i = 0; i < output.length; i++)
-			assertEquals(r.randomInt(), (int)output[i]);
+			assertEquals(r.uniformInt(), (int)output[i]);
 	}
 	
 }

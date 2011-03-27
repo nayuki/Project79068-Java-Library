@@ -23,44 +23,44 @@ public final class SynchronizedRandom implements Random {
 	
 	
 	
-	public int randomInt() {
+	public int uniformInt() {
 		synchronized (lock) {
-			return random.randomInt();
+			return random.uniformInt();
 		}
 	}
 	
 	
-	public int randomInt(int n) {
+	public int uniformInt(int n) {
 		synchronized (lock) {
-			return random.randomInt(n);
+			return random.uniformInt(n);
 		}
 	}
 	
 	
-	public long randomLong() {
+	public long uniformLong() {
 		synchronized (lock) {
-			return random.randomLong();
+			return random.uniformLong();
 		}
 	}
 	
 	
-	public double randomDouble() {
+	public double uniformDouble() {
 		synchronized (lock) {
-			return random.randomDouble();
+			return random.uniformDouble();
 		}
 	}
 	
 	
-	public void randomBytes(byte[] b) {
+	public void uniformBytes(byte[] b) {
 		synchronized (lock) {
-			random.randomBytes(b);
+			random.uniformBytes(b);
 		}
 	}
 	
 	
-	public void randomBytes(byte[] b, int off, int len) {
+	public void uniformBytes(byte[] b, int off, int len) {
 		synchronized (lock) {
-			random.randomBytes(b, off, len);
+			random.uniformBytes(b, off, len);
 		}
 	}
 	

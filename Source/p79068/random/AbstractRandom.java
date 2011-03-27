@@ -29,16 +29,16 @@ public abstract class AbstractRandom implements Random {
 	 * @return an integer in the range [0, {@code n}), each with equal probability
 	 * @throws IllegalArgumentException if {@code n} &le; 0
 	 */
-	public int randomInt(int n) {
+	public int uniformInt(int n) {
 		if (n <= 0)
 			throw new IllegalArgumentException();
 		if (IntegerMath.isPowerOf2(n))
-			return randomInt() & (n - 1);
+			return uniformInt() & (n - 1);
 		else {  // Unbiased
 			int random;
 			int result;
 			do {
-				random = randomInt() & 0x7FFFFFFF;
+				random = uniformInt() & 0x7FFFFFFF;
 				result = random % n;
 			} while (random - result + (n - 1) < 0);
 			return result;
@@ -50,8 +50,8 @@ public abstract class AbstractRandom implements Random {
 	 * Returns a random, uniformly distributed {@code int} value.
 	 * @return a value in the range of {@code int}, each with equal probability
 	 */
-	public int randomInt() {
-		return (int)randomLong();
+	public int uniformInt() {
+		return (int)uniformLong();
 	}
 	
 	
@@ -59,29 +59,29 @@ public abstract class AbstractRandom implements Random {
 	 * Returns a random {@code double} value uniformly distributed between 0.0 (inclusive) and 1.0 (exclusive). The granularity is unspecified.
 	 * @return a {@code double} in the range [0, 1), each with equal probability
 	 */
-	public double randomDouble() {
-		return (randomLong() & 0x1FFFFFFFFFFFFFL) * doubleScaler;
+	public double uniformDouble() {
+		return (uniformLong() & 0x1FFFFFFFFFFFFFL) * doubleScaler;
 	}
 	
 	
 	/**
 	 * Places random, uniformly distributed {@code byte} values into the specified array.
 	 */
-	public void randomBytes(byte[] b) {
-		randomBytes(b, 0, b.length);
+	public void uniformBytes(byte[] b) {
+		uniformBytes(b, 0, b.length);
 	}
 	
 	
 	/**
 	 * Places random, uniformly distributed {@code byte} values into the specified array.
 	 */
-	public void randomBytes(byte[] b, int off, int len) {
+	public void uniformBytes(byte[] b, int off, int len) {
 		BoundsChecker.check(b.length, off, len);
 		
 		// Fill efficiently, 8 bytes at a time
 		int templen = len / 8 * 8;
 		for (int end = off + templen; off < end; off += 8) {
-			long rand = randomLong();
+			long rand = uniformLong();
 			b[off + 0] = (byte)(rand >>> 56);
 			b[off + 1] = (byte)(rand >>> 48);
 			b[off + 2] = (byte)(rand >>> 40);
@@ -95,7 +95,7 @@ public abstract class AbstractRandom implements Random {
 		
 		// Fill the last few bytes (fewer than 8 iterations)
 		int end = off + len;
-		for (long rand = randomLong(); off < end; off++, rand >>>= 8)
+		for (long rand = uniformLong(); off < end; off++, rand >>>= 8)
 			b[off] = (byte)rand;
 	}
 	

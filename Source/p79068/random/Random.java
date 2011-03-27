@@ -17,7 +17,7 @@ public interface Random {
 	 * Returns a random, uniformly distributed {@code int} value.
 	 * @return a value in the range of {@code int}, each with equal probability
 	 */
-	public int randomInt();
+	public int uniformInt();
 	
 	
 	/**
@@ -25,32 +25,32 @@ public interface Random {
 	 * @return an integer in the range [0, {@code n}), each with equal probability
 	 * @throws IllegalArgumentException if {@code n} &le; 0
 	 */
-	public int randomInt(int n);
+	public int uniformInt(int n);
 	
 	
 	/**
 	 * Returns a random, uniformly distributed {@code long} value.
 	 * @return a value in the range of {@code long}, each with equal probability
 	 */
-	public long randomLong();
+	public long uniformLong();
 	
 	
 	/**
 	 * Returns a random {@code double} value uniformly distributed between 0.0 (inclusive) and 1.0 (exclusive). The granularity is unspecified.
 	 * @return a {@code double} in the range [0, 1), each with equal probability
 	 */
-	public double randomDouble();
+	public double uniformDouble();
 	
 	
 	/**
 	 * Places random, uniformly distributed {@code byte} values into the specified array.
 	 */
-	public void randomBytes(byte[] b);
+	public void uniformBytes(byte[] b);
 	
 	
 	/**
 	 * Places random, uniformly distributed {@code byte} values into the specified array.
 	 */
-	public void randomBytes(byte[] b, int off, int len);
+	public void uniformBytes(byte[] b, int off, int len);
 	
 }
