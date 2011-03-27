@@ -32,6 +32,7 @@ public final class HashValue implements Comparable<HashValue> {
 	
 	/**
 	 * Returns this hash value as an array of bytes.
+	 * @return this hash value as an array of bytes
 	 */
 	public byte[] toBytes() {
 		return hashValue.clone();
@@ -40,18 +41,21 @@ public final class HashValue implements Comparable<HashValue> {
 	
 	/**
 	 * Returns this hash value as a hexadecimal string (in uppercase). For example, {@code "1337C0DE"}.
+	 * @return this hash value as a hexadecimal string
 	 */
 	public String toHexString() {
 		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < hashValue.length; i++)
-			sb.append(hexDigits[hashValue[i] >>> 4 & 0xF])
-			  .append(hexDigits[hashValue[i] >>> 0 & 0xF]);
+		for (int i = 0; i < hashValue.length; i++) {
+			sb.append(hexDigits[(hashValue[i] >>> 4) & 0xF])
+			  .append(hexDigits[(hashValue[i] >>> 0) & 0xF]);
+		}
 		return sb.toString();
 	}
 	
 	
 	/**
 	 * Returns the length of this hash value, in bytes.
+	 * @return the length of this hash value, in bytes
 	 */
 	public int getLength() {
 		return hashValue.length;
@@ -59,7 +63,7 @@ public final class HashValue implements Comparable<HashValue> {
 	
 	
 	/**
-	 * Tests whether this hash value is equal to the specified object. Returns {@code true} if the specified object is a hash value and its byte array has the same length and contents as this hash value's byte array. Otherwise, this method returns {@code false}.
+	 * Tests whether this hash value is equal to the specified object. Returns {@code true} if the specified object is a hash value and its byte array has the same length and contents as this hash value's byte array. Otherwise returns {@code false}.
 	 * @param other the object to test for equality
 	 * @return whether {@code other} is a hash value with the same sequence of bytes
 	 */
