@@ -31,7 +31,7 @@ public final class KaratsubaMultiplication {
 	
 	
 	// Requirement: CUTOFF >= 64, or else there will be infinite recursion.
-	private static final int CUTOFF = 2048;
+	private static final int CUTOFF = 1536;
 	
 	
 	// Requires x >= 0 and y >= 0
