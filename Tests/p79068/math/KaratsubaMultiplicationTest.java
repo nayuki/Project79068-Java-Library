@@ -12,34 +12,17 @@ public final class KaratsubaMultiplicationTest {
 	
 	
 	@Test
-	public void testPositivePositive() {
-		BigInteger x = new BigInteger(30000, random);
-		BigInteger y = new BigInteger(30000, random);
-		assertEquals(x.multiply(y), KaratsubaMultiplication.multiply(x, y));
-	}
-	
-	
-	@Test
-	public void testPositiveNegative() {
-		BigInteger x = new BigInteger(30000, random);
-		BigInteger y = new BigInteger(30000, random).negate();
-		assertEquals(x.multiply(y), KaratsubaMultiplication.multiply(x, y));
-	}
-	
-	
-	@Test
-	public void testNegativePositive() {
-		BigInteger x = new BigInteger(30000, random).negate();
-		BigInteger y = new BigInteger(30000, random);
-		assertEquals(x.multiply(y), KaratsubaMultiplication.multiply(x, y));
-	}
-	
-	
-	@Test
-	public void testNegativeNegative() {
-		BigInteger x = new BigInteger(30000, random).negate();
-		BigInteger y = new BigInteger(30000, random).negate();
-		assertEquals(x.multiply(y), KaratsubaMultiplication.multiply(x, y));
+	public void testRandomly() {
+		for (int i = 0; i < 100; i++) {
+			int size = random.nextInt(30000);
+			BigInteger x = new BigInteger(size, random);
+			BigInteger y = new BigInteger(size, random);
+			if (random.nextBoolean())
+				x = x.negate();
+			if (random.nextBoolean())
+				y = y.negate();
+			assertEquals(x.multiply(y), KaratsubaMultiplication.multiply(x, y));
+		}
 	}
 	
 }
