@@ -18,15 +18,7 @@ public final class KaratsubaMultiplication {
 	 */
 	public static BigInteger multiply(BigInteger x, BigInteger y) {
 		NullChecker.check(x, y);
-		if (x.signum() >= 0 && y.signum() >= 0) {
-			return recursiveMultiply(x, y);
-		} else if (x.signum() < 0 && y.signum() >= 0) {
-			return recursiveMultiply(x.negate(), y).negate();
-		} else if (x.signum() >= 0 && y.signum() < 0) {
-			return recursiveMultiply(x, y.negate()).negate();
-		} else {  // x < 0 && y < 0
-			return recursiveMultiply(x.negate(), y.negate());
-		}
+		return recursiveMultiply(x, y);
 	}
 	
 	
@@ -34,7 +26,7 @@ public final class KaratsubaMultiplication {
 	private static final int CUTOFF = 1536;
 	
 	
-	// Requires x >= 0 and y >= 0
+	// Requires x != null and y != null
 	private static BigInteger recursiveMultiply(BigInteger x, BigInteger y) {
 		if (x.bitLength() <= CUTOFF || y.bitLength() <= CUTOFF) {  // Base case
 			return x.multiply(y);
