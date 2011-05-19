@@ -44,7 +44,7 @@ public final class KaratsubaMultiplication {
 			BigInteger b = recursiveMultiply(xlow.add(xhigh), ylow.add(yhigh));
 			BigInteger c = recursiveMultiply(xlow, ylow);
 			BigInteger d = b.subtract(a).subtract(c);
-			return c.add(d.shiftLeft(half)).add(a.shiftLeft(half * 2));
+			return a.shiftLeft(half).add(d).shiftLeft(half).add(c);
 		}
 	}
 	
