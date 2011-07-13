@@ -1,6 +1,9 @@
 package p79068.random;
 
 
+/**
+ * A random number generator with more output types and probability distributions.
+ */
 public final class FancyRandom implements Random {
 	
 	/**
@@ -25,6 +28,8 @@ public final class FancyRandom implements Random {
 	
 	
 	
+	/* Random Boolean */
+	
 	/**
 	 * Returns a random, uniformly distributed {@code boolean} value.
 	 * @return <samp>true</samp> or <samp>false</samp>, each with equal probability
@@ -43,6 +48,8 @@ public final class FancyRandom implements Random {
 		return random.uniformDouble() < p;
 	}
 	
+	
+	/* Random int32 */
 	
 	/**
 	 * Returns a random, uniformly distributed {@code int} value.
@@ -98,6 +105,8 @@ public final class FancyRandom implements Random {
 	}
 	
 	
+	/* Random int64 */
+	
 	/**
 	 * Returns a random, uniformly distributed {@code long} value.
 	 * @return a value in the range of {@code long}, each with equal probability
@@ -106,6 +115,8 @@ public final class FancyRandom implements Random {
 		return random.uniformInt();
 	}
 	
+	
+	/* Random byte array */
 	
 	/**
 	 * Stores random, uniformly distributed {@code byte} values into the specified array.
@@ -123,6 +134,8 @@ public final class FancyRandom implements Random {
 	}
 	
 	
+	/* Random float32 */
+	
 	/**
 	 * Returns a random {@code float} value uniformly distributed between 0.0 (inclusive) and 1.0 (exclusive). The granularity is unspecified.
 	 * @return a {@code float} in the range [0, 1), each with equal probability
@@ -131,6 +144,8 @@ public final class FancyRandom implements Random {
 		return (random.uniformInt() & 0xFFFFFF) * floatScaler;
 	}
 	
+	
+	/* Random float64 */
 	
 	/**
 	 * Returns a random {@code double} value uniformly distributed between 0.0 (inclusive) and 1.0 (exclusive). The granularity is unspecified.
