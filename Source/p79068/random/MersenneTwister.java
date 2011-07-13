@@ -85,6 +85,8 @@ public final class MersenneTwister extends AbstractRandom {
 			nextState();
 		int x = state[index];
 		index++;
+		
+		// Tempering
 		x ^= x >>> 11;
 		x ^= (x << 7) & 0x9D2C5680;
 		x ^= (x << 15) & 0xEFC60000;
