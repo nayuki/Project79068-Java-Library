@@ -46,19 +46,14 @@ final class Crc32Hasher extends AbstractHasher {
 	
 	private static int[] xorTable;
 	
-	
 	static {
 		xorTable = new int[256];
-		int poly = 0xEDB88320;
+		final int POLY = 0xEDB88320;
 		for (int i = 0; i < 256; i++) {
-			int register = i;
-			for (int j = 0; j < 8; j++) {
-				if ((register & 1) != 0)
-					register = (register >>> 1) ^ poly;
-				else
-					register >>>= 1;
-			}
-			xorTable[i] = register;
+			int reg = i;
+			for (int j = 0; j < 8; j++)
+				reg = (reg >>> 1) ^ (reg & 1) * POLY;
+			xorTable[i] = reg;
 		}
 	}
 	

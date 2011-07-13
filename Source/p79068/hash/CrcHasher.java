@@ -47,34 +47,31 @@ final class CrcHasher extends AbstractHasher {
 			throw new IllegalArgumentException("Invalid initial XOR constant");
 		if (degree < 64 && (xorOut >>> degree) != 0)
 			throw new IllegalArgumentException("Invalid final XOR constant");
+		
 		this.degree = degree;
 		this.reverseInputBits = revIn;
 		this.reverseOutputBits = revOut;
 		this.xorOutput = xorOut;
+		
+		// Build look-up table to allow whole-byte CRC processing
 		poly <<= 64 - degree;
 		xorTable = new long[256];
+		
 		if (!revIn) {  // Use the left-shift algorithm
 			for (int i = 0; i < 256; i++) {
 				long reg = (long)i << 56;
-				for (int j = 0; j < 8; j++) {
-					if ((reg >>> 63) != 0)
-						reg = (reg << 1) ^ poly;
-					else
-						reg <<= 1;
-				}
+				for (int j = 0; j < 8; j++)
+					reg = (reg >>> 1) ^ (reg >>> 63) * poly;
 				xorTable[i] = reg;
 			}
 			state = xorIn << (64 - degree);
+			
 		} else {  // Use the right-shift algorithm
 			poly = LongBitMath.reverse(poly);
 			for (int i = 0; i < 256; i++) {
 				long reg = i;
-				for (int j = 0; j < 8; j++) {
-					if ((reg & 1) != 0)
-						reg = (reg >>> 1) ^ poly;
-					else
-						reg >>>= 1;
-				}
+				for (int j = 0; j < 8; j++)
+					reg = (reg >>> 1) ^ (reg & 1) * poly;
 				xorTable[i] = reg;
 			}
 			state = xorIn;
