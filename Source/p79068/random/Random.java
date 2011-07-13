@@ -3,11 +3,13 @@ package p79068.random;
 import p79068.concurrent.SynchronizedRandom;
 
 
-
+/**
+ * A random number generator. Implementations can be pseudo-random (deterministic) or truly random.
+ */
 public interface Random {
 	
 	/**
-	 * A default, thread-safe instance provided for convenience.
+	 * A global, thread-safe random number generator instance provided for convenience.
 	 */
 	public static final Random DEFAULT = new SynchronizedRandom(new MersenneTwister());
 	
