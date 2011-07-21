@@ -1,10 +1,7 @@
-package p79068.util;
+package p79068.random;
 
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
-
-import p79068.random.MersenneTwister;
-import p79068.random.Random;
 
 
 public final class MersenneTwisterTest {
