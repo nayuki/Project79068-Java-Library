@@ -8,7 +8,7 @@ import p79068.lang.NullChecker;
  * An arbitrary precision fraction. The numerator and denominator are both BigIntegers.
  * The fraction is always in canonical form: the denominator is positive, and the GCD of the numerator and denominator is one.
  */
-public final class BigFraction implements Comparable<BigFraction> {
+public final class BigFraction extends Number implements Comparable<BigFraction> {
 	
 	/** The fraction 0, or 0/1. */
 	public static final BigFraction ZERO = new BigFraction(0, 1);
@@ -212,6 +212,32 @@ public final class BigFraction implements Comparable<BigFraction> {
 	@Override
 	public String toString() {
 		return String.format("%d/%d", numerator, denominator);
+	}
+	
+	
+	@Override
+	public int intValue() {
+		return numerator.divide(denominator).intValue();
+	}
+	
+	
+	@Override
+	public long longValue() {
+		return numerator.divide(denominator).longValue();
+	}
+	
+	
+	@Override
+	public float floatValue() {
+		// FIXME: Low accuracy!
+		return (float)(numerator.doubleValue() / denominator.doubleValue());
+	}
+	
+	
+	@Override
+	public double doubleValue() {
+		// FIXME: Low accuracy!
+		return numerator.doubleValue() / denominator.doubleValue();
 	}
 	
 }
