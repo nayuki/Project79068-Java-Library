@@ -10,6 +10,8 @@ import p79068.lang.NullChecker;
  */
 public final class BigFraction extends Number implements Comparable<BigFraction> {
 	
+	/* Public constants */
+	
 	/** The fraction 0, or 0/1. */
 	public static final BigFraction ZERO = new BigFraction(0, 1);
 	
@@ -25,6 +27,8 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 	private BigInteger denominator;
 	
 	
+	
+	/* Constructors */
 	
 	/**
 	 * Constructs a BigFraction representing the specified integer value. The denominator is 1.
@@ -79,6 +83,8 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 	
 	
 	
+	/* Getter methods */
+	
 	/**
 	 * Returns the numerator of this fraction.
 	 * @return the numerator
@@ -97,6 +103,7 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 	}
 	
 	
+	/* Arithmetic methods */
 	
 	/**
 	 * Returns {@code this + other}.
@@ -168,6 +175,7 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 	}
 	
 	
+	/* Comparison methods */
 	
 	/**
 	 * Tests whether this fraction equals the specified object.
@@ -204,6 +212,8 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 		return numerator.hashCode() ^ denominator.hashCode();
 	}
 	
+	
+	/* String and primitive number type conversion methods */
 	
 	/**
 	 * Returns a string representation of this fraction. The format is subject to change.
