@@ -106,6 +106,7 @@ public final class BoundsCheckerTest {
 				{5, -2, 7},
 				{5, -3, 4},
 				{5, 2, -1},
+				{2000000000, 1500000000, 1500000000},
 				{0, Integer.MAX_VALUE, Integer.MAX_VALUE},
 				{Integer.MAX_VALUE, 1, Integer.MAX_VALUE},
 				{Integer.MAX_VALUE, Integer.MIN_VALUE, Integer.MAX_VALUE},
@@ -127,6 +128,7 @@ public final class BoundsCheckerTest {
 				{-1, 0, 0},
 				{-3, 0, -2},
 				{-3, -1, 2},
+				{-5, 1, 1},
 				{Integer.MIN_VALUE, 0, Integer.MAX_VALUE},
 				{Integer.MIN_VALUE + 1, 0, Integer.MAX_VALUE / 2},
 				{Integer.MIN_VALUE / 3, Integer.MIN_VALUE / 4, 100}
