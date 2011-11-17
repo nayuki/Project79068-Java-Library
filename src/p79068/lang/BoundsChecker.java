@@ -40,7 +40,7 @@ public final class BoundsChecker {
 	public static void check(int arrayLength, int accessOffset, int accessLength) {
 		if (arrayLength < 0)
 			throw new IllegalArgumentException(String.format("Negative array length (%d)", arrayLength));
-		if (accessOffset < 0 || accessOffset > arrayLength || accessLength < 0 || accessOffset > arrayLength - accessLength)
+		if (accessOffset < 0 || accessOffset > arrayLength || accessLength < 0 || accessLength > arrayLength - accessOffset)
 			throw new IndexOutOfBoundsException(String.format("Bounds = [%d,%d), access range = [%d,%d)", 0, arrayLength, accessOffset, (long)accessOffset + accessLength));
 	}
 	
