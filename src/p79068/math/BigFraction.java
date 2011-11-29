@@ -246,8 +246,79 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 	
 	@Override
 	public double doubleValue() {
-		// FIXME: Low accuracy!
-		return numerator.doubleValue() / denominator.doubleValue();
+		BigInteger num = numerator;
+		BigInteger den = denominator;
+		
+		// Eliminate zero
+		if (num.equals(ZERO))
+			return 0.0;
+		
+		// Make number positive
+		int sign;
+		if (num.compareTo(BigInteger.ZERO) > 0)
+			sign = 1;
+		else {
+			num = num.negate();
+			sign = -1;
+		}
+		
+		// Normalize number to the range [1, 2)
+		int exponent = 0;
+		while (num.compareTo(den.shiftLeft(1)) >= 0) {
+			den = den.shiftLeft(1);
+			exponent++;
+		}
+		while (num.compareTo(den) < 0) {
+			num = num.shiftLeft(1);
+			exponent--;
+		}
+		
+		// Weed out definite infinity and zero
+		if (exponent > 1023)
+			return sign * Double.POSITIVE_INFINITY;
+		if (exponent < -1075)
+			return 0.0;
+		
+		if (exponent >= -1022) {  // Normal (probably)
+			long mantissa = round(num.shiftLeft(52), den).longValue();
+			if (mantissa < (1L << 52) || mantissa > (1L << 53))
+				throw new AssertionError();
+			else if (mantissa == (1L << 53)) {
+				mantissa >>>= 1;
+				exponent++;
+			}
+			mantissa ^= 1L << 52;
+			
+			if (exponent <= 1023)
+				return Double.longBitsToDouble((long)((1 - sign) / 2) << 63 | (long)(exponent + 1023) << 52 | mantissa);
+			else
+				return sign * Double.POSITIVE_INFINITY;
+			
+		} else {  // Subnormal (probably)
+			long mantissa = round(num.shiftLeft(exponent + 1074), den).longValue();
+			if (mantissa > (1L << 52))
+				throw new AssertionError();
+			else if (mantissa == (1L << 52))
+				return Double.longBitsToDouble((long)((1 - sign) / 2) << 63 | 1 << 52);  // Normal
+			else
+				return Double.longBitsToDouble((long)((1 - sign) / 2) << 63 | mantissa);  // Subnormal
+		}
+	}
+	
+	
+	// Round half even for a non-negative argument. e.g. round(3, 4) = 1, round(1, 2) = 0, round(3, 2) = 2.
+	private static BigInteger round(BigInteger num, BigInteger den) {
+		BigInteger[] temp = num.divideAndRemainder(den);
+		BigInteger quot = temp[0];
+		BigInteger rem  = temp[1];
+		
+		int cmp = rem.shiftLeft(1).compareTo(den);
+		if (cmp > 0)  // Greater than half
+			quot = quot.add(BigInteger.ONE);
+		else if (cmp == 0 && quot.and(BigInteger.ONE).intValue() == 1)  // Exactly half, and quotient is odd
+			quot = quot.add(BigInteger.ONE);
+		
+		return quot;
 	}
 	
 }
