@@ -2,6 +2,9 @@ package p79068.math;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+
+import java.math.BigInteger;
+
 import org.junit.Test;
 
 
@@ -68,6 +71,32 @@ public final class BigFractionTest {
 		assertTrue(new BigFraction(-1, 2).compareTo(new BigFraction(1, 2)) < 0);
 		assertTrue(new BigFraction(-4, 3).compareTo(new BigFraction(1, 2)) < 0);
 		assertTrue(new BigFraction(-2, 3).compareTo(new BigFraction(-7, 5)) > 0);
+	}
+	
+	
+	@Test
+	public void testFloatValue() {
+		assertEquals(0.0, new BigFraction(0, 1).floatValue(), 0);
+		assertEquals(-5.0, new BigFraction(-5, 1).floatValue(), 0);
+		
+		assertEquals(1.0, new BigFraction(1, 1).floatValue(), 0);
+		assertEquals(2.0, new BigFraction(2, 1).floatValue(), 0);
+		assertEquals(3.0, new BigFraction(3, 1).floatValue(), 0);
+		assertEquals(4.0, new BigFraction(4, 1).floatValue(), 0);
+		assertEquals(5.0, new BigFraction(5, 1).floatValue(), 0);
+		assertEquals(7.0, new BigFraction(7, 1).floatValue(), 0);
+		
+		assertEquals(0.5, new BigFraction(1, 2).floatValue(), 0);
+		assertEquals(0.25, new BigFraction(1, 4).floatValue(), 0);
+		assertEquals(0.75, new BigFraction(3, 4).floatValue(), 0);
+	}
+	
+	
+	@Test
+	public void testFloatValueBig() {
+		assertEquals(0x7F000000, Float.floatToIntBits(new BigFraction(BigInteger.ONE.shiftLeft(127), BigInteger.ONE).floatValue()));
+		assertEquals(Float.MAX_VALUE, new BigFraction(BigInteger.valueOf((1 << 24) - 1).shiftLeft(127), BigInteger.ONE.shiftLeft(23)).floatValue(), 0);
+		assertEquals(Float.POSITIVE_INFINITY, new BigFraction(BigInteger.ONE.shiftLeft(128), BigInteger.ONE).floatValue(), 0);
 	}
 	
 }
