@@ -249,7 +249,7 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 		BigInteger den = denominator;
 		
 		// Eliminate zero
-		if (num.equals(ZERO))
+		if (num.equals(BigInteger.ZERO))
 			return 0.0f;
 		
 		// Make number positive
@@ -317,7 +317,7 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 		BigInteger den = denominator;
 		
 		// Eliminate zero
-		if (num.equals(ZERO))
+		if (num.equals(BigInteger.ZERO))
 			return 0.0;
 		
 		// Make number positive
