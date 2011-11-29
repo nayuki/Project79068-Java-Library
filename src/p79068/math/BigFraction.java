@@ -246,6 +246,12 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 	
 	@Override
 	public double doubleValue() {
+		final int MANTISSA_BITS = 52;
+		final int EXPONENT_BITS = 11;
+		
+		final int MAX_EXPONENT = (1 << (EXPONENT_BITS - 1)) - 1;  // 1023 (this is the same value as the exponent bias)
+		final int MIN_EXPONENT = 1 - MAX_EXPONENT;  // -1022 (for normal numbers)
+		
 		BigInteger num = numerator;
 		BigInteger den = denominator;
 		
@@ -274,34 +280,34 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 		}
 		
 		// Weed out definite infinity and zero
-		if (exponent > 1023)
+		if (exponent > MAX_EXPONENT)
 			return sign * Double.POSITIVE_INFINITY;
-		if (exponent < -1075)
+		if (exponent < MIN_EXPONENT - MANTISSA_BITS - 1)
 			return 0.0;
 		
-		if (exponent >= -1022) {  // Normal (probably)
-			long mantissa = round(num.shiftLeft(52), den).longValue();
-			if (mantissa < (1L << 52) || mantissa > (1L << 53))
+		if (exponent >= MIN_EXPONENT) {  // Normal (probably)
+			long mantissa = round(num.shiftLeft(MANTISSA_BITS), den).longValue();
+			if (mantissa < (1L << MANTISSA_BITS) || mantissa > (1L << (MANTISSA_BITS + 1)))
 				throw new AssertionError();
-			else if (mantissa == (1L << 53)) {
+			else if (mantissa == (1L << (MANTISSA_BITS + 1))) {
 				mantissa >>>= 1;
 				exponent++;
 			}
-			mantissa ^= 1L << 52;
+			mantissa ^= 1L << MANTISSA_BITS;  // Normal numbers have an implicit leading bit
 			
-			if (exponent <= 1023)
-				return Double.longBitsToDouble((long)((1 - sign) / 2) << 63 | (long)(exponent + 1023) << 52 | mantissa);
+			if (exponent <= MAX_EXPONENT)
+				return Double.longBitsToDouble((long)((1 - sign) / 2) << (MANTISSA_BITS + EXPONENT_BITS) | (long)(exponent + MAX_EXPONENT) << MANTISSA_BITS | mantissa);
 			else
 				return sign * Double.POSITIVE_INFINITY;
 			
 		} else {  // Subnormal (probably)
-			long mantissa = round(num.shiftLeft(exponent + 1074), den).longValue();
-			if (mantissa > (1L << 52))
+			long mantissa = round(num.shiftLeft(exponent - (MIN_EXPONENT - MANTISSA_BITS)), den).longValue();
+			if (mantissa > (1L << MANTISSA_BITS))
 				throw new AssertionError();
-			else if (mantissa == (1L << 52))
-				return Double.longBitsToDouble((long)((1 - sign) / 2) << 63 | 1 << 52);  // Normal
+			else if (mantissa == (1L << MANTISSA_BITS))
+				return Double.longBitsToDouble((long)((1 - sign) / 2) << (MANTISSA_BITS + EXPONENT_BITS) | 1 << MANTISSA_BITS);  // Normal
 			else
-				return Double.longBitsToDouble((long)((1 - sign) / 2) << 63 | mantissa);  // Subnormal
+				return Double.longBitsToDouble((long)((1 - sign) / 2) << (MANTISSA_BITS + EXPONENT_BITS) | mantissa);  // Subnormal
 		}
 	}
 	
