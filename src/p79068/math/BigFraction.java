@@ -261,8 +261,12 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 			sign = -1;
 		}
 		
-		// Normalize number to the range [1, 2)
-		int exponent = 0;
+		// Roughly normalize the number
+		int exponent = num.bitLength() - 1 - den.bitLength();
+		if      (exponent > 0) den = den.shiftLeft( exponent);
+		else if (exponent < 0) num = num.shiftLeft(-exponent);
+		
+		// Normalize number to the range [1, 2) by brute force
 		while (num.compareTo(den.shiftLeft(1)) >= 0) {
 			den = den.shiftLeft(1);
 			exponent++;
@@ -329,8 +333,12 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 			sign = -1;
 		}
 		
-		// Normalize number to the range [1, 2)
-		int exponent = 0;
+		// Roughly normalize the number
+		int exponent = num.bitLength() - 1 - den.bitLength();
+		if      (exponent > 0) den = den.shiftLeft( exponent);
+		else if (exponent < 0) num = num.shiftLeft(-exponent);
+		
+		// Normalize number to the range [1, 2) by brute force
 		while (num.compareTo(den.shiftLeft(1)) >= 0) {
 			den = den.shiftLeft(1);
 			exponent++;
