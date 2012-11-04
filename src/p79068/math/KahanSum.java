@@ -20,6 +20,7 @@ public final class KahanSum {
 		double y = x - compensation;
 		double temp = sum + y;
 		compensation = (temp - sum) - y;
+		sum = temp;
 		return this;
 	}
 	
