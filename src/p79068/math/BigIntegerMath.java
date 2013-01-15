@@ -45,6 +45,27 @@ public final class BigIntegerMath {
 	}
 	
 	
+	/**
+	 * Returns floor(sqrt(<var>x</var>)), or throws an exception if {@code x < 0}.
+	 * @param x the argument
+	 * @return the floor of the square root of {@code x}
+	 * @throws NullPointerException if {@code x} is null
+	 * @throws IllegalArgumentException if {@code x} is less than zero
+	 */
+	public static BigInteger sqrt(BigInteger x) {
+		NullChecker.check(x);
+		if (x.signum() == -1)
+			throw new IllegalArgumentException("Square root of negative number");
+		BigInteger y = BigInteger.ZERO;
+		for (int i = (x.bitLength() - 1) / 2; i >= 0; i--) {
+			y = y.setBit(i);
+			if (y.multiply(y).compareTo(x) > 0)
+				y = y.clearBit(i);
+		}
+		return y;
+	}
+	
+	
 	
 	/**
 	 * Not instantiable.
