@@ -4,13 +4,10 @@ import java.math.BigInteger;
 import p79068.lang.NullChecker;
 
 
-/**
- * Utility class for multiplying BigIntegers quickly, using the Karatsuba multiplication algorithm.
- */
-public final class KaratsubaMultiplication {
+public final class BigIntegerMath {
 	
 	/**
-	 * Returns {@code x * y}, the product of the specified integers. This gives the same result as {@code x.multiply(y)} but should be faster.
+	 * Returns {@code x * y} (the product of the specified integers), which gives the same result as {@code x.multiply(y)} but should be faster. The current implementation uses Karatsuba multiplication.
 	 * @param x a multiplicand
 	 * @param y a multiplicand
 	 * @return {@code x} times {@code} y
@@ -18,17 +15,16 @@ public final class KaratsubaMultiplication {
 	 */
 	public static BigInteger multiply(BigInteger x, BigInteger y) {
 		NullChecker.check(x, y);
-		return recursiveMultiply(x, y);
+		return karatsubaMultiply(x, y);
 	}
 	
 	
 	// Requirement: CUTOFF >= 64, or else there will be infinite recursion.
-	private static final int CUTOFF = 1536;
-	
+	private static final int KARATSUBA_MULTIPLICATION_CUTOFF = 1536;
 	
 	// Requires x != null and y != null
-	private static BigInteger recursiveMultiply(BigInteger x, BigInteger y) {
-		if (x.bitLength() <= CUTOFF || y.bitLength() <= CUTOFF) {  // Base case
+	private static BigInteger karatsubaMultiply(BigInteger x, BigInteger y) {
+		if (x.bitLength() <= KARATSUBA_MULTIPLICATION_CUTOFF || y.bitLength() <= KARATSUBA_MULTIPLICATION_CUTOFF) {  // Base case
 			return x.multiply(y);
 			
 		} else {
@@ -40,9 +36,9 @@ public final class KaratsubaMultiplication {
 			BigInteger xhigh = x.shiftRight(half);
 			BigInteger yhigh = y.shiftRight(half);
 			
-			BigInteger a = recursiveMultiply(xhigh, yhigh);
-			BigInteger b = recursiveMultiply(xlow.add(xhigh), ylow.add(yhigh));
-			BigInteger c = recursiveMultiply(xlow, ylow);
+			BigInteger a = karatsubaMultiply(xhigh, yhigh);
+			BigInteger b = karatsubaMultiply(xlow.add(xhigh), ylow.add(yhigh));
+			BigInteger c = karatsubaMultiply(xlow, ylow);
 			BigInteger d = b.subtract(a).subtract(c);
 			return a.shiftLeft(half).add(d).shiftLeft(half).add(c);
 		}
@@ -53,6 +49,6 @@ public final class KaratsubaMultiplication {
 	/**
 	 * Not instantiable.
 	 */
-	private KaratsubaMultiplication() {}
+	private BigIntegerMath() {}
 	
 }

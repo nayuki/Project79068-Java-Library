@@ -6,13 +6,13 @@ import java.util.Random;
 import org.junit.Test;
 
 
-public final class KaratsubaMultiplicationTest {
+public final class BigIntegerMathTest {
 	
 	private static Random random = new Random();
 	
 	
 	@Test
-	public void testRandomly() {
+	public void testMultiplyRandomly() {
 		for (int i = 0; i < 100; i++) {
 			int size = random.nextInt(30000);
 			BigInteger x = new BigInteger(size, random);
@@ -21,7 +21,7 @@ public final class KaratsubaMultiplicationTest {
 				x = x.negate();
 			if (random.nextBoolean())
 				y = y.negate();
-			assertEquals(x.multiply(y), KaratsubaMultiplication.multiply(x, y));
+			assertEquals(x.multiply(y), BigIntegerMath.multiply(x, y));
 		}
 	}
 	
