@@ -1,7 +1,7 @@
 package p79068.util;
 
+import java.math.BigInteger;
 import p79068.math.ArithmeticOverflowException;
-import p79068.math.Int128;
 import p79068.math.LongMath;
 
 
@@ -40,11 +40,23 @@ public final class DateTime implements Comparable<DateTime> {
 	 * @throws ArithmeticOverflowException if the result does not fit in a {@code long}
 	 */
 	public static long microsSinceEpoch(int year, int month, int day, int hour, int minute, int second, int microsecond) {
-		Int128 temp = new Int128(Date.daysSinceEpoch(year, month, day)).multiply(new Int128(86400000000L));
-		temp = temp.add(new Int128(hour * 3600000000L + minute * 60000000L + second * 1000000L + microsecond));  // The inner calculation doesn't overflow, but it's rather close to doing so
+		long days = day;
+		day = 0;
 		
-		if (temp.high == temp.low >> 63)  // Equivalent to temp >= Long.MIN_VALUE && temp <= Long.MAX_VALUE
-			return temp.low;
+		long temp = LongMath.divideAndFloor(month, 4800);
+		days += temp * 146097;
+		month -= temp * 4800;
+		
+		temp = LongMath.divideAndFloor(year, 400);
+		days += temp * 146097;
+		year -= temp * 400;
+		
+		days += Date.daysSinceEpoch(year, month, day);
+		
+		long micros = hour * 3600000000L + minute * 60000000L + second * 1000000L + microsecond;  // Doesn't overflow, but is rather close to doing so
+		BigInteger result = BigInteger.valueOf(days).multiply(BigInteger.valueOf(86400000000L)).add(BigInteger.valueOf(micros));
+		if (result.bitLength() <= 64)
+			return result.longValue();
 		else
 			throw new ArithmeticOverflowException();
 	}

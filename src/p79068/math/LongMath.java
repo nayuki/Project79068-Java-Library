@@ -1,5 +1,7 @@
 package p79068.math;
 
+import java.math.BigInteger;
+
 
 /**
  * Contains methods for math functions that deal with long integers.
@@ -50,9 +52,9 @@ public final class LongMath {
 	 * @throws ArithmeticOverflowException if the result overflows
 	 */
 	public static long checkedMultiply(long x, long y) {
-		Int128 z = new Int128(x).multiply(new Int128(y));
-		if (z.high == z.low >> 63)  // Equivalent to z >= Long.MIN_VALUE && z <= Long.MAX_VALUE
-			return z.low;
+		BigInteger z = BigInteger.valueOf(x).multiply(BigInteger.valueOf(y));
+		if (z.bitLength() <= 64)
+			return z.longValue();
 		else
 			throw new ArithmeticOverflowException(String.format("%d * %d", x, y));
 	}
