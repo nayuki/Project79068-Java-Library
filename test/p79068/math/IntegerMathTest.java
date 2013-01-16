@@ -17,38 +17,38 @@ public final class IntegerMathTest {
 	// Basic operations
 	
 	@Test
-	public void testSafeAdd() {
+	public void testCheckedAdd() {
 		assertEquals(3, IntegerMath.checkedAdd(1, 2));
 		assertEquals(-238, IntegerMath.checkedAdd(-980, 742));
 	}
 	
 	
 	@Test(expected=ArithmeticOverflowException.class)
-	public void testSafeAddInvalid0() {
+	public void testCheckedAddInvalid0() {
 		IntegerMath.checkedAdd(2147483647, 1);
 	}
 	
 	
 	@Test(expected=ArithmeticOverflowException.class)
-	public void testSafeAddInvalid1() {
+	public void testCheckedAddInvalid1() {
 		IntegerMath.checkedAdd(2147483600, 1000);
 	}
 	
 	
 	@Test(expected=ArithmeticOverflowException.class)
-	public void testSafeAddInvalid2() {
+	public void testCheckedAddInvalid2() {
 		IntegerMath.checkedAdd(-2147483648, -1);
 	}
 	
 	
 	@Test(expected=ArithmeticOverflowException.class)
-	public void testSafeAddInvalid3() {
+	public void testCheckedAddInvalid3() {
 		IntegerMath.checkedAdd(-2147483000, -10000);
 	}
 	
 	
 	@Test
-	public void testSafeMultiply() {
+	public void testCheckedMultiply() {
 		assertEquals(6, IntegerMath.checkedMultiply(2, 3));
 		assertEquals(-3976, IntegerMath.checkedMultiply(71, -56));
 		assertEquals(-2147483648, IntegerMath.checkedMultiply(-2147483648, 1));
@@ -57,25 +57,25 @@ public final class IntegerMathTest {
 	
 	
 	@Test(expected=ArithmeticOverflowException.class)
-	public void testSafeMultiplyInvalid0() {
+	public void testCheckedMultiplyInvalid0() {
 		IntegerMath.checkedMultiply(-2147483648, -1);
 	}
 	
 	
 	@Test(expected=ArithmeticOverflowException.class)
-	public void testSafeMultiplyInvalid1() {
+	public void testCheckedMultiplyInvalid1() {
 		IntegerMath.checkedMultiply(1073741824, 2);
 	}
 	
 	
 	@Test(expected=ArithmeticOverflowException.class)
-	public void testSafeMultiplyInvalid2() {
+	public void testCheckedMultiplyInvalid2() {
 		IntegerMath.checkedMultiply(46341, -46341);
 	}
 	
 	
 	@Test(expected=ArithmeticOverflowException.class)
-	public void testSafeMultiplyInvalid3() {
+	public void testCheckedMultiplyInvalid3() {
 		IntegerMath.checkedMultiply(-123456, -67890);
 	}
 	
