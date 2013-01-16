@@ -81,6 +81,41 @@ public final class IntegerMathTest {
 	
 	
 	@Test
+	public void testDivideUnsigned() {
+		assertEquals(0, IntegerMath.divideUnsigned(0, 1));
+		assertEquals(1 << 30, IntegerMath.divideUnsigned(1 << 30, 1));
+		assertEquals((1 << 31) - 1, IntegerMath.divideUnsigned((1 << 31) - 1, 1));
+		assertEquals((1 << 31) + 0, IntegerMath.divideUnsigned((1 << 31) + 0, 1));
+		assertEquals((1 << 31) + 1, IntegerMath.divideUnsigned((1 << 31) + 1, 1));
+		assertEquals(-1, IntegerMath.divideUnsigned(-1, 1));
+		assertEquals((1 << 31) - 1, IntegerMath.divideUnsigned(-1, 2));
+		assertEquals(1 << 30, IntegerMath.divideUnsigned(1 << 31, 2));
+		assertEquals(858993459, IntegerMath.divideUnsigned(-1, 5));
+		assertEquals(613566756, IntegerMath.divideUnsigned(-1, 7));
+		assertEquals(0, IntegerMath.divideUnsigned(1 << 30, 1 << 31));
+		assertEquals(0, IntegerMath.divideUnsigned(1 << 31, (1 << 31) + 1));
+		assertEquals(1, IntegerMath.divideUnsigned((1 << 31) + 2, (1 << 31) + 1));
+	}
+	
+	
+	@Test
+	public void testDivideUnsignedRandomly() {
+		for (int i = 0; i < 1000; i++) {
+			int xbits = RANDOM.uniformInt(33);
+			int ybits = RANDOM.uniformInt(32) + 1;  // Prevent division by 0
+			int x = 0;
+			if (xbits > 0) {
+				x = 1 << (xbits - 1);
+				x |= RANDOM.uniformInt() & (x - 1);
+			}
+			int y = 1 << (ybits - 1);
+			y |= RANDOM.uniformInt() & (y - 1);
+			assertEquals((int)((x & 0xFFFFFFFFL) / (y & 0xFFFFFFFFL)), IntegerMath.divideUnsigned(x, y));
+		}
+	}
+	
+	
+	@Test
 	public void testMod() {
 		assertEquals(3, IntegerMath.mod(7, 4));
 		assertEquals(1, IntegerMath.mod(-7, 4));

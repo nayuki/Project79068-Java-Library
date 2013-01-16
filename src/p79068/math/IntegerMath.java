@@ -73,6 +73,28 @@ public final class IntegerMath {
 	
 	
 	/**
+	 * Returns the quotient of the specified unsigned 32-bit integers.
+	 * @param x the dividend, interpreted as an unsigned 32-bit integer
+	 * @param y the divisor, interpreted as an unsigned 32-bit integer
+	 * @return the quotient, interpreted an unsigned 32-bit integer
+	 * @throws ArithmeticException if {@code y} is 0 (division by zero)
+	 */
+	public static int divideUnsigned(int x, int y) {
+		if (y >= 0) {  // y is less than 32 bits
+			if (x >= 0)  // x is less than 32 bits
+				return x / y;
+			else {
+				int i = Integer.numberOfLeadingZeros(y);  // At least 1
+				if ((x >>> i) < y)
+					i--;
+				return (1 << i) + (x - (y << i)) / y;
+			}
+		} else
+			return (x ^ 0x80000000) < (y ^ 0x80000000) ? 0 : 1;
+	}
+	
+	
+	/**
 	 * Returns the floor of the quotient of the specified integers.
 	 * @param x the dividend
 	 * @param y the divisor
