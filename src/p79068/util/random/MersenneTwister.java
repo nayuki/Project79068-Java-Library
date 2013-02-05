@@ -42,7 +42,7 @@
  */
 
 
-package p79068.random;
+package p79068.util.random;
 
 
 /**

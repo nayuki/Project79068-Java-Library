@@ -5,7 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
-import p79068.random.Random;
+import p79068.util.random.Random;
 
 
 public final class DoubleBitMathTest {
