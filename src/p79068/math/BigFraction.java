@@ -5,7 +5,7 @@ import p79068.lang.NullChecker;
 
 
 /**
- * An arbitrary precision fraction. The numerator and denominator are both BigIntegers.
+ * An arbitrary precision fraction. The numerator and denominator are both BigIntegers. Objects are immutable.
  * The fraction is always in canonical form: the denominator is positive, and the GCD of the numerator and denominator is one.
  */
 public final class BigFraction extends Number implements Comparable<BigFraction> {
@@ -125,6 +125,7 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 	 * Returns {@code this / other}.
 	 * @param other the other fraction
 	 * @return this fraction divided by the other fraction
+	 * @throws ArithmeticException if the other fraction is zero
 	 */
 	public BigFraction divide(BigFraction other) {
 		if (other.numerator.equals(BigInteger.ZERO))
@@ -147,6 +148,7 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 	/**
 	 * Returns {@code 1 / this}. (Also called the multiplicative inverse.)
 	 * @return the reciprocal of this fraction
+	 * @throws ArithmeticException if the denominator is zero
 	 */
 	public BigFraction reciprocal() {
 		if (numerator.equals(BigInteger.ZERO))
@@ -203,18 +205,30 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 	}
 	
 	
+	/**
+	 * Converts this fraction to an {@code int}. Fractions that are not whole numbers are rounded towards zero (e.g. 3/2 becomes 1, and -3/2 becomes -1). The returned result is this integer value modulo 2<sup>32</sup>, as per the narrowing primitive conversion defined in the Java Language Specification.
+	 * @return this fraction converted to an {@code int}
+	 */
 	@Override
 	public int intValue() {
 		return numerator.divide(denominator).intValue();
 	}
 	
 	
+	/**
+	 * Converts this fraction to a {@code long}. Fractions that are not whole numbers are rounded towards zero (e.g. 3/2 becomes 1, and -3/2 becomes -1). The returned result is this integer value modulo 2<sup>64</sup>, as per the narrowing primitive conversion defined in the Java Language Specification.
+	 * @return this fraction converted to a {@code long}
+	 */
 	@Override
 	public long longValue() {
 		return numerator.divide(denominator).longValue();
 	}
 	
 	
+	/**
+	 * Converts this fraction to a {@code float}. The result has the maximum accuracy possible and uses round-half-even.
+	 * @return this fraction converted to a {@code float}
+	 */
 	@Override
 	public float floatValue() {
 		final int MANTISSA_BITS = 23;
@@ -287,6 +301,10 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 	}
 	
 	
+	/**
+	 * Converts this fraction to a {@code double}. The result has the maximum accuracy possible and uses round-half-even.
+	 * @return this fraction converted to a {@code double}
+	 */
 	@Override
 	public double doubleValue() {
 		final int MANTISSA_BITS = 52;
