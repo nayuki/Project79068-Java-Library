@@ -60,7 +60,7 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 	 */
 	public BigFraction(BigInteger num, BigInteger den) {
 		NullChecker.check(num, den);
-		if (den.equals(BigInteger.ZERO))
+		if (den.signum() == 0)
 			throw new IllegalArgumentException("Denominator is zero");
 		
 		// Make denominator positive
@@ -128,7 +128,7 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 	 * @throws ArithmeticException if the other fraction is zero
 	 */
 	public BigFraction divide(BigFraction other) {
-		if (other.numerator.equals(BigInteger.ZERO))
+		if (other.numerator.signum() == 0)
 			throw new ArithmeticException("Division by zero");
 		BigInteger num = numerator.multiply(other.denominator);
 		BigInteger den = denominator.multiply(other.numerator);
@@ -151,7 +151,7 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 	 * @throws ArithmeticException if the denominator is zero
 	 */
 	public BigFraction reciprocal() {
-		if (numerator.equals(BigInteger.ZERO))
+		if (numerator.signum() == 0)
 			throw new ArithmeticException("Division by zero");
 		return new BigFraction(denominator, numerator);
 	}
@@ -241,12 +241,12 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 		BigInteger den = denominator;
 		
 		// Eliminate zero
-		if (num.equals(BigInteger.ZERO))
+		if (num.signum() == 0)
 			return 0.0f;
 		
 		// Make number positive
 		int sign;
-		if (num.compareTo(BigInteger.ZERO) > 0)
+		if (num.signum() == 1)
 			sign = 1;
 		else {
 			num = num.negate();
@@ -317,12 +317,12 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 		BigInteger den = denominator;
 		
 		// Eliminate zero
-		if (num.equals(BigInteger.ZERO))
+		if (num.signum() == 0)
 			return 0.0;
 		
 		// Make number positive
 		int sign;
-		if (num.compareTo(BigInteger.ZERO) > 0)
+		if (num.signum() == 1)
 			sign = 1;
 		else {
 			num = num.negate();
