@@ -21,10 +21,10 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 	
 	
 	// The numerator, which can be any number.
-	private BigInteger numerator;
+	public final BigInteger numerator;
 	
 	// The denominator, which is always positive.
-	private BigInteger denominator;
+	public final BigInteger denominator;
 	
 	
 	
@@ -64,7 +64,7 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 			throw new IllegalArgumentException("Denominator is zero");
 		
 		// Make denominator positive
-		if (den.compareTo(BigInteger.ZERO) < 0) {
+		if (den.signum() == -1) {
 			num = num.negate();
 			den = den.negate();
 		}
@@ -81,26 +81,6 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 		denominator = den;
 	}
 	
-	
-	
-	/* Getter methods */
-	
-	/**
-	 * Returns the numerator of this fraction.
-	 * @return the numerator
-	 */
-	public BigInteger getNumerator() {
-		return numerator;
-	}
-	
-	
-	/**
-	 * Returns the denominator of this fraction.
-	 * @return the denominator
-	 */
-	public BigInteger getDenominator() {
-		return denominator;
-	}
 	
 	
 	/* Arithmetic methods */
@@ -186,10 +166,8 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 	public boolean equals(Object obj) {
 		if (!(obj instanceof BigFraction))
 			return false;
-		else {
-			BigFraction other = (BigFraction)obj;
-			return numerator.equals(other.numerator) && denominator.equals(other.denominator);
-		}
+		BigFraction other = (BigFraction)obj;
+		return numerator.equals(other.numerator) && denominator.equals(other.denominator);
 	}
 	
 	
