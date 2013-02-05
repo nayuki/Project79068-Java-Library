@@ -53,7 +53,7 @@ public final class BigIntegerMathTest {
 	public void testSqrtRandom() {
 		for (int i = 0; i < 1000; i++) {
 			BigInteger x = new BigInteger(random.nextInt(1000) + 1, random);
-			if (random.nextDouble() < 0.1) {  // Test positive
+			if (random.nextDouble() < 0.1 || x.signum() == 0) {  // Test non-negative
 				BigInteger y = BigIntegerMath.sqrt(x);
 				assertTrue(y.signum() >= 0);
 				assertTrue(y.multiply(y).compareTo(x) <= 0);
