@@ -231,73 +231,7 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 	 */
 	@Override
 	public float floatValue() {
-		final int MANTISSA_BITS = 23;
-		final int EXPONENT_BITS = 8;
-		
-		final int MAX_EXPONENT = (1 << (EXPONENT_BITS - 1)) - 1;  // 127 (this is the same value as the exponent bias)
-		final int MIN_EXPONENT = 1 - MAX_EXPONENT;  // -126 (for normal numbers)
-		
-		BigInteger num = numerator;
-		BigInteger den = denominator;
-		
-		// Eliminate zero
-		if (num.signum() == 0)
-			return 0.0f;
-		
-		// Make number positive
-		int sign;
-		if (num.signum() == 1)
-			sign = 1;
-		else {
-			num = num.negate();
-			sign = -1;
-		}
-		
-		// Roughly normalize the number
-		int exponent = num.bitLength() - 1 - den.bitLength();
-		if      (exponent > 0) den = den.shiftLeft( exponent);
-		else if (exponent < 0) num = num.shiftLeft(-exponent);
-		
-		// Normalize number to the range [1, 2) by brute force
-		while (num.compareTo(den.shiftLeft(1)) >= 0) {
-			den = den.shiftLeft(1);
-			exponent++;
-		}
-		while (num.compareTo(den) < 0) {
-			num = num.shiftLeft(1);
-			exponent--;
-		}
-		
-		// Weed out definite infinity and zero
-		if (exponent > MAX_EXPONENT)
-			return sign * Float.POSITIVE_INFINITY;
-		if (exponent < MIN_EXPONENT - MANTISSA_BITS - 1)
-			return 0.0f;
-		
-		if (exponent >= MIN_EXPONENT) {  // Normal (probably)
-			int mantissa = round(num.shiftLeft(MANTISSA_BITS), den).intValue();
-			if (mantissa < (1 << MANTISSA_BITS) || mantissa > (1 << (MANTISSA_BITS + 1)))
-				throw new AssertionError();
-			else if (mantissa == (1 << (MANTISSA_BITS + 1))) {
-				mantissa >>>= 1;
-				exponent++;
-			}
-			mantissa ^= 1 << MANTISSA_BITS;  // Normal numbers have an implicit leading bit
-			
-			if (exponent <= MAX_EXPONENT)
-				return Float.intBitsToFloat(((1 - sign) / 2) << (MANTISSA_BITS + EXPONENT_BITS) | (exponent + MAX_EXPONENT) << MANTISSA_BITS | mantissa);
-			else
-				return sign * Float.POSITIVE_INFINITY;
-			
-		} else {  // Subnormal (probably)
-			int mantissa = round(num.shiftLeft(exponent - (MIN_EXPONENT - MANTISSA_BITS)), den).intValue();
-			if (mantissa > (1 << MANTISSA_BITS))
-				throw new AssertionError();
-			else if (mantissa == (1 << MANTISSA_BITS))
-				return Float.intBitsToFloat(((1 - sign) / 2) << (MANTISSA_BITS + EXPONENT_BITS) | 1 << MANTISSA_BITS);  // Normal
-			else
-				return Float.intBitsToFloat(((1 - sign) / 2) << (MANTISSA_BITS + EXPONENT_BITS) | mantissa);  // Subnormal
-		}
+		return Float.intBitsToFloat((int)toFloatingPointBits(23, 8));
 	}
 	
 	
@@ -307,26 +241,28 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 	 */
 	@Override
 	public double doubleValue() {
-		final int MANTISSA_BITS = 52;
-		final int EXPONENT_BITS = 11;
-		
-		final int MAX_EXPONENT = (1 << (EXPONENT_BITS - 1)) - 1;  // 1023 (this is the same value as the exponent bias)
-		final int MIN_EXPONENT = 1 - MAX_EXPONENT;  // -1022 (for normal numbers)
+		return Double.longBitsToDouble(toFloatingPointBits(52, 11));
+	}
+	
+	
+	private long toFloatingPointBits(int mantissaBits, int exponentBits) {
+		int maxExponent = (1 << (exponentBits - 1)) - 1;  // This is the same value as the exponent bias
+		int minExponent = 1 - maxExponent;  // For normal numbers
 		
 		BigInteger num = numerator;
 		BigInteger den = denominator;
 		
 		// Eliminate zero
 		if (num.signum() == 0)
-			return 0.0;
+			return 0;
 		
 		// Make number positive
-		int sign;
+		long signBit;
 		if (num.signum() == 1)
-			sign = 1;
+			signBit = 0;
 		else {
 			num = num.negate();
-			sign = -1;
+			signBit = 1L << (mantissaBits + exponentBits);
 		}
 		
 		// Roughly normalize the number
@@ -345,34 +281,34 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 		}
 		
 		// Weed out definite infinity and zero
-		if (exponent > MAX_EXPONENT)
-			return sign * Double.POSITIVE_INFINITY;
-		if (exponent < MIN_EXPONENT - MANTISSA_BITS - 1)
-			return 0.0;
+		if (exponent > maxExponent)
+			return signBit | ((1L << exponentBits) - 1) << mantissaBits;  // Infinity
+		if (exponent < minExponent - mantissaBits - 1)
+			return 0;
 		
-		if (exponent >= MIN_EXPONENT) {  // Normal (probably)
-			long mantissa = round(num.shiftLeft(MANTISSA_BITS), den).longValue();
-			if (mantissa < (1L << MANTISSA_BITS) || mantissa > (1L << (MANTISSA_BITS + 1)))
+		if (exponent >= minExponent) {  // Normal (probably)
+			long mantissa = round(num.shiftLeft(mantissaBits), den).longValue();
+			if (mantissa < (1L << mantissaBits) || mantissa > (1L << (mantissaBits + 1)))
 				throw new AssertionError();
-			else if (mantissa == (1L << (MANTISSA_BITS + 1))) {
+			else if (mantissa == (1L << (mantissaBits + 1))) {
 				mantissa >>>= 1;
 				exponent++;
 			}
-			mantissa ^= 1L << MANTISSA_BITS;  // Normal numbers have an implicit leading bit
+			mantissa ^= 1L << mantissaBits;  // Normal numbers have an implicit leading bit
 			
-			if (exponent <= MAX_EXPONENT)
-				return Double.longBitsToDouble((long)((1 - sign) / 2) << (MANTISSA_BITS + EXPONENT_BITS) | (long)(exponent + MAX_EXPONENT) << MANTISSA_BITS | mantissa);
+			if (exponent <= maxExponent)
+				return signBit | (long)(exponent + maxExponent) << mantissaBits | mantissa;  // Normal
 			else
-				return sign * Double.POSITIVE_INFINITY;
+				return signBit | ((1L << exponentBits) - 1) << mantissaBits;  // Infinity
 			
 		} else {  // Subnormal (probably)
-			long mantissa = round(num.shiftLeft(exponent - (MIN_EXPONENT - MANTISSA_BITS)), den).longValue();
-			if (mantissa > (1L << MANTISSA_BITS))
+			long mantissa = round(num.shiftLeft(exponent - (minExponent - mantissaBits)), den).longValue();
+			if (mantissa > (1L << mantissaBits))
 				throw new AssertionError();
-			else if (mantissa == (1L << MANTISSA_BITS))
-				return Double.longBitsToDouble((long)((1 - sign) / 2) << (MANTISSA_BITS + EXPONENT_BITS) | 1 << MANTISSA_BITS);  // Normal
+			else if (mantissa == 1L << mantissaBits)
+				return signBit | 1L << mantissaBits;  // Normal
 			else
-				return Double.longBitsToDouble((long)((1 - sign) / 2) << (MANTISSA_BITS + EXPONENT_BITS) | mantissa);  // Subnormal
+				return signBit | mantissa;  // Subnormal
 		}
 	}
 	
