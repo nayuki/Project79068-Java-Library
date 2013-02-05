@@ -1,7 +1,8 @@
 package p79068.math;
 
 import java.math.BigInteger;
-import p79068.lang.NullChecker;
+
+import p79068.Assert;
 
 
 /**
@@ -59,7 +60,7 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 	 * @throws IllegalArgumentException if the denominator is zero
 	 */
 	public BigFraction(BigInteger num, BigInteger den) {
-		NullChecker.check(num, den);
+		Assert.assertNotNull(num, den);
 		if (den.signum() == 0)
 			throw new IllegalArgumentException("Denominator is zero");
 		

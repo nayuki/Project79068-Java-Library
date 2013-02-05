@@ -1,7 +1,8 @@
 package p79068.math;
 
 import java.math.BigInteger;
-import p79068.lang.NullChecker;
+
+import p79068.Assert;
 
 
 public final class BigIntegerMath {
@@ -14,7 +15,7 @@ public final class BigIntegerMath {
 	 * @throws NullPointerException if {@code x} or {@code y} is {@code null}
 	 */
 	public static BigInteger multiply(BigInteger x, BigInteger y) {
-		NullChecker.check(x, y);
+		Assert.assertNotNull(x, y);
 		return karatsubaMultiply(x, y);
 	}
 	
@@ -53,7 +54,7 @@ public final class BigIntegerMath {
 	 * @throws IllegalArgumentException if {@code x} is less than zero
 	 */
 	public static BigInteger sqrt(BigInteger x) {
-		NullChecker.check(x);
+		Assert.assertNotNull(x);
 		if (x.signum() == -1)
 			throw new IllegalArgumentException("Square root of negative number");
 		BigInteger y = BigInteger.ZERO;

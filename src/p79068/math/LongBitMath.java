@@ -1,6 +1,6 @@
 package p79068.math;
 
-import p79068.lang.BoundsChecker;
+import p79068.Assert;
 
 
 /**
@@ -17,7 +17,7 @@ public final class LongBitMath {
 	 * @return {@code 0} or {@code 1}
 	 */
 	public static int extractBit(long x, int bitIndex) {
-		BoundsChecker.check(64, bitIndex);
+		Assert.assertIndexInBounds(64, bitIndex);
 		return (int)(x >>> bitIndex) & 1;
 	}
 	
@@ -27,7 +27,7 @@ public final class LongBitMath {
 	 * For example: {@code extractBits(0xC0FFEEL, 8, 16)} yields {@code 0xC0FFL}.
 	 */
 	public static long extractBits(long x, int bitOffset, int bitLength) {
-		BoundsChecker.check(64, bitOffset, bitLength);
+		Assert.assertRangeInBounds(64, bitOffset, bitLength);
 		if (bitLength == 64)
 			return x;  // bitOffset = 0, or else an exception was already thrown.
 		else

@@ -1,11 +1,29 @@
-package p79068.lang;
+package p79068;
 
 
 /**
- * Provides convenience methods for checking bounds and throwing {@code IndexOutOfBoundsException}s.
+ * Provides convenience methods for checking nulls and array bounds.
  * <p>Instantiability: <em>Not applicable</em></p>
  */
-public final class BoundsChecker {
+public final class Assert {
+	
+	/**
+	 * Throws a {@code NullPointerException} if the specified object is {@code null}; otherwise returns normally.
+	 * @throws NullPointerException if the object is {@code null}
+	 */
+	public static void assertNotNull(Object obj) {
+		if (obj == null)
+			throw new NullPointerException("Non-null object expected");
+	}
+	
+	
+	public static void assertNotNull(Object... obj) {
+		for (Object o : obj) {
+			if (o == null)
+				throw new NullPointerException("Non-null object expected");
+		}
+	}
+	
 	
 	/**
 	 * Throws an {@code IndexOutOfBoundsException} if the specified index is outside the specified bounds; otherwise returns normally.
@@ -17,7 +35,7 @@ public final class BoundsChecker {
 	 * @throws IllegalArgumentException if the array length is negative (supersedes index out of bounds exception)
 	 * @throws IndexOutOfBoundsException if the index is out of bounds
 	 */
-	public static void check(int arrayLength, int accessIndex) {
+	public static void assertIndexInBounds(int arrayLength, int accessIndex) {
 		if (arrayLength < 0)
 			throw new IllegalArgumentException(String.format("Negative array length (%d)", arrayLength));
 		if (accessIndex < 0 || accessIndex >= arrayLength)
@@ -37,7 +55,7 @@ public final class BoundsChecker {
 	 * @throws IllegalArgumentException if the array length is negative (supersedes index out of bounds exception)
 	 * @throws IndexOutOfBoundsException if the range is out of bounds
 	 */
-	public static void check(int arrayLength, int accessOffset, int accessLength) {
+	public static void assertRangeInBounds(int arrayLength, int accessOffset, int accessLength) {
 		if (arrayLength < 0)
 			throw new IllegalArgumentException(String.format("Negative array length (%d)", arrayLength));
 		if (accessOffset < 0 || accessOffset > arrayLength || accessLength < 0 || accessLength > arrayLength - accessOffset)
@@ -49,6 +67,6 @@ public final class BoundsChecker {
 	/**
 	 * Not instantiable.
 	 */
-	private BoundsChecker() {}
+	private Assert() {}
 	
 }

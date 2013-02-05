@@ -1,18 +1,54 @@
-package p79068.lang;
+package p79068;
 
 import static org.junit.Assert.fail;
 import org.junit.Test;
 
+import p79068.Assert;
 
-public final class BoundsCheckerTest {
+
+public final class AssertTest {
 	
 	@Test
-	public void testCheckIndexValid() {
+	public void testAssertNotNull() {
 		try {
-			BoundsChecker.check(1, 0);
-			BoundsChecker.check(3, 0);
-			BoundsChecker.check(3, 1);
-			BoundsChecker.check(3, 2);
+			Assert.assertNotNull(new Object());
+			Assert.assertNotNull(new String("a"));
+			Assert.assertNotNull(new Integer(3));
+		} catch (NullPointerException e) {
+			fail();
+		}
+	}
+	
+	
+	@Test(expected = NullPointerException.class)
+	public void testAssertNull() {
+		Assert.assertNotNull((Object)null);
+	}
+	
+	
+	@Test
+	public void testAssertVarargNotNull() {
+		try {
+			Assert.assertNotNull(new Object(), new String("a"), new Integer(3));
+		} catch (NullPointerException e) {
+			fail();
+		}
+	}
+	
+	
+	@Test(expected = NullPointerException.class)
+	public void testAssertVarargNull() {
+		Assert.assertNotNull(new Object(), null);
+	}
+	
+	
+	@Test
+	public void testAssertIndexInBoundsValid() {
+		try {
+			Assert.assertIndexInBounds(1, 0);
+			Assert.assertIndexInBounds(3, 0);
+			Assert.assertIndexInBounds(3, 1);
+			Assert.assertIndexInBounds(3, 2);
 		} catch (IndexOutOfBoundsException e) {
 			fail();
 		}
@@ -20,7 +56,7 @@ public final class BoundsCheckerTest {
 	
 	
 	@Test
-	public void testCheckIndexInvalid() {
+	public void testAssertIndexInBoundsInvalid() {
 		int[][] cases = {
 				{0, 0},
 				{3, 3},
@@ -32,7 +68,7 @@ public final class BoundsCheckerTest {
 		
 		for (int[] thecase : cases) {
 			try {
-				BoundsChecker.check(thecase[0], thecase[1]);
+				Assert.assertIndexInBounds(thecase[0], thecase[1]);
 				fail(String.format("%d %d", thecase[0], thecase[1]));
 			} catch (IndexOutOfBoundsException e) {}
 		}
@@ -40,7 +76,7 @@ public final class BoundsCheckerTest {
 	
 	
 	@Test
-	public void testCheckIndexNegativeIndex() {
+	public void testAssertIndexInBoundsNegativeIndex() {
 		int[][] cases = {
 				{0, -1},
 				{0, Integer.MIN_VALUE},
@@ -50,7 +86,7 @@ public final class BoundsCheckerTest {
 		
 		for (int[] thecase : cases) {
 			try {
-				BoundsChecker.check(thecase[0], thecase[1]);
+				Assert.assertIndexInBounds(thecase[0], thecase[1]);
 				fail(String.format("%d %d", thecase[0], thecase[1]));
 			} catch (IndexOutOfBoundsException e) {}
 		}
@@ -58,7 +94,7 @@ public final class BoundsCheckerTest {
 	
 	
 	@Test
-	public void testCheckIndexNegativeArrayLength() {
+	public void testAssertIndexInBoundsNegativeArrayLength() {
 		int[][] cases = {
 				{-1, 0},
 				{Integer.MIN_VALUE, 23},
@@ -68,7 +104,7 @@ public final class BoundsCheckerTest {
 		
 		for (int[] thecase : cases) {
 			try {
-				BoundsChecker.check(thecase[0], thecase[1]);
+				Assert.assertIndexInBounds(thecase[0], thecase[1]);
 				fail(String.format("%d %d", thecase[0], thecase[1]));
 			} catch (IllegalArgumentException e) {}
 		}
@@ -77,18 +113,18 @@ public final class BoundsCheckerTest {
 	
 	
 	@Test
-	public void testCheckRangeValid() {
+	public void testAssertRangeInBoundsValid() {
 		try {
-			BoundsChecker.check(0, 0, 0);
-			BoundsChecker.check(1, 0, 0);
-			BoundsChecker.check(1, 0, 1);
-			BoundsChecker.check(1, 1, 0);
-			BoundsChecker.check(17, 5, 6);
-			BoundsChecker.check(17, 5, 12);
-			BoundsChecker.check(17, 0, 17);
-			BoundsChecker.check(Integer.MAX_VALUE, 0, Integer.MAX_VALUE);
-			BoundsChecker.check(Integer.MAX_VALUE, 31, Integer.MAX_VALUE - 31);
-			BoundsChecker.check(Integer.MAX_VALUE, Integer.MAX_VALUE, 0);
+			Assert.assertRangeInBounds(0, 0, 0);
+			Assert.assertRangeInBounds(1, 0, 0);
+			Assert.assertRangeInBounds(1, 0, 1);
+			Assert.assertRangeInBounds(1, 1, 0);
+			Assert.assertRangeInBounds(17, 5, 6);
+			Assert.assertRangeInBounds(17, 5, 12);
+			Assert.assertRangeInBounds(17, 0, 17);
+			Assert.assertRangeInBounds(Integer.MAX_VALUE, 0, Integer.MAX_VALUE);
+			Assert.assertRangeInBounds(Integer.MAX_VALUE, 31, Integer.MAX_VALUE - 31);
+			Assert.assertRangeInBounds(Integer.MAX_VALUE, Integer.MAX_VALUE, 0);
 		} catch (IndexOutOfBoundsException e) {
 			fail();
 		}
@@ -96,7 +132,7 @@ public final class BoundsCheckerTest {
 	
 	
 	@Test
-	public void testCheckRangeInvalid() {
+	public void testAssertRangeInBoundsInvalid() {
 		int[][] cases = {
 				{0, 1, 0},
 				{0, 1, 2},
@@ -115,7 +151,7 @@ public final class BoundsCheckerTest {
 		
 		for (int[] thecase : cases) {
 			try {
-				BoundsChecker.check(thecase[0], thecase[1], thecase[2]);
+				Assert.assertRangeInBounds(thecase[0], thecase[1], thecase[2]);
 				fail(String.format("%d %d %d", thecase[0], thecase[1], thecase[2]));
 			} catch (IndexOutOfBoundsException e) {}
 		}
@@ -123,7 +159,7 @@ public final class BoundsCheckerTest {
 	
 	
 	@Test
-	public void testCheckRangeNegativeArrayLength() {
+	public void testAssertRangeInBoundsNegativeArrayLength() {
 		int[][] cases = {
 				{-1, 0, 0},
 				{-3, 0, -2},
@@ -136,7 +172,7 @@ public final class BoundsCheckerTest {
 		
 		for (int[] thecase : cases) {
 			try {
-				BoundsChecker.check(thecase[0], thecase[1], thecase[2]);
+				Assert.assertRangeInBounds(thecase[0], thecase[1], thecase[2]);
 				fail(String.format("%d %d %d", thecase[0], thecase[1], thecase[2]));
 			} catch (IllegalArgumentException e) {}
 		}

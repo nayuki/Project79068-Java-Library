@@ -1,6 +1,6 @@
 package p79068.util.random;
 
-import p79068.lang.BoundsChecker;
+import p79068.Assert;
 import p79068.math.IntegerMath;
 
 
@@ -76,7 +76,7 @@ public abstract class AbstractRandom implements Random {
 	 * Stores random, uniformly distributed {@code byte} values into the specified array.
 	 */
 	public void uniformBytes(byte[] b, int off, int len) {
-		BoundsChecker.check(b.length, off, len);
+		Assert.assertRangeInBounds(b.length, off, len);
 		
 		// Fill efficiently, 8 bytes at a time
 		int templen = len / 8 * 8;

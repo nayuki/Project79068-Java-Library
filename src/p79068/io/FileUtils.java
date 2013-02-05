@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import p79068.lang.NullChecker;
+import p79068.Assert;
 
 
 public final class FileUtils {
@@ -69,7 +69,7 @@ public final class FileUtils {
 	 * @return the name of the file
 	 */
 	public static String getNameOnly(File file) {
-		NullChecker.check(file);
+		Assert.assertNotNull(file);
 		return getNameOnly(file.getName());
 	}
 	
@@ -81,7 +81,7 @@ public final class FileUtils {
 	 * @return the name of the file name string
 	 */
 	public static String getNameOnly(String name) {
-		NullChecker.check(name);
+		Assert.assertNotNull(name);
 		int index = name.lastIndexOf('.');
 		if (index > -1)
 			return name.substring(0, index);
@@ -96,7 +96,7 @@ public final class FileUtils {
 	 * @return the extension of the file
 	 */
 	public static String getExtension(File file) {
-		NullChecker.check(file);
+		Assert.assertNotNull(file);
 		return getExtension(file.getName());
 	}
 	
@@ -108,7 +108,7 @@ public final class FileUtils {
 	 * @return the extension of the file name string
 	 */
 	public static String getExtension(String name) {
-		NullChecker.check(name);
+		Assert.assertNotNull(name);
 		int index = name.lastIndexOf('.');
 		if (index != -1)
 			return name.substring(index, name.length());
@@ -123,7 +123,7 @@ public final class FileUtils {
 	 * @throws IOException if the rename failed
 	 */
 	public static void rename(File file, String newname) throws IOException {
-		NullChecker.check(file, newname);
+		Assert.assertNotNull(file, newname);
 		File newfile = new File(file.getParentFile(), newname);
 		if (newfile.exists() && !file.getCanonicalFile().equals(newfile.getCanonicalFile()))
 			throw new IOException(String.format("New file exists: %s", newfile));
@@ -182,7 +182,7 @@ public final class FileUtils {
 	
 	
 	private static void checkArgIsDirectory(File dir) {
-		NullChecker.check(dir);
+		Assert.assertNotNull(dir);
 		if (!dir.isDirectory())
 			throw new IllegalArgumentException("Not a directory");
 	}
