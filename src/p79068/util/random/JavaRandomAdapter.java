@@ -6,10 +6,13 @@ public final class JavaRandomAdapter extends java.util.Random {
 	
 	private Random random;
 	
+	private boolean constructed;
+	
 	
 	
 	public JavaRandomAdapter(Random rand) {
 		random = rand;
+		constructed = true;
 	}
 	
 	
@@ -29,9 +32,12 @@ public final class JavaRandomAdapter extends java.util.Random {
 		return random.uniformLong();
 	}
 	
+	
 	@Override
 	public void setSeed(long seed) {
-		throw new UnsupportedOperationException();
+		// java.util.Random's constructors always call setSeed(), so we must avoid throwing an exception at construction time
+		if (constructed)
+			throw new UnsupportedOperationException();
 	}
 	
 }
