@@ -14,9 +14,9 @@ import p79068.math.IntegerMath;
 public abstract class AbstractRandom implements Random {
 	
 	/**
-	 * Multiplying a 53-bit integer with this constant yields a {@code double} in [0, 1). This value is chosen so that all the mantissa bits in the {@code double} may be non-zero when the magnitude is in [0.5, 1).
+	 * Multiplying a 53-bit integer with this constant yields a {@code double} in the range [0, 1). This value is chosen so that all the mantissa bits in the {@code double} may be non-zero when the magnitude is in [0.5, 1).
 	 */
-	protected static final double doubleScaler = 1.0D / (1L << 53);
+	protected static final double DOUBLE_SCALER = 1.0D / (1L << 53);
 	
 	
 	
@@ -26,18 +26,20 @@ public abstract class AbstractRandom implements Random {
 	
 	/**
 	 * Returns a random, uniformly distributed integer between 0 (inclusive) and {@code n} (exclusive). {@code n} must be positive.
+	 * @param n the upper bound of the range to generate in
 	 * @return an integer in the range [0, {@code n}), each with equal probability
 	 * @throws IllegalArgumentException if {@code n} &le; 0
 	 */
 	public int uniformInt(int n) {
 		if (n <= 0)
 			throw new IllegalArgumentException();
+		
 		if (IntegerMath.isPowerOf2(n))
-			return uniformInt() & (n - 1);
+			return uniformInt() & (n - 1);  // Fast path
 		else {  // Unbiased
 			int random;
 			int result;
-			do {
+			do {  // Rejection sampling
 				random = uniformInt() >>> 1;  // In the range [0, 2^31)
 				result = random % n;
 			} while (random - result + (n - 1) < 0);
@@ -60,12 +62,13 @@ public abstract class AbstractRandom implements Random {
 	 * @return a {@code double} in the range [0, 1), each with equal probability
 	 */
 	public double uniformDouble() {
-		return (uniformLong() & 0x1FFFFFFFFFFFFFL) * doubleScaler;
+		return (uniformLong() & 0x1FFFFFFFFFFFFFL) * DOUBLE_SCALER;
 	}
 	
 	
 	/**
 	 * Stores random, uniformly distributed {@code byte} values into the specified array.
+	 * @param b the byte array to store to
 	 */
 	public void uniformBytes(byte[] b) {
 		uniformBytes(b, 0, b.length);
@@ -74,6 +77,9 @@ public abstract class AbstractRandom implements Random {
 	
 	/**
 	 * Stores random, uniformly distributed {@code byte} values into the specified array.
+	 * @param b the byte array to store to
+	 * @param off the offset into the array
+	 * @param len the length of the range to store
 	 */
 	public void uniformBytes(byte[] b, int off, int len) {
 		Assert.assertRangeInBounds(b.length, off, len);
@@ -93,7 +99,7 @@ public abstract class AbstractRandom implements Random {
 		}
 		len -= templen;
 		
-		// Fill the last few bytes (fewer than 8 iterations)
+		// Fill the last few bytes (0 to 7 iterations)
 		int end = off + len;
 		for (long rand = uniformLong(); off < end; off++, rand >>>= 8)
 			b[off] = (byte)rand;
