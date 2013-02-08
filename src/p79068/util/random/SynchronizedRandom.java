@@ -1,7 +1,6 @@
 package p79068.util.random;
 
 
-
 /**
  * Wraps a {@link Random} with a monitor.
  */

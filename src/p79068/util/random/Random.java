@@ -1,7 +1,6 @@
 package p79068.util.random;
 
 
-
 /**
  * A random number generator. Implementations can be pseudo-random (deterministic) or truly random.
  */
