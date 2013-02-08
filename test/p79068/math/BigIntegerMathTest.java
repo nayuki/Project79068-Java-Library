@@ -5,24 +5,28 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.math.BigInteger;
-import java.util.Random;
+
 import org.junit.Test;
+
+import p79068.util.random.JavaRandomAdapter;
+import p79068.util.random.Random;
 
 
 public final class BigIntegerMathTest {
 	
-	private static Random random = new Random();
+	private static Random RANDOM = Random.DEFAULT;
+	private static java.util.Random JAVA_RANDOM = new JavaRandomAdapter(RANDOM);
 	
 	
 	@Test
 	public void testMultiplyRandomly() {
 		for (int i = 0; i < 100; i++) {
-			int size = random.nextInt(30000);
-			BigInteger x = new BigInteger(size, random);
-			BigInteger y = new BigInteger(size, random);
-			if (random.nextBoolean())
+			int size = RANDOM.uniformInt(30000);
+			BigInteger x = new BigInteger(size, JAVA_RANDOM);
+			BigInteger y = new BigInteger(size, JAVA_RANDOM);
+			if (RANDOM.uniformInt(2) == 1)
 				x = x.negate();
-			if (random.nextBoolean())
+			if (RANDOM.uniformInt(2) == 1)
 				y = y.negate();
 			assertEquals(x.multiply(y), BigIntegerMath.multiply(x, y));
 		}
@@ -50,10 +54,10 @@ public final class BigIntegerMathTest {
 	
 	
 	@Test
-	public void testSqrtRandom() {
+	public void testSqrtRandomly() {
 		for (int i = 0; i < 1000; i++) {
-			BigInteger x = new BigInteger(random.nextInt(1000) + 1, random);
-			if (random.nextDouble() < 0.1 || x.signum() == 0) {  // Test non-negative
+			BigInteger x = new BigInteger(RANDOM.uniformInt(1000) + 1, JAVA_RANDOM);
+			if (RANDOM.uniformDouble() < 0.1 || x.signum() == 0) {  // Test non-negative
 				BigInteger y = BigIntegerMath.sqrt(x);
 				assertTrue(y.signum() >= 0);
 				assertTrue(y.multiply(y).compareTo(x) <= 0);
