@@ -158,7 +158,7 @@ public final class BigFractionTest {
 	public void testFloatValueHuge() {
 		assertEquals(Float.intBitsToFloat(0x7F000000), new BigFraction(BigInteger.ONE.shiftLeft(127), BigInteger.ONE).floatValue(), 0);
 		assertEquals(Float.MAX_VALUE, new BigFraction(BigInteger.valueOf((1 << 24) - 1).shiftLeft(127), BigInteger.ONE.shiftLeft(23)).floatValue(), 0);
-		assertEquals(Float.MAX_VALUE, new BigFraction(BigInteger.valueOf((1 << 25) - 2).shiftLeft(126), BigInteger.ONE.shiftLeft(23)).floatValue(), 0);
+		assertEquals(Float.MAX_VALUE, new BigFraction(BigInteger.valueOf((1 << 27) - 11).shiftLeft(124), BigInteger.ONE.shiftLeft(23)).floatValue(), 0);
 		assertEquals(Float.POSITIVE_INFINITY, new BigFraction(BigInteger.valueOf((1 << 25) - 1).shiftLeft(126), BigInteger.ONE.shiftLeft(23)).floatValue(), 0);
 		assertEquals(Float.POSITIVE_INFINITY, new BigFraction(BigInteger.ONE.shiftLeft(128), BigInteger.ONE).floatValue(), 0);
 	}
@@ -228,7 +228,7 @@ public final class BigFractionTest {
 	public void testDoubleValueHuge() {
 		assertEquals(Double.longBitsToDouble(0x7FE0000000000000L), new BigFraction(BigInteger.ONE.shiftLeft(1023), BigInteger.ONE).doubleValue(), 0);
 		assertEquals(Double.MAX_VALUE, new BigFraction(BigInteger.valueOf((1L << 53) - 1).shiftLeft(1023), BigInteger.ONE.shiftLeft(52)).doubleValue(), 0);
-		assertEquals(Double.MAX_VALUE, new BigFraction(BigInteger.valueOf((1L << 54) - 2).shiftLeft(1022), BigInteger.ONE.shiftLeft(52)).doubleValue(), 0);
+		assertEquals(Double.MAX_VALUE, new BigFraction(BigInteger.valueOf((1L << 56) - 11).shiftLeft(1020), BigInteger.ONE.shiftLeft(52)).doubleValue(), 0);
 		assertEquals(Double.POSITIVE_INFINITY, new BigFraction(BigInteger.valueOf((1L << 54) - 1).shiftLeft(1022), BigInteger.ONE.shiftLeft(52)).doubleValue(), 0);
 		assertEquals(Double.POSITIVE_INFINITY, new BigFraction(BigInteger.ONE.shiftLeft(1024), BigInteger.ONE).doubleValue(), 0);
 	}
