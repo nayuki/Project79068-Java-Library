@@ -14,22 +14,14 @@ public final class BigFractionTest {
 	
 	@Test
 	public void testSimplify() {
-		assertEquals(BigInteger.ZERO, new BigFraction(0, 1).numerator);
-		assertEquals(BigInteger.ONE, new BigFraction(0, 1).denominator);
-		assertEquals(BigInteger.ZERO, new BigFraction(0, -2).numerator);
-		assertEquals(BigInteger.ONE, new BigFraction(0, -2).denominator);
-		assertEquals(BigInteger.ONE, new BigFraction(1, 3).numerator);
-		assertEquals(BigInteger.valueOf(3), new BigFraction(1, 3).denominator);
-		assertEquals(BigInteger.valueOf(-2), new BigFraction(-2, 5).numerator);
-		assertEquals(BigInteger.valueOf(5), new BigFraction(-2, 5).denominator);
-		assertEquals(BigInteger.valueOf(-5), new BigFraction(5, -2).numerator);
-		assertEquals(BigInteger.valueOf(2), new BigFraction(5, -2).denominator);
-		assertEquals(BigInteger.valueOf(3), new BigFraction(-3, -4).numerator);
-		assertEquals(BigInteger.valueOf(4), new BigFraction(-3, -4).denominator);
-		assertEquals(BigInteger.valueOf(3), new BigFraction(18, 30).numerator);
-		assertEquals(BigInteger.valueOf(5), new BigFraction(18, 30).denominator);
-		assertEquals(BigInteger.valueOf(2), new BigFraction(-10, -35).numerator);
-		assertEquals(BigInteger.valueOf(7), new BigFraction(-10, -35).denominator);
+		check(0, 1, new BigFraction(0, 1));
+		check(0, 1, new BigFraction(0, -2));
+		check(1, 3, new BigFraction(1, 3));
+		check(-2, 5, new BigFraction(-2, 5));
+		check(-5, 2, new BigFraction(5, -2));
+		check(3, 4, new BigFraction(-3, -4));
+		check(3, 5, new BigFraction(18, 30));
+		check(2, 7, new BigFraction(-10, -35));
 	}
 	
 	
@@ -46,38 +38,38 @@ public final class BigFractionTest {
 	
 	@Test
 	public void testAdd() {
-		assertEquals(BigFraction.ZERO, BigFraction.ZERO.add(BigFraction.ZERO));
-		assertEquals(new BigFraction(2), BigFraction.ONE.add(BigFraction.ONE));
-		assertEquals(new BigFraction(5, 6), new BigFraction(1, 2).add(new BigFraction(1, 3)));
-		assertEquals(new BigFraction(-49, 45), new BigFraction(-19, 18).add(new BigFraction(-1, 30)));
+		check(0, 1, BigFraction.ZERO.add(BigFraction.ZERO));
+		check(2, 1, BigFraction.ONE.add(BigFraction.ONE));
+		check(5, 6, new BigFraction(1, 2).add(new BigFraction(1, 3)));
+		check(-49, 45, new BigFraction(-19, 18).add(new BigFraction(-1, 30)));
 	}
 	
 	
 	@Test
 	public void testSubtract() {
-		assertEquals(BigFraction.ZERO, BigFraction.ZERO.subtract(BigFraction.ZERO));
-		assertEquals(new BigFraction(1), new BigFraction(2).subtract(BigFraction.ONE));
-		assertEquals(new BigFraction(1, 6), new BigFraction(1, 2).subtract(new BigFraction(1, 3)));
-		assertEquals(new BigFraction(-46, 45), new BigFraction(-19, 18).subtract(new BigFraction(-1, 30)));
+		check(0, 1, BigFraction.ZERO.subtract(BigFraction.ZERO));
+		check(1, 1, new BigFraction(2).subtract(BigFraction.ONE));
+		check(1, 6, new BigFraction(1, 2).subtract(new BigFraction(1, 3)));
+		check(-46, 45, new BigFraction(-19, 18).subtract(new BigFraction(-1, 30)));
 	}
 	
 	
 	@Test
 	public void testMultiply() {
-		assertEquals(BigFraction.ZERO, BigFraction.ZERO.multiply(BigFraction.ONE));
-		assertEquals(BigFraction.ONE, BigFraction.ONE.multiply(BigFraction.ONE));
-		assertEquals(new BigFraction(15), new BigFraction(3).multiply(new BigFraction(5)));
-		assertEquals(new BigFraction(35, 6), new BigFraction(5, 3).multiply(new BigFraction(7, 2)));
-		assertEquals(new BigFraction(-4, 3), new BigFraction(-1, 18).multiply(new BigFraction(24, 1)));
+		check(0, 1, BigFraction.ZERO.multiply(BigFraction.ONE));
+		check(1, 1, BigFraction.ONE.multiply(BigFraction.ONE));
+		check(15, 1, new BigFraction(3).multiply(new BigFraction(5)));
+		check(35, 6, new BigFraction(5, 3).multiply(new BigFraction(7, 2)));
+		check(-4, 3, new BigFraction(-1, 18).multiply(new BigFraction(24, 1)));
 	}
 	
 	
 	@Test
 	public void testDivide() {
-		assertEquals(BigFraction.ZERO, BigFraction.ZERO.divide(BigFraction.ONE));
-		assertEquals(BigFraction.ONE, BigFraction.ONE.divide(BigFraction.ONE));
-		assertEquals(new BigFraction(1, 3), new BigFraction(2).divide(new BigFraction(6)));
-		assertEquals(new BigFraction(-10, 21), new BigFraction(5, -3).divide(new BigFraction(7, 2)));
+		check(0, 1, BigFraction.ZERO.divide(BigFraction.ONE));
+		check(1, 1, BigFraction.ONE.divide(BigFraction.ONE));
+		check(1, 3, new BigFraction(2).divide(new BigFraction(6)));
+		check(-10, 21, new BigFraction(5, -3).divide(new BigFraction(7, 2)));
 	}
 	
 	
@@ -89,19 +81,19 @@ public final class BigFractionTest {
 	
 	@Test
 	public void testNegate() {
-		assertEquals(BigFraction.ZERO, BigFraction.ZERO.negate());
-		assertEquals(new BigFraction(-1), BigFraction.ONE.negate());
-		assertEquals(new BigFraction(2), new BigFraction(-2).negate());
-		assertEquals(new BigFraction(-3, 5), new BigFraction(3, 5).negate());
+		check(0, 1, BigFraction.ZERO.negate());
+		check(-1, 1, BigFraction.ONE.negate());
+		check(2, 1, new BigFraction(-2).negate());
+		check(-3, 5, new BigFraction(3, 5).negate());
 	}
 	
 	
 	@Test
 	public void testReciprocal() {
-		assertEquals(BigFraction.ONE, BigFraction.ONE.reciprocal());
-		assertEquals(new BigFraction(1, 2), new BigFraction(2).reciprocal());
-		assertEquals(new BigFraction(7, 3), new BigFraction(3, 7).reciprocal());
-		assertEquals(new BigFraction(-5, 4), new BigFraction(-4, 5).reciprocal());
+		check(1, 1, BigFraction.ONE.reciprocal());
+		check(1, 2, new BigFraction(2).reciprocal());
+		check(7, 3, new BigFraction(3, 7).reciprocal());
+		check(-5, 4, new BigFraction(-4, 5).reciprocal());
 	}
 	
 	
@@ -261,6 +253,12 @@ public final class BigFractionTest {
 			
 			assertEquals(Double.longBitsToDouble(rawdouble), frac.doubleValue(), 0);
 		}
+	}
+	
+	
+	private static void check(int expectNumer, int expectDenom, BigFraction frac) {
+		assertEquals(BigInteger.valueOf(expectNumer), frac.numerator);
+		assertEquals(BigInteger.valueOf(expectDenom), frac.denominator);
 	}
 	
 }
