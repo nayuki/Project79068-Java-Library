@@ -5,7 +5,12 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 
-public final class MersenneTwisterTest {
+public final class MersenneTwisterTest extends RandomTest {
+	
+	protected Random getInstance() {
+		return new MersenneTwister();
+	}
+	
 	
 	@Test
 	public void testMersenneTwister() {
