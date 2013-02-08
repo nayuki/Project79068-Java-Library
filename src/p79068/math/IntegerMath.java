@@ -337,20 +337,49 @@ public final class IntegerMath {
 	// Number theory functions
 	
 	/**
+	 * Tests whether the specified integer is a positive prime number. Note that 0 and 1 are not prime.
+	 * @param n the integer to test for primeness
+	 * @return whether {@code n} is prime
+	 */
+	public static boolean isPrime(int n) {
+		if (n < 2)
+			return false;
+		else if (n < 6)
+			return n != 4;
+		else if (n % 2 == 0 || n % 3 == 0 || n % 5 == 0)
+			return false;
+		else {
+			// Trial division with wheel factorization
+			int end = sqrt(n);
+			for (int i = 6; i < end; i += 6) {
+				if (n % (i + 1) == 0 || n % (i + 5) == 0)
+					return false;
+			}
+			return true;
+		}
+	}
+	
+	
+	/**
 	 * Returns the greatest common divisor (GCD) of the specified integers. If <var>z</var> is the GCD of <var>x</var> and <var>y</var>, then <var>z</var> is the largest number such that <var>x</var>/<var>z</var> and <var>y</var>/<var>z</var> are integers.
 	 */
 	public static int gcd(int x, int y) {
 		if (x == Integer.MIN_VALUE && y == Integer.MIN_VALUE)
 			throw new ArithmeticOverflowException(String.format("gcd(%d, %d)", x, y));
 		else {
+			// The GCD will not be -Integer.MIN_VALUE, so we can safely remove a factor of 2
 			if (x == Integer.MIN_VALUE)
-				x /= 2;
+				x >>>= 1;
 			else if (y == Integer.MIN_VALUE)
-				y /= 2;
+				y >>>= 1;
+			
+			// Make arguments non-negative
 			if (x < 0)
 				x = -x;
 			if (y < 0)
 				y = -y;
+			
+			// Standard Euclidean algorithm
 			while (y != 0) {
 				int z = x % y;
 				x = y;

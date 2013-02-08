@@ -48,6 +48,37 @@ public final class IntegerMathTest {
 	
 	
 	@Test
+	public void testCheckedSubtract() {
+		assertEquals(-2, IntegerMath.checkedSubtract(5, 7));
+		assertEquals(-1722, IntegerMath.checkedSubtract(-980, 742));
+	}
+	
+	
+	@Test(expected=ArithmeticOverflowException.class)
+	public void testCheckedSubtractInvalid0() {
+		IntegerMath.checkedSubtract(-2147483648, 1);
+	}
+	
+	
+	@Test(expected=ArithmeticOverflowException.class)
+	public void testCheckedSubtractInvalid1() {
+		IntegerMath.checkedSubtract(-2147483648, 2147483647);
+	}
+	
+	
+	@Test(expected=ArithmeticOverflowException.class)
+	public void testCheckedSubtractInvalid2() {
+		IntegerMath.checkedSubtract(2147483000, -10000);
+	}
+	
+	
+	@Test(expected=ArithmeticOverflowException.class)
+	public void testCheckedSubtractInvalid3() {
+		IntegerMath.checkedSubtract(-2147483000, 10000);
+	}
+	
+	
+	@Test
 	public void testCheckedMultiply() {
 		assertEquals(6, IntegerMath.checkedMultiply(2, 3));
 		assertEquals(-3976, IntegerMath.checkedMultiply(71, -56));
@@ -77,6 +108,22 @@ public final class IntegerMathTest {
 	@Test(expected=ArithmeticOverflowException.class)
 	public void testCheckedMultiplyInvalid3() {
 		IntegerMath.checkedMultiply(-123456, -67890);
+	}
+	
+	
+	@Test
+	public void testCheckedDivide() {
+		assertEquals(2, IntegerMath.checkedDivide(2, 1));
+		assertEquals(1, IntegerMath.checkedDivide(5, 3));
+		assertEquals(-1, IntegerMath.checkedDivide(-5, 3));
+		assertEquals(0, IntegerMath.checkedDivide(1, -4));
+		assertEquals(-2147483647, IntegerMath.checkedDivide(2147483647, -1));
+	}
+	
+	
+	@Test(expected=ArithmeticOverflowException.class)
+	public void testCheckedDivideInvalid() {
+		IntegerMath.checkedDivide(-2147483648, -1);
 	}
 	
 	
@@ -116,9 +163,32 @@ public final class IntegerMathTest {
 	
 	
 	@Test
+	public void testDivideAndFloor() {
+		assertEquals(3, IntegerMath.divideAndFloor(3, 1));
+		assertEquals(-2, IntegerMath.divideAndFloor(-2, 1));
+		assertEquals(2, IntegerMath.divideAndFloor(5, 2));
+		assertEquals(3, IntegerMath.divideAndFloor(7, 2));
+		assertEquals(0, IntegerMath.divideAndFloor(1, 3));
+		assertEquals(0, IntegerMath.divideAndFloor(2, 3));
+		assertEquals(-3, IntegerMath.divideAndFloor(-5, 2));
+		assertEquals(-4, IntegerMath.divideAndFloor(-7, 2));
+		assertEquals(-1, IntegerMath.divideAndFloor(-1, 3));
+		assertEquals(-1, IntegerMath.divideAndFloor(-2, 3));
+	}
+	
+	
+	@Test(expected=ArithmeticOverflowException.class)
+	public void testDivideAndFloorInvalid() {
+		IntegerMath.divideAndFloor(-2147483648, -1);
+	}
+	
+	
+	@Test
 	public void testMod() {
+		assertEquals(0, IntegerMath.mod(8, 4));
 		assertEquals(3, IntegerMath.mod(7, 4));
 		assertEquals(1, IntegerMath.mod(-7, 4));
+		assertEquals(0, IntegerMath.mod(8, -4));
 		assertEquals(-1, IntegerMath.mod(7, -4));
 		assertEquals(-3, IntegerMath.mod(-7, -4));
 		assertEquals(-1, IntegerMath.mod(Integer.MAX_VALUE, Integer.MIN_VALUE));
@@ -149,6 +219,23 @@ public final class IntegerMathTest {
 	
 	
 	@Test
+	public void testCompare() {
+		assertTrue(IntegerMath.compare(0, 0) == 0);
+		assertTrue(IntegerMath.compare(7, 7) == 0);
+		assertTrue(IntegerMath.compare(3, 5) < 0);
+		assertTrue(IntegerMath.compare(-2, -3) > 0);
+		assertTrue(IntegerMath.compare(Integer.MAX_VALUE, Integer.MAX_VALUE) == 0);
+		assertTrue(IntegerMath.compare(Integer.MIN_VALUE, Integer.MIN_VALUE) == 0);
+		assertTrue(IntegerMath.compare(Integer.MIN_VALUE, Integer.MAX_VALUE) < 0);
+		assertTrue(IntegerMath.compare(Integer.MAX_VALUE, Integer.MIN_VALUE) > 0);
+		assertTrue(IntegerMath.compare(Integer.MIN_VALUE, Integer.MIN_VALUE + 10) < 0);
+		assertTrue(IntegerMath.compare(Integer.MIN_VALUE + 10, Integer.MIN_VALUE) > 0);
+		assertTrue(IntegerMath.compare(Integer.MAX_VALUE, Integer.MAX_VALUE - 10) > 0);
+		assertTrue(IntegerMath.compare(Integer.MAX_VALUE - 10, Integer.MAX_VALUE) < 0);
+	}
+	
+	
+	@Test
 	public void testCompareUnsigned() {
 		assertTrue(IntegerMath.compareUnsigned(13, 72) < 0);
 		assertTrue(IntegerMath.compareUnsigned(0xBEEF0000, 0xDEAD0000) < 0);
@@ -173,8 +260,8 @@ public final class IntegerMathTest {
 		assertTrue(IntegerMath.isPowerOf2(2));
 		assertTrue(IntegerMath.isPowerOf2(4));
 		assertTrue(IntegerMath.isPowerOf2(8));
-		assertTrue(IntegerMath.isPowerOf2(536870912));
-		assertTrue(IntegerMath.isPowerOf2(1073741824));
+		assertTrue(IntegerMath.isPowerOf2(1 << 29));
+		assertTrue(IntegerMath.isPowerOf2(1 << 30));
 		
 		assertFalse(IntegerMath.isPowerOf2(0));
 		assertFalse(IntegerMath.isPowerOf2(3));
@@ -217,7 +304,7 @@ public final class IntegerMathTest {
 		for (int i = 0; i < 1000; i++) {
 			int x = RANDOM.uniformInt() & 0x7FFFFFFF;
 			int y = IntegerMath.sqrt(x);
-			assertTrue(y * y <= x);
+			assertTrue(y * y <= x && (long)(y + 1) * (y + 1) > x);
 		}
 	}
 	
@@ -257,9 +344,9 @@ public final class IntegerMathTest {
 			int x = RANDOM.uniformInt();
 			int y = IntegerMath.cbrt(x);
 			if (x >= 0)
-				assertTrue(y * y * y <= x);
+				assertTrue(y * y * y <= x && (long)(y + 1) * (y + 1) * (y + 1) > x);
 			else
-				assertTrue(y * y * y >= x);
+				assertTrue(y * y * y >= x && (long)(y - 1) * (y - 1) * (y - 1) < x);
 		}
 	}
 	
@@ -281,9 +368,9 @@ public final class IntegerMathTest {
 	@Test
 	public void testLog2FloorRandomly() {
 		for (int i = 0; i < 1000; i++) {
-			int x = RANDOM.uniformInt(Integer.MAX_VALUE - 1) + 1;
+			int x = RANDOM.uniformInt(Integer.MAX_VALUE - 1) + 1;  // In the range [1, Integer.MAX_VALUE]
 			int y = IntegerMath.log2Floor(x);
-			assertTrue((1 << y) <= x);
+			assertTrue((1 << y) <= x && (2L << y) > x);
 		}
 	}
 	
@@ -305,9 +392,9 @@ public final class IntegerMathTest {
 	@Test
 	public void testLog2CeilingRandomly() {
 		for (int i = 0; i < 1000; i++) {
-			int x = RANDOM.uniformInt(0x3FFFFFFF) + 1;
+			int x = RANDOM.uniformInt(Integer.MAX_VALUE - 1) + 1;  // In the range [1, Integer.MAX_VALUE]
 			int y = IntegerMath.log2Ceiling(x);
-			assertTrue((1 << y) >= x);
+			assertTrue((1L << y) >= x);
 		}
 	}
 	
@@ -331,10 +418,10 @@ public final class IntegerMathTest {
 	@Test
 	public void testFloorToPowerOf2Randomly() {
 		for (int i = 0; i < 1000; i++) {
-			int x = RANDOM.uniformInt(Integer.MAX_VALUE - 1) + 1;
+			int x = RANDOM.uniformInt(Integer.MAX_VALUE - 1) + 1;  // In the range [1, Integer.MAX_VALUE]
 			int y = IntegerMath.floorToPowerOf2(x);
 			assertTrue(IntegerMath.isPowerOf2(y));
-			assertTrue(y <= x);
+			assertTrue(y <= x && y * 2L > x);
 		}
 	}
 	
@@ -361,6 +448,70 @@ public final class IntegerMathTest {
 			int y = IntegerMath.ceilingToPowerOf2(x);
 			assertTrue(IntegerMath.isPowerOf2(y));
 			assertTrue(y >= x);
+		}
+	}
+	
+	
+	@Test
+	public void testIsPrime() {
+		int[] primes = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101};
+		for (int i = -20, j = 0; j < primes.length; i++) {  // i is the number to test, j is the index into 'primes' such that i <= primes[j]
+			if (i == primes[j]) {
+				assertTrue(IntegerMath.isPrime(i));
+				j++;
+			} else
+				assertFalse(IntegerMath.isPrime(i));
+		}
+	}
+	
+	
+	@Test
+	public void testGcd() {
+		assertEquals(0, IntegerMath.gcd(0, 0));
+		assertEquals(5, IntegerMath.gcd(5, 0));
+		assertEquals(2, IntegerMath.gcd(0, 2));
+		assertEquals(3, IntegerMath.gcd(3, 3));
+		assertEquals(3, IntegerMath.gcd(-3, 6));
+		assertEquals(3, IntegerMath.gcd(-6, -9));
+		assertEquals(15, IntegerMath.gcd(30, -315));
+		assertEquals(1 << 30, IntegerMath.gcd(-1 << 31, 1 << 30));
+	}
+	
+	
+	@Test(expected=ArithmeticOverflowException.class)
+	public void testGcdInvalid() {
+		IntegerMath.gcd(Integer.MIN_VALUE, Integer.MIN_VALUE);
+	}
+	
+	
+	@Test
+	public void testGcdRandomly() {
+		for (int i = 0; i < 1000; i++) {
+			// This tests only some of the properties of the GCD - necessary but not sufficient
+			int xbits = RANDOM.uniformInt(32);
+			int x = 0;
+			if (xbits > 0) {
+				x = 1 << (xbits - 1);
+				x |= RANDOM.uniformInt() & (x - 1);
+			}
+			if (RANDOM.uniformInt(2) == 1)
+				x = -x;
+			
+			int ybits = RANDOM.uniformInt(32);
+			int y = 0;
+			if (ybits > 0) {
+				y = 1 << (ybits - 1);
+				y |= RANDOM.uniformInt() & (y - 1);
+			}
+			if (RANDOM.uniformInt(2) == 1)
+				y = -y;
+			
+			int gcd = IntegerMath.gcd(x, y);
+			if (x != 0 || y != 0) {
+				assertEquals(0, x % gcd);
+				assertEquals(0, y % gcd);
+			}
+			assertEquals(gcd, IntegerMath.gcd(y, x));  // Commutativity
 		}
 	}
 	
