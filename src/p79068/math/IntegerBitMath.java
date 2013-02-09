@@ -63,28 +63,6 @@ public final class IntegerBitMath {
 	}
 	
 	
-	/**
-	 * Returns the specified bit sequence rotated to the left by the specified number of places. The shift value is taken modulo 32.
-	 * @param x the bit sequence to rotate
-	 * @param shift the number of places to rotate to the left, taken modulo 32
-	 * @return {@code x} rotated to the left by {@code shift} places
-	 */
-	public static int rotateLeft(int x, int shift) {
-		return x << shift | x >>> (32 - shift);
-	}
-	
-	
-	/**
-	 * Returns the specified bit sequence rotated to the right by the specified number of places. The shift value is taken modulo 32.
-	 * @param x the bit sequence to rotate
-	 * @param shift the number of places to rotate to the right, taken modulo 32
-	 * @return {@code x} rotated to the right by {@code shift} places
-	 */
-	public static int rotateRight(int x, int shift) {
-		return x << (32 - shift) | x >>> shift;
-	}
-	
-	
 	public static int swapByteEndian(int x) {
 		x = (x & 0x00FF00FF) <<  8 | ((x >>>  8) & 0x00FF00FF);
 		x = (x & 0x0000FFFF) << 16 | ((x >>> 16) & 0x0000FFFF);

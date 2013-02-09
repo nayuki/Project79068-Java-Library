@@ -142,32 +142,6 @@ public final class DoubleBitMathTest {
 	}
 	
 	
-	@Test
-	public void testIsInfinite() {
-		assertFalse(DoubleBitMath.isInfinite(Double.MIN_VALUE));
-		assertFalse(DoubleBitMath.isInfinite(0));
-		assertFalse(DoubleBitMath.isInfinite(1));
-		assertFalse(DoubleBitMath.isInfinite(Math.PI));
-		assertFalse(DoubleBitMath.isInfinite(Double.MAX_VALUE));
-		assertTrue(DoubleBitMath.isInfinite(Double.POSITIVE_INFINITY));
-		assertTrue(DoubleBitMath.isInfinite(Double.NEGATIVE_INFINITY));
-		assertFalse(DoubleBitMath.isInfinite(Double.NaN));
-	}
-	
-	
-	@Test
-	public void testIsNaN() {
-		assertFalse(DoubleBitMath.isNaN(Double.MIN_VALUE));
-		assertFalse(DoubleBitMath.isNaN(0));
-		assertFalse(DoubleBitMath.isNaN(1));
-		assertFalse(DoubleBitMath.isNaN(Math.PI));
-		assertFalse(DoubleBitMath.isNaN(Double.MAX_VALUE));
-		assertFalse(DoubleBitMath.isNaN(Double.POSITIVE_INFINITY));
-		assertFalse(DoubleBitMath.isNaN(Double.NEGATIVE_INFINITY));
-		assertTrue(DoubleBitMath.isNaN(Double.NaN));
-	}
-	
-	
 	
 	private static boolean checkRelation(double x) {
 		int sgn = DoubleBitMath.getSign(x);

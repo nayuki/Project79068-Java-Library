@@ -143,27 +143,8 @@ public final class DoubleBitMath {
 	 * @return whether the specified number is finite
 	 */
 	public static boolean isFinite(double x) {
-		return !isNaN(x) && !isInfinite(x);
-	}
-	
-	
-	/**
-	 * Tests whether the specified number is infinite. All numbers are valid inputs.
-	 * @param x the double-precision number
-	 * @return whether the specified number is infinite
-	 */
-	public static boolean isInfinite(double x) {
-		return x == Double.POSITIVE_INFINITY || x == Double.NEGATIVE_INFINITY;
-	}
-	
-	
-	/**
-	 * Tests whether the specified number is NaN (not a number). All numbers are valid inputs.
-	 * @param x the double-precision number
-	 * @return whether the specified number is NaN
-	 */
-	public static boolean isNaN(double x) {
-		return x != x;
+		return !Double.isNaN(x) && !Double.isInfinite(x);
+		// Also equivalent to isNormal(x) || isSubnormal(x)
 	}
 	
 	
