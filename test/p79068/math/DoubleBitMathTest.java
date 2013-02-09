@@ -31,12 +31,12 @@ public final class DoubleBitMathTest {
 	
 	@Test
 	public void testGetExponent() {
-		assertEquals(0, DoubleBitMath.getExponent(0));
 		assertEquals(-1, DoubleBitMath.getExponent(0.5));
 		assertEquals(0, DoubleBitMath.getExponent(1));
 		assertEquals(1, DoubleBitMath.getExponent(2));
 		assertEquals(1, DoubleBitMath.getExponent(3));
 		assertEquals(2, DoubleBitMath.getExponent(4));
+		assertEquals(-1022, DoubleBitMath.getExponent(0));
 		assertEquals(-1022, DoubleBitMath.getExponent(Double.MIN_VALUE));
 		assertEquals(1023, DoubleBitMath.getExponent(Double.MAX_VALUE));
 		assertEquals(1, DoubleBitMath.getExponent(-Math.PI));
@@ -119,7 +119,7 @@ public final class DoubleBitMathTest {
 	public void testIsSubnormal() {
 		assertTrue(DoubleBitMath.isSubnormal(Double.MIN_VALUE));
 		assertTrue(DoubleBitMath.isSubnormal(Double.MIN_VALUE * 3));
-		assertFalse(DoubleBitMath.isSubnormal(0));
+		assertTrue(DoubleBitMath.isSubnormal(0));
 		assertFalse(DoubleBitMath.isSubnormal(1));
 		assertFalse(DoubleBitMath.isSubnormal(Math.PI));
 		assertFalse(DoubleBitMath.isSubnormal(Math.E));

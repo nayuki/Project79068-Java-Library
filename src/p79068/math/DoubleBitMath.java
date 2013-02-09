@@ -2,7 +2,7 @@ package p79068.math;
 
 
 /**
- * Contains methods that deal with the bit representation of IEEE 754 double-precision floating-point numbers.
+ * Contains methods that manipulate the bit representation of IEEE 754 double-precision floating-point numbers.
  */
 public final class DoubleBitMath {
 	
@@ -39,28 +39,28 @@ public final class DoubleBitMath {
 	
 	
 	
-	// Managed values
+	// Mathematical values
 	
 	/**
 	 * Returns the signum of the specified number. Positive and negative zero both have a signum of 0. For finite numbers, this relation holds: {@code x} = {@code getSign(x)} � ({@code getMantissa(x)} / 2<sup>52</sup>) � 2<sup>{@code getExponent(x)}</sup>. Infinities are valid inputs, but NaN is not a valid input.
 	 * @param x the double-precision number
-	 * @return the signum of x
-	 * @throws IllegalArgumentException if x is NaN
+	 * @return the signum of x, which is -1, 0, or 1
+	 * @throws IllegalArgumentException if {@code x} is NaN
 	 */
 	public static int getSign(double x) {
 		if (x > 0)
-			return 1;
+			return +1;
 		else if (x < 0)
 			return -1;
 		else if (x == 0)
 			return 0;
 		else
-			throw new IllegalArgumentException("Not a finite floating-point number");
+			throw new IllegalArgumentException("Floating-point NaN");
 	}
 	
 	
 	/**
-	 * Returns the exponent of the specified number. For finite numbers, this relation holds: {@code x} = {@code getSign(x)} � ({@code getMantissa(x)} / 2<sup>52</sup>) � 2<sup>{@code getExponent(x)}</sup>. Zero yields the exponent 0. Infinities and NaN are invalid inputs. The result is in the range [-1022, 1023].
+	 * Returns the exponent of the specified number. For finite numbers, this relation holds: {@code x} = {@code getSign(x)} � ({@code getMantissa(x)} / 2<sup>52</sup>) � 2<sup>{@code getExponent(x)}</sup>. Subnormal numbers all have the same exponent. Infinities and NaN are invalid inputs. The result is in the range [-1022, 1023].
 	 * @param x the double-precision number
 	 * @return the exponent
 	 * @throws IllegalArgumentException if x is infinite or NaN
@@ -69,14 +69,10 @@ public final class DoubleBitMath {
 		int exp = getRawExponent(x);
 		if (exp == 2047)
 			throw new IllegalArgumentException("Not a finite floating-point number");
-		else if (exp > 0)
+		else if (exp > 0)  // Normal
 			return exp - 1023;
-		else {  // Subnormal
-			if (x == 0)
-				return 0;
-			else
-				return exp - 1022;
-		}
+		else  // Subnormal
+			return -1022;
 	}
 	
 	
@@ -91,14 +87,13 @@ public final class DoubleBitMath {
 			throw new IllegalArgumentException("Not a finite floating-point number");
 		long man = getRawMantissa(x);
 		if (!isSubnormal(x) && x != 0)
-			return man | 0x10000000000000L;
-		else
-			return man;
+			man |= (1L << 52);
+		return man;
 	}
 	
 	
 	/**
-	 * Returns the sign of the specified number it is zero. Returns 1 for positive zero and -1 for negative zero. Non-zero inputs are invalid.
+	 * Returns the sign of the specified number if it is zero. Returns 1 for positive zero and -1 for negative zero. Non-zero inputs are invalid.
 	 * @param x the double-precision number
 	 * @return the sign of the number if it is zero
 	 * @throws IllegalArgumentException if x is not zero
@@ -126,13 +121,11 @@ public final class DoubleBitMath {
 	
 	
 	/**
-	 * Tests whether the specified number is subnormal. Zeros, infinities, and NaN are not subnormal. All numbers are valid inputs.
+	 * Tests whether the specified number is subnormal. Zeros are subnormal; infinities and NaN are not subnormal. All numbers are valid inputs.
 	 * @param x the double-precision number
 	 * @return whether the specified number is subnormal
 	 */
 	public static boolean isSubnormal(double x) {
-		if (x == 0)
-			return false;
 		return getRawExponent(x) == 0;
 	}
 	
