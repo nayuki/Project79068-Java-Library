@@ -21,10 +21,10 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 	
 	
 	
-	// The numerator, which can be any number.
+	/** The numerator, which can be any number. */
 	public final BigInteger numerator;
 	
-	// The denominator, which is always positive.
+	/** The denominator, which is always positive. */
 	public final BigInteger denominator;
 	
 	

@@ -17,6 +17,7 @@ public class ArithmeticOverflowException extends ArithmeticException {
 	
 	/**
 	 * Creates an arithmetic overflow exception with the specified detail message.
+	 * @param message the detail message
 	 */
 	public ArithmeticOverflowException(String message) {
 		super(message);
