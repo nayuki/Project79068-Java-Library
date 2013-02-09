@@ -101,8 +101,6 @@ public final class LcgRandom extends AbstractRandom {
 	
 	@Override
 	public int uniformInt(int n) {
-		if (n <= 0)
-			throw new IllegalArgumentException();
 		if (IntegerMath.isPowerOf2(n)) {
 			// Shift the wanted number of upper bits into the high region, then shift the high region down
 			return (int)(((uniformInt() & 0xFFFFFFFFL) * n) >>> 32);

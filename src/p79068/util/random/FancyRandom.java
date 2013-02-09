@@ -9,7 +9,7 @@ public final class FancyRandom implements Random {
 	/**
 	 * Multiplying a 24-bit integer with this constant yields a {@code float} in [0, 1). This value is chosen so that all the mantissa bits in the {@code float} may be non-zero when the magnitude is in [0.5, 1).
 	 */
-	private static final float floatScaler = 1.0F / (1 << 24);
+	private static final float FLOAT_SCALER = 1.0F / (1 << 24);
 	
 	
 	
@@ -45,6 +45,8 @@ public final class FancyRandom implements Random {
 	 * @return <samp>true</samp> with probability {@code p}, or <samp>false</samp> with probability 1 &minus; {@code p}
 	 */
 	public boolean bernoulliBoolean(double p) {
+		if (p < 0 || p > 1 || Double.isNaN(p))
+			throw new IllegalArgumentException();
 		return random.uniformDouble() < p;
 	}
 	
@@ -76,8 +78,8 @@ public final class FancyRandom implements Random {
 	 * @param p the success probability
 	 * @return a binomially distributed integer in the range [0, {@code n}]
 	 */
-	public int binomial(int n, double p) {
-		if (n < 0 || p < 0 || p > 1)
+	public int binomialInt(int n, double p) {
+		if (n < 0 || p < 0 || p > 1 || Double.isNaN(p))
 			throw new IllegalArgumentException();
 		
 		int count = 0;
@@ -94,7 +96,7 @@ public final class FancyRandom implements Random {
 	 * @param p the success probability
 	 * @return a geometrically distributed integer in the range [0, {@code Integer.MAX_VALUE}]
 	 */
-	public int geometric(double p) {
+	public int geometricInt(double p) {
 		if (p < 0 || p > 1)
 			throw new IllegalArgumentException();
 		
@@ -112,7 +114,7 @@ public final class FancyRandom implements Random {
 	 * @return a value in the range of {@code long}, each with equal probability
 	 */
 	public long uniformLong() {
-		return random.uniformInt();
+		return random.uniformLong();
 	}
 	
 	
@@ -141,7 +143,7 @@ public final class FancyRandom implements Random {
 	 * @return a {@code float} in the range [0, 1), each with equal probability
 	 */
 	public float uniformFloat() {
-		return (random.uniformInt() & 0xFFFFFF) * floatScaler;
+		return (random.uniformInt() & 0xFFFFFF) * FLOAT_SCALER;
 	}
 	
 	
@@ -161,8 +163,11 @@ public final class FancyRandom implements Random {
 	 * <p>To obtain a exponentially distributed value with mean {@code lambda}, use this expression: {@code exponential() * lambda}</p>
 	 * @return a {@code double} with an exponential distribution of mean 1.
 	 */
-	public double exponential() {
-		return -Math.log(random.uniformDouble());
+	public double exponentialDouble() {
+		double x;
+		do x = random.uniformDouble();
+		while (x == 0);
+		return -Math.log(x);
 	}
 	
 	
@@ -172,7 +177,7 @@ public final class FancyRandom implements Random {
 	 * <p>Note that the probability of producing a number outside of [&minus;10, 10] is 10<sup>&minus;23</sup>; the probability of producing a number outside of [&minus;15, 15] is 10<sup>&minus;50</sup> (i.e., effectively impossible). (Assuming that the underlying random number generator is unbiased.)</p>
 	 * @return a {@code double} with a Gaussian distribution of mean 0.0 and standard deviation 1.0
 	 */
-	public double gaussian() {  // Uses the Box-Muller transform
+	public double gaussianDouble() {  // Uses the Box-Muller transform
 		if (!hasNextGaussian) {
 			double x, y;
 			double magsqr;
