@@ -1,6 +1,6 @@
 package p79068.io;
 
-import java.io.EOFException;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -23,7 +24,7 @@ public final class FileUtils {
 	 * @throws IllegalArgumentException if {@code dir} is not a directory
 	 */
 	public static SortedSet<File> listItems(File dir) {
-		checkArgIsDirectory(dir);
+		assertIsDirectory(dir);
 		SortedSet<File> result = new TreeSet<File>();
 		Collections.addAll(result, dir.listFiles());
 		return result;
@@ -36,7 +37,7 @@ public final class FileUtils {
 	 * @throws IllegalArgumentException if {@code dir} is not a directory
 	 */
 	public static SortedSet<File> listFiles(File dir) {
-		checkArgIsDirectory(dir);
+		assertIsDirectory(dir);
 		SortedSet<File> result = new TreeSet<File>();
 		for (File item : dir.listFiles()) {
 			if (item.isFile())
@@ -52,7 +53,7 @@ public final class FileUtils {
 	 * @throws IllegalArgumentException if {@code dir} is not a directory
 	 */
 	public static SortedSet<File> listDirs(File dir) {
-		checkArgIsDirectory(dir);
+		assertIsDirectory(dir);
 		SortedSet<File> result = new TreeSet<File>();
 		for (File item : dir.listFiles()) {
 			if (item.isDirectory())
@@ -132,9 +133,11 @@ public final class FileUtils {
 	}
 	
 	
+	
 	public static byte[] readAll(File file) throws IOException {
 		if (file.length() > Integer.MAX_VALUE)
 			throw new RuntimeException("File too large");
+		
 		int length = (int)file.length();
 		byte[] b = new byte[length];
 		InputStream in = new FileInputStream(file);
@@ -142,22 +145,41 @@ public final class FileUtils {
 			int position = 0;
 			while (position < length) {
 				int read = in.read(b, position, length - position);
-				if (read == -1)
-					throw new EOFException("Unexpected end of file");
+				if (read == -1)  // File became shorter
+					return Arrays.copyOf(b, position);
 				position += read;
+			}
+			
+			// Read extra data if file became longer
+			byte[] temp = new byte[1024];
+			ByteArrayOutputStream bout = new ByteArrayOutputStream();
+			while (true) {
+				int read = in.read(temp);
+				if (read == -1)
+					break;
+				bout.write(temp, 0, read);
+			}
+			temp = bout.toByteArray();
+			if (temp.length == 0)
+				return b;
+			else {
+				if ((long)b.length + temp.length > Integer.MAX_VALUE)
+					throw new RuntimeException("File too large");
+				byte[] result = Arrays.copyOf(b, b.length + temp.length);
+				System.arraycopy(temp, 0, b, b.length, temp.length);
+				return result;
 			}
 		} finally {
 			in.close();
 		}
-		return b;
 	}
 	
 	
 	public static String readAll(File file, String charset) throws IOException {
 		InputStream in0 = new FileInputStream(file);
-		InputStreamReader in = new InputStreamReader(in0);
-		StringBuffer sb = new StringBuffer();
-		char[] c = new char[65536];
+		InputStreamReader in = new InputStreamReader(in0, charset);
+		StringBuilder sb = new StringBuilder();
+		char[] c = new char[64 * 1024];
 		while (true) {
 			int tp = in.read(c, 0, c.length);
 			if (tp == -1)
@@ -170,10 +192,15 @@ public final class FileUtils {
 	}
 	
 	
-	public static void write(File file, byte[] b) throws IOException {
+	public static void writeAll(File file, byte[] b) throws IOException {
+		writeAll(file, b, 0, b.length);
+	}
+	
+	
+	public static void writeAll(File file, byte[] b, int off, int len) throws IOException {
 		OutputStream out = new FileOutputStream(file);
 		try {
-			out.write(b);
+			out.write(b, off, len);
 		} finally {
 			out.close();
 		}
@@ -181,7 +208,7 @@ public final class FileUtils {
 	
 	
 	
-	private static void checkArgIsDirectory(File dir) {
+	private static void assertIsDirectory(File dir) {
 		Assert.assertNotNull(dir);
 		if (!dir.isDirectory())
 			throw new IllegalArgumentException("Not a directory");
@@ -189,7 +216,7 @@ public final class FileUtils {
 	
 	
 	
-	/** 
+	/**
 	 * Not instantiable.
 	 */
 	private FileUtils() {}
