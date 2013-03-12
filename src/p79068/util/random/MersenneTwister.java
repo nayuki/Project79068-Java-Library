@@ -49,7 +49,7 @@ package p79068.util.random;
  * <p>Mutability: <em>Mutable</em><br>
  * Thread safety: <em>Unsafe</em></p>
  */
-public final class MersenneTwister extends AbstractRandom {
+public final class MersenneTwister extends AbstractRandom implements Cloneable {
 	
 	private int[] state;
 	
@@ -96,6 +96,18 @@ public final class MersenneTwister extends AbstractRandom {
 	@Override
 	public long uniformLong() {
 		return (long)uniformInt() << 32 | (uniformInt() & 0xFFFFFFFFL);
+	}
+	
+	
+	@Override
+	public MersenneTwister clone() {
+		try {
+			MersenneTwister result = (MersenneTwister)super.clone();
+			result.state = result.state.clone();
+			return result;
+		} catch (CloneNotSupportedException e) {
+			throw new AssertionError(e);
+		}
 	}
 	
 	
