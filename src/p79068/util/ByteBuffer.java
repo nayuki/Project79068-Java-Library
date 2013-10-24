@@ -53,20 +53,31 @@ public final class ByteBuffer {
 	}
 	
 	
+	public byte get(int i) {
+		Assert.assertIndexInBounds(length, i);
+		return buffer[i];
+	}
+	
+	
+	public void get(int off, int len, byte[] b, int boff) {
+		Assert.assertRangeInBounds(length, off, len);
+		Assert.assertRangeInBounds(b.length, boff, len);
+		System.arraycopy(buffer, off, b, boff, len);
+	}
+	
+	
 	public byte[] toByteArray() {
 		return Arrays.copyOf(buffer, length);
 	}
 	
 	
-	/* Modification methods */
-	
-	public ByteBuffer append(byte b) {
-		ensureCapacity(1);
-		buffer[length] = b;
-		length++;
-		return this;
+	public byte[] toByteArray(int off, int len) {
+		Assert.assertRangeInBounds(length, off, len);
+		return Arrays.copyOfRange(buffer, off, off + len);
 	}
 	
+	
+	/* Modification methods */
 	
 	public ByteBuffer append(int b) {
 		ensureCapacity(1);
@@ -82,9 +93,68 @@ public final class ByteBuffer {
 	
 	
 	public ByteBuffer append(byte[] b, int off, int len) {
+		Assert.assertNotNull(b);
+		Assert.assertRangeInBounds(b.length, off, len);
 		ensureCapacity(len);
 		System.arraycopy(b, off, buffer, length, len);
 		length += len;
+		return this;
+	}
+	
+	
+	public ByteBuffer append(ByteBuffer b) {
+		Assert.assertNotNull(b);
+		return append(b.buffer, 0, b.length);
+	}
+	
+	
+	public ByteBuffer insert(int i, int b) {
+		if (i < 0 || i > length)
+			throw new IndexOutOfBoundsException();
+		ensureCapacity(1);
+		System.arraycopy(buffer, i, buffer, i + 1, length - i);
+		buffer[i] = (byte)b;
+		length++;
+		return this;
+	}
+	
+	
+	public ByteBuffer insert(int i, byte[] b) {
+		return insert(i, b, 0, b.length);
+	}
+	
+	
+	public ByteBuffer insert(int i, byte[] b, int off, int len) {
+		if (i < 0 || i > length)
+			throw new IndexOutOfBoundsException();
+		Assert.assertNotNull(b);
+		Assert.assertRangeInBounds(b.length, off, len);
+		ensureCapacity(len);
+		System.arraycopy(buffer, i, buffer, i + len, length - i);
+		System.arraycopy(b, off, buffer, i, len);
+		length += len;
+		return this;
+	}
+	
+	
+	public ByteBuffer insert(int i, ByteBuffer b) {
+		Assert.assertNotNull(b);
+		return insert(i, b.buffer, 0, b.length);
+	}
+	
+	
+	public ByteBuffer remove(int i) {
+		Assert.assertIndexInBounds(length, i);
+		System.arraycopy(buffer, i + 1, buffer, i, length - i - 1);
+		length--;
+		return this;
+	}
+	
+	
+	public ByteBuffer remove(int off, int len) {
+		Assert.assertRangeInBounds(length, off, len);
+		System.arraycopy(buffer, off + len, buffer, off, length - off - len);
+		length -= len;
 		return this;
 	}
 	
