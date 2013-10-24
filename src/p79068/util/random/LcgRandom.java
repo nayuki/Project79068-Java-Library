@@ -1,7 +1,6 @@
 package p79068.util.random;
 
 import p79068.math.IntegerMath;
-import p79068.math.LongBitMath;
 
 
 /**
@@ -25,7 +24,7 @@ public final class LcgRandom extends AbstractRandom {
 	 * Constructs an LCG PRNG with an arbitrary seed and arbitrary default parameters.
 	 */
 	public LcgRandom() {
-		this(System.currentTimeMillis() ^ LongBitMath.reverse(System.nanoTime()));
+		this(System.currentTimeMillis() ^ Long.reverse(System.nanoTime()));
 	}
 	
 	

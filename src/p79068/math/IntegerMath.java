@@ -270,7 +270,7 @@ public final class IntegerMath {
 		x |= x >>>  4;
 		x |= x >>>  8;
 		x |= x >>> 16;
-		return IntegerBitMath.countOnes(x) - 1;
+		return Integer.bitCount(x) - 1;
 	}
 	
 	
@@ -289,7 +289,7 @@ public final class IntegerMath {
 		x |= x >>>  4;
 		x |= x >>>  8;
 		x |= x >>> 16;
-		return IntegerBitMath.countOnes(x);
+		return Integer.bitCount(x);
 	}
 	
 	

@@ -35,67 +35,6 @@ public final class LongBitMath {
 	}
 	
 	
-	/**
-	 * Returns the reverse of the specified bit sequence.
-	 * @param x the bit sequence to reverse
-	 * @return the reverse of {@code x}
-	 */
-	public static long reverse(long x) {
-		x = (x & 0x5555555555555555L) <<  1 | ((x >>>  1) & 0x5555555555555555L);
-		x = (x & 0x3333333333333333L) <<  2 | ((x >>>  2) & 0x3333333333333333L);
-		x = (x & 0x0F0F0F0F0F0F0F0FL) <<  4 | ((x >>>  4) & 0x0F0F0F0F0F0F0F0FL);
-		x = (x & 0x00FF00FF00FF00FFL) <<  8 | ((x >>>  8) & 0x00FF00FF00FF00FFL);
-		x = (x & 0x0000FFFF0000FFFFL) << 16 | ((x >>> 16) & 0x0000FFFF0000FFFFL);
-		x = (x & 0x00000000FFFFFFFFL) << 32 | ((x >>> 32) & 0x00000000FFFFFFFFL);
-		return x;
-	}
-	
-	
-	/**
-	 * Returns the number of bits set to {@code 1} in the specified integer. Also known as the Hamming weight or population count function.
-	 * @return the number of bits set to {@code 1}, between {@code 0} (inclusive) and {@code 64} (inclusive)
-	 */
-	public static int countOnes(long x) {
-		x = ((x >>>  1) & 0x5555555555555555L) + (x & 0x5555555555555555L);
-		x = ((x >>>  2) & 0x3333333333333333L) + (x & 0x3333333333333333L);
-		x = ((x >>>  4) & 0x0F0F0F0F0F0F0F0FL) + (x & 0x0F0F0F0F0F0F0F0FL);
-		x = ((x >>>  8) & 0x00FF00FF00FF00FFL) + (x & 0x00FF00FF00FF00FFL);
-		x = ((x >>> 16) & 0x0000FFFF0000FFFFL) + (x & 0x0000FFFF0000FFFFL);
-		x = ((x >>> 32) & 0x00000000FFFFFFFFL) + (x & 0x00000000FFFFFFFFL);
-		return (int)x;
-	}
-	
-	/**
-	 * Returns the specified bit sequence rotated to the left by the specified number of places. The shift value is taken modulo 64.
-	 * @param x the bit sequence to rotate
-	 * @param shift the number of places to rotate to the left, taken modulo 64
-	 * @return {@code x} rotated to the left by {@code shift} places
-	 */
-	public static long rotateLeft(long x, int shift) {
-		return x << shift | x >>> (64 - shift);
-	}
-	
-	
-	/**
-	 * Returns the specified bit sequence rotated to the right by the specified number of places. The shift value is taken modulo 64.
-	 * @param x the bit sequence to rotate
-	 * @param shift the number of places to rotate to the right, taken modulo 64
-	 * @return {@code x} rotated to the right by {@code shift} places
-	 */
-	public static long rotateRight(long x, int shift) {
-		return x << (64 - shift) | x >>> shift;
-	}
-	
-	
-	public static long swapByteEndian(long x) {
-		x = (x & 0x00FF00FF00FF00FFL) <<  8 | ((x >>>  8) & 0x00FF00FF00FF00FFL);
-		x = (x & 0x0000FFFF0000FFFFL) << 16 | ((x >>> 16) & 0x0000FFFF0000FFFFL);
-		x = (x & 0x00000000FFFFFFFFL) << 32 | ((x >>> 32) & 0x00000000FFFFFFFFL);
-		return x;
-	}
-	
-	
-	
 	public static byte[] toBytesBigEndian(long[] ain) {
 		byte[] aout = new byte[ain.length * 8];
 		for (int i = 0; i < aout.length; i++)
