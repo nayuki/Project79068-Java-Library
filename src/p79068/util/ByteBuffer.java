@@ -5,11 +5,15 @@ import java.util.Arrays;
 
 public final class ByteBuffer {
 	
+	/* Fields */
+	
 	private byte[] buffer;
 	
 	private int length;
 	
 	
+	
+	/* Constructors */
 	
 	public ByteBuffer() {
 		buffer = new byte[1];
@@ -17,6 +21,20 @@ public final class ByteBuffer {
 	}
 	
 	
+	
+	/* Retrieval methods */
+	
+	public int length() {
+		return length;
+	}
+	
+	
+	public byte[] toByteArray() {
+		return Arrays.copyOf(buffer, length);
+	}
+	
+	
+	/* Modification methods */
 	
 	public ByteBuffer append(byte b) {
 		if (length == buffer.length)
@@ -54,20 +72,12 @@ public final class ByteBuffer {
 	}
 	
 	
-	public int length() {
-		return length;
-	}
-	
-	
-	public byte[] toByteArray() {
-		return Arrays.copyOf(buffer, length);
-	}
-	
-	
 	public void clear() {
 		length = 0;
 	}
 	
+	
+	/* Private methods */
 	
 	private void resize(int newCapacity) {
 		if (newCapacity < length || newCapacity < 1)
