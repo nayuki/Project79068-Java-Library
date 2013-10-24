@@ -3,6 +3,7 @@ package p79068.util;
 import java.util.Arrays;
 
 import p79068.Assert;
+import p79068.math.IntegerMath;
 
 
 public final class ByteBuffer {
@@ -60,8 +61,7 @@ public final class ByteBuffer {
 	/* Modification methods */
 	
 	public ByteBuffer append(byte b) {
-		if (length == buffer.length)
-			resize(length * 2);
+		ensureCapacity(1);
 		buffer[length] = b;
 		length++;
 		return this;
@@ -69,8 +69,7 @@ public final class ByteBuffer {
 	
 	
 	public ByteBuffer append(int b) {
-		if (length == buffer.length)
-			resize(length * 2);
+		ensureCapacity(1);
 		buffer[length] = (byte)b;
 		length++;
 		return this;
@@ -83,12 +82,7 @@ public final class ByteBuffer {
 	
 	
 	public ByteBuffer append(byte[] b, int off, int len) {
-		if (length + len > buffer.length) {
-			int newLength = buffer.length;
-			while (newLength < length + len)
-				newLength *= 2;
-			resize(newLength);
-		}
+		ensureCapacity(len);
 		System.arraycopy(b, off, buffer, length, len);
 		length += len;
 		return this;
@@ -102,10 +96,14 @@ public final class ByteBuffer {
 	
 	/* Private methods */
 	
-	private void resize(int newCapacity) {
-		if (newCapacity < length || newCapacity < 1)
-			throw new IllegalArgumentException();
-		buffer = Arrays.copyOf(buffer, newCapacity);
+	private void ensureCapacity(int delta) {
+		int newLength = IntegerMath.checkedAdd(length, delta);
+		if (buffer.length < newLength) {
+			long capacity = buffer.length;
+			while (capacity < newLength)
+				capacity = Math.min(capacity * 2, Integer.MAX_VALUE);
+			buffer = Arrays.copyOf(buffer, (int)capacity);
+		}
 	}
 	
 }
