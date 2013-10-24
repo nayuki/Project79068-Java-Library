@@ -2,6 +2,8 @@ package p79068.util;
 
 import java.util.Arrays;
 
+import p79068.Assert;
+
 
 public final class ByteBuffer {
 	
@@ -18,6 +20,27 @@ public final class ByteBuffer {
 	public ByteBuffer() {
 		buffer = new byte[1];
 		length = 0;
+	}
+	
+	
+	public ByteBuffer(byte[] b) {
+		Assert.assertNotNull(b);
+		if (b.length == 0)
+			buffer = new byte[1];
+		else
+			buffer = b.clone();
+		length = b.length;
+	}
+	
+	
+	public ByteBuffer(byte[] b, int off, int len) {
+		Assert.assertNotNull(b);
+		Assert.assertRangeInBounds(b.length, off, len);
+		if (len == 0)
+			buffer = new byte[1];
+		else
+			buffer = Arrays.copyOfRange(b, off, off + len);
+		length = len;
 	}
 	
 	
