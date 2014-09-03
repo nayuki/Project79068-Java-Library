@@ -130,7 +130,7 @@ public final class Date implements Comparable<Date> {
 		d--;  // Convert day from 1-based to 0-based. Use d as the accumulator.
 		d += LongMath.divideAndFloor(y, 400) * 146097;  // Reduce year into day. There are 146097 days in any contiguous 400 years.
 		y -= LongMath.divideAndFloor(y, 400) * 400;     // Reduce year to [0, 400)
-		d += y*365 + y/4 - y/100 + y/400 + cumulativeDays[(int)m];  // Add the days in the years (taking leap years into account) and months
+		d += y*365 + y/4 - y/100 + y/400 + ((int)m * 153 + 2) / 5;  // Add the days in the years (taking leap years into account) and months
 		
 		d -= 730425;  // Convert epoch from 0000-03-01 to 2000-01-01
 		
