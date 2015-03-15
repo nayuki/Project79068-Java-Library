@@ -1,5 +1,6 @@
 package p79068.io;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,11 +9,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.SortedSet;
 import java.util.TreeSet;
-
 import p79068.Assert;
 
 
@@ -204,6 +206,16 @@ public final class FileUtils {
 		} finally {
 			out.close();
 		}
+	}
+	
+	
+	public static BufferedReader newUtf8TextReader(File file) throws IOException {
+		return new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
+	}
+	
+	
+	public static PrintWriter newUtf8TextWriter(File file) throws IOException {
+		return new PrintWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
 	}
 	
 	
