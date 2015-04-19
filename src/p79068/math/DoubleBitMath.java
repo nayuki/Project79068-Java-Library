@@ -42,7 +42,7 @@ public final class DoubleBitMath {
 	// Mathematical values
 	
 	/**
-	 * Returns the signum of the specified number. Positive and negative zero both have a signum of 0. For finite numbers, this relation holds: {@code x} = {@code getSign(x)} � ({@code getMantissa(x)} / 2<sup>52</sup>) � 2<sup>{@code getExponent(x)}</sup>. Infinities are valid inputs, but NaN is not a valid input.
+	 * Returns the signum of the specified number. Positive and negative zero both have a signum of 0. For finite numbers, this relation holds: {@code x} = {@code getSign(x)} × ({@code getMantissa(x)} / 2<sup>52</sup>) × 2<sup>{@code getExponent(x)}</sup>. Infinities are valid inputs, but NaN is not a valid input.
 	 * @param x the double-precision number
 	 * @return the signum of x, which is -1, 0, or 1
 	 * @throws IllegalArgumentException if {@code x} is NaN
@@ -60,7 +60,7 @@ public final class DoubleBitMath {
 	
 	
 	/**
-	 * Returns the exponent of the specified number. For finite numbers, this relation holds: {@code x} = {@code getSign(x)} � ({@code getMantissa(x)} / 2<sup>52</sup>) � 2<sup>{@code getExponent(x)}</sup>. Subnormal numbers all have the same exponent. Infinities and NaN are invalid inputs. The result is in the range [-1022, 1023].
+	 * Returns the exponent of the specified number. For finite numbers, this relation holds: {@code x} = {@code getSign(x)} × ({@code getMantissa(x)} / 2<sup>52</sup>) × 2<sup>{@code getExponent(x)}</sup>. Subnormal numbers all have the same exponent. Infinities and NaN are invalid inputs. The result is in the range [-1022, 1023].
 	 * @param x the double-precision number
 	 * @return the exponent
 	 * @throws IllegalArgumentException if x is infinite or NaN
@@ -77,7 +77,7 @@ public final class DoubleBitMath {
 	
 	
 	/**
-	 * Returns the mantissa of the specified number. For finite numbers, this relation holds: {@code x} = {@code getSign(x)} � ({@code getMantissa(x)} / 2<sup>52</sup>) � 2<sup>{@code getExponent(x)}</sup>. Infinities and NaN are invalid inputs. The result is in the range [2<sup>52</sup>, 2<sup>53</sup>) for normal numbers and [0, 2<sup>52</sup>) for subnormal numbers.
+	 * Returns the mantissa of the specified number. For finite numbers, this relation holds: {@code x} = {@code getSign(x)} × ({@code getMantissa(x)} / 2<sup>52</sup>) × 2<sup>{@code getExponent(x)}</sup>. Infinities and NaN are invalid inputs. The result is in the range [2<sup>52</sup>, 2<sup>53</sup>) for normal numbers and [0, 2<sup>52</sup>) for subnormal numbers.
 	 * @param x the double-precision number
 	 * @return the mantissa
 	 * @throws IllegalArgumentException if x is infinite or NaN
