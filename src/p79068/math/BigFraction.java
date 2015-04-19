@@ -174,7 +174,8 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 	
 	
 	/**
-	 * Compares this fraction to the specified fraction. Returns a negative number if {@code this < other}, zero if {@code this == other}, or a positive number if {@code this > other}.
+	 * Compares this fraction to the specified fraction. Returns a negative number if {@code this < other},
+	 * zero if {@code this == other}, or a positive number if {@code this > other}.
 	 * @param other the fraction to compare to
 	 * @return negative if {@code this < other}, zero if {@code this == other}, or positive if {@code this > other}
 	 */
@@ -206,7 +207,9 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 	
 	
 	/**
-	 * Converts this fraction to an {@code int}. Fractions that are not whole numbers are rounded towards zero (e.g. 3/2 becomes 1, and -3/2 becomes -1). The returned result is this integer value modulo 2<sup>32</sup>, as per the narrowing primitive conversion defined in the Java Language Specification.
+	 * Converts this fraction to an {@code int}. Fractions that are not whole numbers are rounded towards zero
+	 * (e.g. 3/2 becomes 1, and -3/2 becomes -1). The returned result is this integer value modulo 2<sup>32</sup>,
+	 * as per the narrowing primitive conversion defined in the Java Language Specification.
 	 * @return this fraction converted to an {@code int}
 	 */
 	@Override
@@ -216,7 +219,9 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 	
 	
 	/**
-	 * Converts this fraction to a {@code long}. Fractions that are not whole numbers are rounded towards zero (e.g. 3/2 becomes 1, and -3/2 becomes -1). The returned result is this integer value modulo 2<sup>64</sup>, as per the narrowing primitive conversion defined in the Java Language Specification.
+	 * Converts this fraction to a {@code long}. Fractions that are not whole numbers are rounded towards zero
+	 * (e.g. 3/2 becomes 1, and -3/2 becomes -1). The returned result is this integer value modulo 2<sup>64</sup>,
+	 * as per the narrowing primitive conversion defined in the Java Language Specification.
 	 * @return this fraction converted to a {@code long}
 	 */
 	@Override

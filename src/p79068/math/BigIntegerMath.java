@@ -7,7 +7,8 @@ import p79068.Assert;
 public final class BigIntegerMath {
 	
 	/**
-	 * Returns {@code x * y} (the product of the specified integers), which gives the same result as {@code x.multiply(y)} but should be faster. The current implementation uses Karatsuba multiplication.
+	 * Returns {@code x * y} (the product of the specified integers), which gives the same result as
+	 * {@code x.multiply(y)} but should be faster. The current implementation uses Karatsuba multiplication.
 	 * @param x a multiplicand
 	 * @param y a multiplicand
 	 * @return {@code x} times {@code} y

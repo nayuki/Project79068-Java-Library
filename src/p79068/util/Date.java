@@ -7,7 +7,8 @@ import p79068.math.LongMath;
 
 /**
  * A date on the Gregorian calendar. The epoch of 2000-01-01 is used. Date objects are immutable.
- * <p>Years in CE/AD are represented normally. Years in BCE/BC count down from zero: {@code 0} is year 1 BCE, {@code -1} is year 2 BCE, {@code -2} is year 3 BCE, and so on.</p>
+ * <p>Years in CE/AD are represented normally. Years in BCE/BC count down from zero:
+ *   {@code 0} is year 1 BCE, {@code -1} is year 2 BCE, {@code -2} is year 3 BCE, and so on.</p>
  * <p>Months:</p>
  * <ul>
  *  <li>{@code 01}: January</li>
@@ -53,7 +54,8 @@ public final class Date implements Comparable<Date> {
 	
 	
 	/**
-	 * Tests whether the specified year is a leap year. A year divisible by 400 is a leap year. Otherwise, a year divisible by 4 but not by 100 is a leap year. Other years are not leap years.
+	 * Tests whether the specified year is a leap year. A year divisible by 400 is a leap year.
+	 * Otherwise, a year divisible by 4 but not by 100 is a leap year. Other years are not leap years.
 	 * @param year the year to test
 	 * @return {@code true} if and only if {@code year} is a leap year
 	 */
@@ -63,7 +65,9 @@ public final class Date implements Comparable<Date> {
 	
 	
 	/**
-	 * Returns the number of days in the specified month of the specified year. This method returns the correct result for all arguments. For example, January has 31 days, April has 30 days, February has 28 days on a non-leap year, and February has 29 days on a leap year.
+	 * Returns the number of days in the specified month of the specified year.
+	 * This method returns the correct result for all arguments. For example, January has 31 days,
+	 * April has 30 days, February has 28 days on a non-leap year, and February has 29 days on a leap year.
 	 * @param year the year
 	 * @param month the month
 	 * @return the number of days in the month
@@ -218,7 +222,9 @@ public final class Date implements Comparable<Date> {
 	
 	
 	/**
-	 * Returns a date representing this date plus the specified number of days. Addition and subtraction are related by the equation {@code this.add(x).subtract(this) == x} (for {@code int x}), assuming no overflow.
+	 * Returns a date representing this date plus the specified number of days.
+	 * Addition and subtraction are related by the equation {@code this.add(x).subtract(this) == x}
+	 * (for {@code int x}), assuming no overflow.
 	 * @param days the number of days to add
 	 * @return a date representing {@code days} days after this date
 	 * @throws ArithmeticOverflowException if the resulting date cannot be represented
@@ -229,7 +235,9 @@ public final class Date implements Comparable<Date> {
 	
 	
 	/**
-	 * Returns the signed difference between this date and the specified date, in days. Addition and subtraction are related by the equation {@code this.add(x).subtract(this) == x} (for {@code int x}), assuming no overflow.
+	 * Returns the signed difference between this date and the specified date, in days.
+	 * Addition and subtraction are related by the equation {@code this.add(x).subtract(this) == x}
+	 * (for {@code int x}), assuming no overflow.
 	 * @param other the date to subtract
 	 * @return the number of days to add to {@code date} in order to get {@code this}
 	 * @throws ArithmeticOverflowException if the resulting difference cannot be represented
@@ -241,7 +249,8 @@ public final class Date implements Comparable<Date> {
 	
 	
 	/**
-	 * Tests whether this date is equal to the specified object. Returns {@code true} if the specified object is a date representing the same day. Otherwise, this method returns {@code false}.
+	 * Tests whether this date is equal to the specified object. Returns {@code true} if the specified
+	 * object is a date representing the same day. Otherwise, this method returns {@code false}.
 	 * @param other the object to test for equality
 	 * @return whether {@code other} is a date with the same day
 	 */
@@ -253,7 +262,8 @@ public final class Date implements Comparable<Date> {
 	
 	
 	/**
-	 * Compares this date with the specified date for order. Returns a negative integer, zero, or positive integer respectively if this date is earlier than, equal to, or later than the specified date.
+	 * Compares this date with the specified date for order. Returns a negative integer, zero, or positive
+	 * integer respectively if this date is earlier than, equal to, or later than the specified date.
 	 * @param other the date to compare to
 	 * @return a negative integer, zero, or positive integer respectively if {@code this} is earlier than, equal to, or later than {@code other}
 	 */

@@ -6,7 +6,8 @@ import p79068.math.LongMath;
 
 
 /**
- * An instance of this class represents a date and time using the Gregorian calendar and UTC time zone, with microsecond precision. The epoch of 2000-01-01 00:00:00 UTC is used.
+ * An instance of this class represents a date and time using the Gregorian calendar and
+ * UTC time zone, with microsecond precision. The epoch of 2000-01-01 00:00:00 UTC is used.
  * <p>Mutability: <em>Immutable</em></p>
  * <p>See Date for the numerical representations of year, month, and day.</p>
  * <p>The earliest representable date and time is year &minus;290278, month 12, day 22, time 19:59:05.224192 UTC.<br>
@@ -168,7 +169,8 @@ public final class DateTime implements Comparable<DateTime> {
 	
 	
 	/**
-	 * Tests whether this date is equal to the specified object. Returns {@code true} if the specified object is a date-time representing the same day and time. Otherwise, this method returns {@code false}.
+	 * Tests whether this date is equal to the specified object. Returns {@code true} if the specified object
+	 * is a date-time representing the same day and time. Otherwise, this method returns {@code false}.
 	 * @param other the object to test for equality
 	 * @return whether {@code other} is a date-time with the same day and time
 	 */
@@ -179,7 +181,8 @@ public final class DateTime implements Comparable<DateTime> {
 	
 	
 	/**
-	 * Compares this date-time with the specified date for order. Returns a negative integer, zero, or positive integer respectively if this date is earlier than, equal to, or later than the specified date-time.
+	 * Compares this date-time with the specified date for order. Returns a negative integer, zero, or positive
+	 * integer respectively if this date is earlier than, equal to, or later than the specified date-time.
 	 * @param other the date to compare to
 	 * @return a negative integer, zero, or positive integer respectively if {@code this} is earlier than, equal to, or later than {@code other}
 	 */

@@ -61,7 +61,8 @@ public final class LongMath {
 	
 	
 	/**
-	 * Returns the quotient of the specified integers, throwing an exception if the result overflows. The only overflow case is when {@code x} = &minus;2<sup>31</sup> and {@code y} = &minus;1.
+	 * Returns the quotient of the specified integers, throwing an exception if the result overflows.
+	 * The only overflow case is when {@code x} = &minus;2<sup>31</sup> and {@code y} = &minus;1.
 	 * @param x the dividend
 	 * @param y the divisor
 	 * @return {@code x} divided by {@code y}
@@ -99,7 +100,8 @@ public final class LongMath {
 	
 	
 	/**
-	 * Returns {@code x} modulo {@code y}. The result either has the same sign as {@code y} or is zero. Note that this is not exactly the same as the remainder operator ({@code %}) provided by the language.
+	 * Returns {@code x} modulo {@code y}. The result either has the same sign as {@code y} or is zero.
+	 * Note that this is not exactly the same as the remainder operator ({@code %}) provided by the language.
 	 * @param x the integer to reduce
 	 * @param y the modulus
 	 * @return {@code x} modulo {@code y}
@@ -151,7 +153,9 @@ public final class LongMath {
 	
 	
 	/**
-	 * Returns the integer in the specified range (inclusive) nearest to the specified integer. In other words, if {@code x &lt; min} then {@code min} is returned; if {@code x &gt; max} then {@code max} is returned; otherwise {@code x} is returned. This function is equivalent to {@code Math.max(Math.min(x, max), min)}.
+	 * Returns the integer in the specified range (inclusive) nearest to the specified integer.
+	 * In other words, if {@code x &lt; min} then {@code min} is returned; if {@code x &gt; max} then {@code max} is returned;
+	 * otherwise {@code x} is returned. This function is equivalent to {@code Math.max(Math.min(x, max), min)}.
 	 * @param x the integer to clamp
 	 * @param min the lower limit (inclusive)
 	 * @param max the upper limit (inclusive)

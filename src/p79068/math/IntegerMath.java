@@ -58,7 +58,8 @@ public final class IntegerMath {
 	
 	
 	/**
-	 * Returns the quotient of the specified integers, throwing an exception if the result overflows. The only overflow case is when {@code x} = &minus;2<sup>31</sup> and {@code y} = &minus;1.
+	 * Returns the quotient of the specified integers, throwing an exception if the result overflows.
+	 * The only overflow case is when {@code x} = &minus;2<sup>31</sup> and {@code y} = &minus;1.
 	 * @param x the dividend
 	 * @param y the divisor
 	 * @return {@code x} divided by {@code y}
@@ -118,7 +119,8 @@ public final class IntegerMath {
 	
 	
 	/**
-	 * Returns {@code x} modulo {@code y}. The result either has the same sign as {@code y} or is zero. Note that this is not exactly the same as the remainder operator ({@code %}) provided by the language.
+	 * Returns {@code x} modulo {@code y}. The result either has the same sign as {@code y} or is zero.
+	 * Note that this is not exactly the same as the remainder operator ({@code %}) provided by the language.
 	 * <p>Sample values:</p>
 	 * <ul>
 	 *   <li>{@code mod( 4, &nbsp;3) = &nbsp;1}</li>
@@ -177,7 +179,10 @@ public final class IntegerMath {
 	
 	
 	/**
-	 * Returns the integer in the specified range (inclusive) nearest to the specified integer. In other words, if {@code x &lt; min} then {@code min} is returned; if {@code x &gt; max} then {@code max} is returned; otherwise {@code x} is returned. This function is equivalent to {@code Math.max(Math.min(x, max), min)}.
+	 * Returns the integer in the specified range (inclusive) nearest to the specified integer.
+	 * In other words, if {@code x &lt; min} then {@code min} is returned; if {@code x &gt; max}
+	 * then {@code max} is returned; otherwise {@code x} is returned.
+	 * This function is equivalent to {@code Math.max(Math.min(x, max), min)}.
 	 * @param x the integer to clamp
 	 * @param min the lower limit (inclusive)
 	 * @param max the upper limit (inclusive)
@@ -197,7 +202,8 @@ public final class IntegerMath {
 	
 	
 	/**
-	 * Tests whether the specified number is an integral power of 2. The powers of 2 are 1, 2, 4, ..., 1073741824. Zero and negative numbers are not powers of 2.
+	 * Tests whether the specified number is an integral power of 2.
+	 * The powers of 2 are 1, 2, 4, ..., 1073741824. Zero and negative numbers are not powers of 2.
 	 * @param x the integer to test
 	 * @return {@code true} if and only if {@code x} is an integral power of 2
 	 */
@@ -361,7 +367,9 @@ public final class IntegerMath {
 	
 	
 	/**
-	 * Returns the greatest common divisor (GCD) of the specified integers. If <var>z</var> is the GCD of <var>x</var> and <var>y</var>, then <var>z</var> is the largest number such that <var>x</var>/<var>z</var> and <var>y</var>/<var>z</var> are integers.
+	 * Returns the greatest common divisor (GCD) of the specified integers.
+	 * If <var>z</var> is the GCD of <var>x</var> and <var>y</var>, then <var>z</var> is the
+	 * largest number such that <var>x</var>/<var>z</var> and <var>y</var>/<var>z</var> are integers.
 	 */
 	public static int gcd(int x, int y) {
 		if (x == Integer.MIN_VALUE && y == Integer.MIN_VALUE)
