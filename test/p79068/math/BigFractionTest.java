@@ -9,8 +9,7 @@ import p79068.util.random.Random;
 
 public final class BigFractionTest {
 	
-	@Test
-	public void testSimplify() {
+	@Test public void testSimplify() {
 		check(0, 1, new BigFraction(0, 1));
 		check(0, 1, new BigFraction(0, -2));
 		check(1, 3, new BigFraction(1, 3));
@@ -22,8 +21,7 @@ public final class BigFractionTest {
 	}
 	
 	
-	@Test
-	public void testEquals() {
+	@Test public void testEquals() {
 		assertEquals(BigFraction.ZERO, new BigFraction(0, 2));
 		assertEquals(BigFraction.ZERO, new BigFraction(0, -1));
 		assertEquals(BigFraction.ONE, new BigFraction(5, 5));
@@ -33,8 +31,7 @@ public final class BigFractionTest {
 	}
 	
 	
-	@Test
-	public void testAdd() {
+	@Test public void testAdd() {
 		check(0, 1, BigFraction.ZERO.add(BigFraction.ZERO));
 		check(2, 1, BigFraction.ONE.add(BigFraction.ONE));
 		check(5, 6, new BigFraction(1, 2).add(new BigFraction(1, 3)));
@@ -42,8 +39,7 @@ public final class BigFractionTest {
 	}
 	
 	
-	@Test
-	public void testSubtract() {
+	@Test public void testSubtract() {
 		check(0, 1, BigFraction.ZERO.subtract(BigFraction.ZERO));
 		check(1, 1, new BigFraction(2).subtract(BigFraction.ONE));
 		check(1, 6, new BigFraction(1, 2).subtract(new BigFraction(1, 3)));
@@ -51,8 +47,7 @@ public final class BigFractionTest {
 	}
 	
 	
-	@Test
-	public void testMultiply() {
+	@Test public void testMultiply() {
 		check(0, 1, BigFraction.ZERO.multiply(BigFraction.ONE));
 		check(1, 1, BigFraction.ONE.multiply(BigFraction.ONE));
 		check(15, 1, new BigFraction(3).multiply(new BigFraction(5)));
@@ -61,8 +56,7 @@ public final class BigFractionTest {
 	}
 	
 	
-	@Test
-	public void testDivide() {
+	@Test public void testDivide() {
 		check(0, 1, BigFraction.ZERO.divide(BigFraction.ONE));
 		check(1, 1, BigFraction.ONE.divide(BigFraction.ONE));
 		check(1, 3, new BigFraction(2).divide(new BigFraction(6)));
@@ -76,8 +70,7 @@ public final class BigFractionTest {
 	}
 	
 	
-	@Test
-	public void testNegate() {
+	@Test public void testNegate() {
 		check(0, 1, BigFraction.ZERO.negate());
 		check(-1, 1, BigFraction.ONE.negate());
 		check(2, 1, new BigFraction(-2).negate());
@@ -85,8 +78,7 @@ public final class BigFractionTest {
 	}
 	
 	
-	@Test
-	public void testReciprocal() {
+	@Test public void testReciprocal() {
 		check(1, 1, BigFraction.ONE.reciprocal());
 		check(1, 2, new BigFraction(2).reciprocal());
 		check(7, 3, new BigFraction(3, 7).reciprocal());
@@ -100,8 +92,7 @@ public final class BigFractionTest {
 	}
 	
 	
-	@Test
-	public void testCompareTo() {
+	@Test public void testCompareTo() {
 		assertTrue(new BigFraction(0).compareTo(new BigFraction(0)) == 0);
 		assertTrue(new BigFraction(1, 2).compareTo(new BigFraction(1, 2)) == 0);
 		assertTrue(new BigFraction(4, 4).compareTo(new BigFraction(1, 1)) == 0);
@@ -113,8 +104,7 @@ public final class BigFractionTest {
 	}
 	
 	
-	@Test
-	public void testFloatValue() {
+	@Test public void testFloatValue() {
 		assertEquals(0.0f, new BigFraction(0, 1).floatValue(), 0);
 		assertEquals(-5.0f, new BigFraction(-5, 1).floatValue(), 0);
 		
@@ -134,8 +124,7 @@ public final class BigFractionTest {
 	}
 	
 	
-	@Test
-	public void testFloatValueTiny() {
+	@Test public void testFloatValueTiny() {
 		// Normal
 		assertEquals(Float.intBitsToFloat(0x00800000), new BigFraction(BigInteger.ONE, BigInteger.ONE.shiftLeft(126)).floatValue(), 0);
 		assertEquals(Float.intBitsToFloat(0x00800000), new BigFraction(BigInteger.valueOf(1 << 24 | 1), BigInteger.ONE.shiftLeft(150)).floatValue(), 0);
@@ -151,8 +140,7 @@ public final class BigFractionTest {
 	}
 	
 	
-	@Test
-	public void testFloatValueHuge() {
+	@Test public void testFloatValueHuge() {
 		assertEquals(Float.intBitsToFloat(0x7F000000), new BigFraction(BigInteger.ONE.shiftLeft(127), BigInteger.ONE).floatValue(), 0);
 		assertEquals(Float.MAX_VALUE, new BigFraction(BigInteger.valueOf((1 << 24) - 1).shiftLeft(127), BigInteger.ONE.shiftLeft(23)).floatValue(), 0);
 		assertEquals(Float.MAX_VALUE, new BigFraction(BigInteger.valueOf((1 << 27) - 11).shiftLeft(124), BigInteger.ONE.shiftLeft(23)).floatValue(), 0);
@@ -161,8 +149,7 @@ public final class BigFractionTest {
 	}
 	
 	
-	@Test
-	public void testFloatValueRandomly() {
+	@Test public void testFloatValueRandomly() {
 		for (int i = 0; i < 1000; i++) {
 			int sign = Random.DEFAULT.uniformInt(2);
 			int exp = Random.DEFAULT.uniformInt(255);
@@ -183,8 +170,7 @@ public final class BigFractionTest {
 	}
 	
 	
-	@Test
-	public void testDoubleValue() {
+	@Test public void testDoubleValue() {
 		assertEquals(0.0, new BigFraction(0, 1).doubleValue(), 0);
 		assertEquals(-5.0, new BigFraction(-5, 1).doubleValue(), 0);
 		
@@ -204,8 +190,7 @@ public final class BigFractionTest {
 	}
 	
 	
-	@Test
-	public void testDoubleValueTiny() {
+	@Test public void testDoubleValueTiny() {
 		// Normal
 		assertEquals(Double.longBitsToDouble(0x0010000000000000L), new BigFraction(BigInteger.ONE, BigInteger.ONE.shiftLeft(1022)).doubleValue(), 0);
 		assertEquals(Double.longBitsToDouble(0x0010000000000000L), new BigFraction(BigInteger.valueOf(1L << 53 | 1), BigInteger.ONE.shiftLeft(1075)).doubleValue(), 0);
@@ -221,8 +206,7 @@ public final class BigFractionTest {
 	}
 	
 	
-	@Test
-	public void testDoubleValueHuge() {
+	@Test public void testDoubleValueHuge() {
 		assertEquals(Double.longBitsToDouble(0x7FE0000000000000L), new BigFraction(BigInteger.ONE.shiftLeft(1023), BigInteger.ONE).doubleValue(), 0);
 		assertEquals(Double.MAX_VALUE, new BigFraction(BigInteger.valueOf((1L << 53) - 1).shiftLeft(1023), BigInteger.ONE.shiftLeft(52)).doubleValue(), 0);
 		assertEquals(Double.MAX_VALUE, new BigFraction(BigInteger.valueOf((1L << 56) - 11).shiftLeft(1020), BigInteger.ONE.shiftLeft(52)).doubleValue(), 0);
@@ -231,8 +215,7 @@ public final class BigFractionTest {
 	}
 	
 	
-	@Test
-	public void testDoubleValueRandomly() {
+	@Test public void testDoubleValueRandomly() {
 		for (int i = 0; i < 1000; i++) {
 			int sign = Random.DEFAULT.uniformInt(2);
 			int exp = Random.DEFAULT.uniformInt(255);

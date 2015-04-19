@@ -14,8 +14,7 @@ import p79068.util.random.Random;
 
 public final class DateTest {
 	
-	@Test
-	public void testIsLeapYear() {
+	@Test public void testIsLeapYear() {
 		assertFalse(Date.isLeapYear(1998));
 		assertFalse(Date.isLeapYear(2001));
 		assertFalse(Date.isLeapYear(2007));
@@ -35,8 +34,7 @@ public final class DateTest {
 	}
 	
 	
-	@Test
-	public void testIsLeapYearBce() {
+	@Test public void testIsLeapYearBce() {
 		assertFalse(Date.isLeapYear(-1));
 		assertFalse(Date.isLeapYear(-2));
 		assertFalse(Date.isLeapYear(-15));
@@ -52,8 +50,7 @@ public final class DateTest {
 	}
 	
 	
-	@Test
-	public void testIsLeapYearEdgeCases() {
+	@Test public void testIsLeapYearEdgeCases() {
 		assertFalse(Date.isLeapYear(Integer.MAX_VALUE - 0));
 		assertFalse(Date.isLeapYear(Integer.MAX_VALUE - 1));
 		assertFalse(Date.isLeapYear(Integer.MAX_VALUE - 2));
@@ -67,8 +64,7 @@ public final class DateTest {
 	}
 	
 	
-	@Test
-	public void testMonthLength() {
+	@Test public void testMonthLength() {
 		assertEquals(31, Date.monthLength(2000, 1));
 		assertEquals(29, Date.monthLength(2000, 2));
 		assertEquals(31, Date.monthLength(2000, 3));
@@ -89,8 +85,7 @@ public final class DateTest {
 	}
 	
 	
-	@Test
-	public void testMonthLengthLenient() {
+	@Test public void testMonthLengthLenient() {
 		assertEquals(29, Date.monthLength(1999, 14));
 		assertEquals(29, Date.monthLength(2001, -10));
 		assertEquals(28, Date.monthLength(2000, 14));
@@ -98,8 +93,7 @@ public final class DateTest {
 	}
 	
 	
-	@Test
-	public void testMonthLengthEdgeCases() {
+	@Test public void testMonthLengthEdgeCases() {
 		assertEquals(30, Date.monthLength(Integer.MIN_VALUE, Integer.MIN_VALUE));  // April, non-leap year
 		assertEquals(31, Date.monthLength(Integer.MIN_VALUE, Integer.MAX_VALUE));  // July, non-leap year
 		assertEquals(30, Date.monthLength(Integer.MAX_VALUE, Integer.MIN_VALUE));  // April, leap year
@@ -121,8 +115,7 @@ public final class DateTest {
 	}
 	
 	
-	@Test
-	public void testDayOfWeekByEpoch() {
+	@Test public void testDayOfWeekByEpoch() {
 		assertEquals(4, Date.dayOfWeek(-2));
 		assertEquals(5, Date.dayOfWeek(-1));
 		assertEquals(6, Date.dayOfWeek( 0));  // 2000-01-01
@@ -131,8 +124,7 @@ public final class DateTest {
 	}
 	
 	
-	@Test
-	public void testDayOfWeekByEpochEdgeCases() {
+	@Test public void testDayOfWeekByEpochEdgeCases() {
 		assertEquals(4, Date.dayOfWeek(Integer.MIN_VALUE + 0));
 		assertEquals(5, Date.dayOfWeek(Integer.MIN_VALUE + 1));
 		assertEquals(6, Date.dayOfWeek(Integer.MIN_VALUE + 2));
@@ -143,8 +135,7 @@ public final class DateTest {
 	}
 	
 	
-	@Test
-	public void testDayOfWeek() {
+	@Test public void testDayOfWeek() {
 		assertEquals(6, Date.dayOfWeek(2000,  1,  1));
 		assertEquals(0, Date.dayOfWeek(2000,  1,  2));
 		assertEquals(1, Date.dayOfWeek(2000,  1,  3));
@@ -164,22 +155,19 @@ public final class DateTest {
 	}
 	
 	
-	@Test
-	public void testDayOfWeekCounting() {
+	@Test public void testDayOfWeekCounting() {
 		for (TestDate d : new DateRange(1600, 1, 1, 6, -146097, 146097 * 2))
 			assertEquals(d.dayOfWeek, Date.dayOfWeek(d.year, d.month, d.day));
 	}
 	
 	
-	@Test
-	public void testDayOfWeekEdgeCases() {
+	@Test public void testDayOfWeekEdgeCases() {
 		assertEquals(2, Date.dayOfWeek(Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE));
 		assertEquals(4, Date.dayOfWeek(Integer.MIN_VALUE, Integer.MIN_VALUE, Integer.MIN_VALUE));
 	}
 	
 	
-	@Test
-	public void testDaysSinceEpoch() {
+	@Test public void testDaysSinceEpoch() {
 		assertEquals(-730, Date.daysSinceEpoch(1998, 1, 1));
 		assertEquals(-365, Date.daysSinceEpoch(1999, 1, 1));
 		assertEquals(   0, Date.daysSinceEpoch(2000, 1, 1));
@@ -192,16 +180,14 @@ public final class DateTest {
 	}
 	
 	
-	@Test
-	public void testDaysSinceByEpochCounting() {
+	@Test public void testDaysSinceByEpochCounting() {
 		for (TestDate d : new DateRange(1600, 1, 1, 6, -146097, 146097 * 2))
 			assertEquals(d.daysSinceEpoch, Date.daysSinceEpoch(d.year, d.month, d.day));
 	}
 	
 	
 	// Days since epoch to calendar date, forwards
-	@Test
-	public void testNewDateByEpochCounting() {
+	@Test public void testNewDateByEpochCounting() {
 		for (TestDate d : new DateRange(1600, 1, 1, 6, -146097, 146097 * 2)) {
 			Date date = new Date(d.daysSinceEpoch);
 			assertEquals(d.year, date.year);
@@ -212,8 +198,7 @@ public final class DateTest {
 	
 	
 	// new Date(y,m,d), because it requires a conversion to epoch days and then back to calendar date.
-	@Test
-	public void testNewDateByCalendar() {
+	@Test public void testNewDateByCalendar() {
 		for (TestDate d : new DateRange(1600, 1, 1, 6, -146097, 146097 * 2)) {
 			Date date = new Date(d.year, d.month, d.day);
 			assertEquals(d.year, date.year);
@@ -223,8 +208,7 @@ public final class DateTest {
 	}
 	
 	
-	@Test
-	public void testNewDateEdgeCases() {
+	@Test public void testNewDateEdgeCases() {
 		{
 			Date date = new Date(-2147483648);
 			assertEquals(-5877611, date.year);
@@ -239,8 +223,7 @@ public final class DateTest {
 	}
 	
 	
-	@Test
-	public void testNewDateOverflow() {
+	@Test public void testNewDateOverflow() {
 		int[][] cases = {
 			{-5877611, 6, 21},
 			{-5877611, 5, 30},
@@ -261,8 +244,7 @@ public final class DateTest {
 	}
 	
 	
-	@Test
-	public void testNewDateLenientRepresentations() {
+	@Test public void testNewDateLenientRepresentations() {
 		assertEquals(new Date(2000, 1, 1), new Date(2000, 2, -30));
 		assertEquals(new Date(2000, 1, 1), new Date(2000, 0, 32));
 		assertEquals(new Date(2000, 1, 1), new Date(1999, 12, 32));
@@ -271,8 +253,7 @@ public final class DateTest {
 	}
 	
 	
-	@Test
-	public void testCompareRandomly() {
+	@Test public void testCompareRandomly() {
 		for (int i = 0; i < 1000; i++) {
 			int y0 = Random.DEFAULT.uniformInt(10000000) - 5000000;
 			int m0 = Random.DEFAULT.uniformInt(12) + 1;

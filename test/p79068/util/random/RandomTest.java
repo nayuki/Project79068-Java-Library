@@ -11,8 +11,7 @@ public abstract class RandomTest {
 	protected abstract Random getInstance();
 	
 	
-	@Test
-	public void testUniformIntN() {
+	@Test public void testUniformIntN() {
 		Random r = getInstance();
 		for (int i = 1; i < 1000; i++) {
 			int x = r.uniformInt(i);
@@ -21,8 +20,7 @@ public abstract class RandomTest {
 	}
 	
 	
-	@Test
-	public void testUniformIntNInvalid() {
+	@Test public void testUniformIntNInvalid() {
 		Random r = getInstance();
 		for (int i = 0; i > -1000; i--) {
 			try {
@@ -33,8 +31,7 @@ public abstract class RandomTest {
 	}
 	
 	
-	@Test
-	public void testUniformDouble() {
+	@Test public void testUniformDouble() {
 		Random r = getInstance();
 		for (int i = 1; i < 1000; i++) {
 			double x = r.uniformDouble();
@@ -43,8 +40,7 @@ public abstract class RandomTest {
 	}
 	
 	
-	@Test
-	public void testUniformBytesRange() {
+	@Test public void testUniformBytesRange() {
 		Random r = getInstance();
 		for (int i = 0; i < 1000; i++) {
 			byte[] reference = new byte[i];

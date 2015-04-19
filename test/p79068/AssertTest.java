@@ -7,8 +7,7 @@ import p79068.Assert;
 
 public final class AssertTest {
 	
-	@Test
-	public void testAssertNotNull() {
+	@Test public void testAssertNotNull() {
 		try {
 			Assert.assertNotNull(new Object());
 			Assert.assertNotNull(new String("a"));
@@ -25,8 +24,7 @@ public final class AssertTest {
 	}
 	
 	
-	@Test
-	public void testAssertVarargNotNull() {
+	@Test public void testAssertVarargNotNull() {
 		try {
 			Assert.assertNotNull(new Object(), new String("a"), new Integer(3));
 		} catch (NullPointerException e) {
@@ -41,8 +39,7 @@ public final class AssertTest {
 	}
 	
 	
-	@Test
-	public void testAssertIndexInBoundsValid() {
+	@Test public void testAssertIndexInBoundsValid() {
 		try {
 			Assert.assertIndexInBounds(1, 0);
 			Assert.assertIndexInBounds(3, 0);
@@ -54,8 +51,7 @@ public final class AssertTest {
 	}
 	
 	
-	@Test
-	public void testAssertIndexInBoundsInvalid() {
+	@Test public void testAssertIndexInBoundsInvalid() {
 		int[][] cases = {
 				{0, 0},
 				{3, 3},
@@ -74,8 +70,7 @@ public final class AssertTest {
 	}
 	
 	
-	@Test
-	public void testAssertIndexInBoundsNegativeIndex() {
+	@Test public void testAssertIndexInBoundsNegativeIndex() {
 		int[][] cases = {
 				{0, -1},
 				{0, Integer.MIN_VALUE},
@@ -92,8 +87,7 @@ public final class AssertTest {
 	}
 	
 	
-	@Test
-	public void testAssertIndexInBoundsNegativeArrayLength() {
+	@Test public void testAssertIndexInBoundsNegativeArrayLength() {
 		int[][] cases = {
 				{-1, 0},
 				{Integer.MIN_VALUE, 23},
@@ -111,8 +105,7 @@ public final class AssertTest {
 	
 	
 	
-	@Test
-	public void testAssertRangeInBoundsValid() {
+	@Test public void testAssertRangeInBoundsValid() {
 		try {
 			Assert.assertRangeInBounds(0, 0, 0);
 			Assert.assertRangeInBounds(1, 0, 0);
@@ -130,8 +123,7 @@ public final class AssertTest {
 	}
 	
 	
-	@Test
-	public void testAssertRangeInBoundsInvalid() {
+	@Test public void testAssertRangeInBoundsInvalid() {
 		int[][] cases = {
 				{0, 1, 0},
 				{0, 1, 2},
@@ -157,8 +149,7 @@ public final class AssertTest {
 	}
 	
 	
-	@Test
-	public void testAssertRangeInBoundsNegativeArrayLength() {
+	@Test public void testAssertRangeInBoundsNegativeArrayLength() {
 		int[][] cases = {
 				{-1, 0, 0},
 				{-3, 0, -2},

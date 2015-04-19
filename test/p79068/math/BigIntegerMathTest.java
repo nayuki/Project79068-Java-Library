@@ -15,8 +15,7 @@ public final class BigIntegerMathTest {
 	private static java.util.Random JAVA_RANDOM = new JavaRandomAdapter(RANDOM);
 	
 	
-	@Test
-	public void testMultiplyRandomly() {
+	@Test public void testMultiplyRandomly() {
 		for (int i = 0; i < 100; i++) {
 			int size = RANDOM.uniformInt(30000);
 			BigInteger x = new BigInteger(size, JAVA_RANDOM);
@@ -30,8 +29,7 @@ public final class BigIntegerMathTest {
 	}
 	
 	
-	@Test
-	public void testSqrtBasic() {
+	@Test public void testSqrtBasic() {
 		assertEquals(BigInteger.valueOf(0), BigIntegerMath.sqrt(BigInteger.valueOf( 0)));
 		assertEquals(BigInteger.valueOf(1), BigIntegerMath.sqrt(BigInteger.valueOf( 1)));
 		assertEquals(BigInteger.valueOf(1), BigIntegerMath.sqrt(BigInteger.valueOf( 2)));
@@ -50,8 +48,7 @@ public final class BigIntegerMathTest {
 	}
 	
 	
-	@Test
-	public void testSqrtRandomly() {
+	@Test public void testSqrtRandomly() {
 		for (int i = 0; i < 1000; i++) {
 			BigInteger x = new BigInteger(RANDOM.uniformInt(1000) + 1, JAVA_RANDOM);
 			if (RANDOM.uniformDouble() < 0.1 || x.signum() == 0) {  // Test non-negative

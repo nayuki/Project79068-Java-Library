@@ -14,8 +14,7 @@ public final class DoubleBitMathTest {
 	
 	
 	
-	@Test
-	public void testGetSign() {
+	@Test public void testGetSign() {
 		assertEquals( 0, DoubleBitMath.getSign(POSITIVE_ZERO));
 		assertEquals( 0, DoubleBitMath.getSign(NEGATIVE_ZERO));
 		assertEquals(+1, DoubleBitMath.getSign(+1));
@@ -28,8 +27,7 @@ public final class DoubleBitMathTest {
 	}
 	
 	
-	@Test
-	public void testGetExponent() {
+	@Test public void testGetExponent() {
 		assertEquals(-1, DoubleBitMath.getExponent(0.5));
 		assertEquals(0, DoubleBitMath.getExponent(1));
 		assertEquals(1, DoubleBitMath.getExponent(2));
@@ -43,8 +41,7 @@ public final class DoubleBitMathTest {
 	}
 	
 	
-	@Test
-	public void testGetMantissa() {
+	@Test public void testGetMantissa() {
 		assertEquals(0, DoubleBitMath.getMantissa(0));
 		assertEquals(0x10000000000000L, DoubleBitMath.getMantissa(0.5));
 		assertEquals(0x10000000000000L, DoubleBitMath.getMantissa(1));
@@ -56,8 +53,7 @@ public final class DoubleBitMathTest {
 	}
 	
 	
-	@Test
-	public void testSgnManExpRelation() {
+	@Test public void testSgnManExpRelation() {
 		assertTrue(checkRelation(POSITIVE_ZERO));
 		assertTrue(checkRelation(NEGATIVE_ZERO));
 		assertTrue(checkRelation(+1));
@@ -75,8 +71,7 @@ public final class DoubleBitMathTest {
 	}
 	
 	
-	@Test
-	public void testGetZeroSign() {
+	@Test public void testGetZeroSign() {
 		assertEquals(+1, DoubleBitMath.getZeroSign(POSITIVE_ZERO));
 		assertEquals(-1, DoubleBitMath.getZeroSign(NEGATIVE_ZERO));
 	}
@@ -100,8 +95,7 @@ public final class DoubleBitMathTest {
 	}
 	
 	
-	@Test
-	public void testIsNormal() {
+	@Test public void testIsNormal() {
 		assertFalse(DoubleBitMath.isNormal(Double.MIN_VALUE));
 		assertFalse(DoubleBitMath.isNormal(Double.MIN_VALUE * 5));
 		assertFalse(DoubleBitMath.isNormal(0));
@@ -114,8 +108,7 @@ public final class DoubleBitMathTest {
 	}
 	
 	
-	@Test
-	public void testIsSubnormal() {
+	@Test public void testIsSubnormal() {
 		assertTrue(DoubleBitMath.isSubnormal(Double.MIN_VALUE));
 		assertTrue(DoubleBitMath.isSubnormal(Double.MIN_VALUE * 3));
 		assertTrue(DoubleBitMath.isSubnormal(0));
@@ -128,8 +121,7 @@ public final class DoubleBitMathTest {
 	}
 	
 	
-	@Test
-	public void testIsFinite() {
+	@Test public void testIsFinite() {
 		assertTrue(DoubleBitMath.isFinite(Double.MIN_VALUE));
 		assertTrue(DoubleBitMath.isFinite(0));
 		assertTrue(DoubleBitMath.isFinite(1));

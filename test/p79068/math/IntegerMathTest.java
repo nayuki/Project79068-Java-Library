@@ -15,8 +15,7 @@ public final class IntegerMathTest {
 	
 	// Basic operations
 	
-	@Test
-	public void testCheckedAdd() {
+	@Test public void testCheckedAdd() {
 		assertEquals(3, IntegerMath.checkedAdd(1, 2));
 		assertEquals(-238, IntegerMath.checkedAdd(-980, 742));
 	}
@@ -46,8 +45,7 @@ public final class IntegerMathTest {
 	}
 	
 	
-	@Test
-	public void testCheckedSubtract() {
+	@Test public void testCheckedSubtract() {
 		assertEquals(-2, IntegerMath.checkedSubtract(5, 7));
 		assertEquals(-1722, IntegerMath.checkedSubtract(-980, 742));
 	}
@@ -77,8 +75,7 @@ public final class IntegerMathTest {
 	}
 	
 	
-	@Test
-	public void testCheckedMultiply() {
+	@Test public void testCheckedMultiply() {
 		assertEquals(6, IntegerMath.checkedMultiply(2, 3));
 		assertEquals(-3976, IntegerMath.checkedMultiply(71, -56));
 		assertEquals(-2147483648, IntegerMath.checkedMultiply(-2147483648, 1));
@@ -110,8 +107,7 @@ public final class IntegerMathTest {
 	}
 	
 	
-	@Test
-	public void testCheckedDivide() {
+	@Test public void testCheckedDivide() {
 		assertEquals(2, IntegerMath.checkedDivide(2, 1));
 		assertEquals(1, IntegerMath.checkedDivide(5, 3));
 		assertEquals(-1, IntegerMath.checkedDivide(-5, 3));
@@ -126,8 +122,7 @@ public final class IntegerMathTest {
 	}
 	
 	
-	@Test
-	public void testDivideUnsigned() {
+	@Test public void testDivideUnsigned() {
 		assertEquals(0, IntegerMath.divideUnsigned(0, 1));
 		assertEquals(1 << 30, IntegerMath.divideUnsigned(1 << 30, 1));
 		assertEquals((1 << 31) - 1, IntegerMath.divideUnsigned((1 << 31) - 1, 1));
@@ -144,8 +139,7 @@ public final class IntegerMathTest {
 	}
 	
 	
-	@Test
-	public void testDivideUnsignedRandomly() {
+	@Test public void testDivideUnsignedRandomly() {
 		for (int i = 0; i < 1000; i++) {
 			int xbits = RANDOM.uniformInt(33);
 			int ybits = RANDOM.uniformInt(32) + 1;  // Prevent division by 0
@@ -161,8 +155,7 @@ public final class IntegerMathTest {
 	}
 	
 	
-	@Test
-	public void testDivideAndFloor() {
+	@Test public void testDivideAndFloor() {
 		assertEquals(3, IntegerMath.divideAndFloor(3, 1));
 		assertEquals(-2, IntegerMath.divideAndFloor(-2, 1));
 		assertEquals(2, IntegerMath.divideAndFloor(5, 2));
@@ -182,8 +175,7 @@ public final class IntegerMathTest {
 	}
 	
 	
-	@Test
-	public void testMod() {
+	@Test public void testMod() {
 		assertEquals(0, IntegerMath.mod(8, 4));
 		assertEquals(3, IntegerMath.mod(7, 4));
 		assertEquals(1, IntegerMath.mod(-7, 4));
@@ -197,8 +189,7 @@ public final class IntegerMathTest {
 	
 	// Simple functions
 	
-	@Test
-	public void testSign() {
+	@Test public void testSign() {
 		assertEquals( 0, IntegerMath.sign(0));
 		
 		assertEquals(+1, IntegerMath.sign(1));
@@ -217,8 +208,7 @@ public final class IntegerMathTest {
 	}
 	
 	
-	@Test
-	public void testCompare() {
+	@Test public void testCompare() {
 		assertTrue(IntegerMath.compare(0, 0) == 0);
 		assertTrue(IntegerMath.compare(7, 7) == 0);
 		assertTrue(IntegerMath.compare(3, 5) < 0);
@@ -234,8 +224,7 @@ public final class IntegerMathTest {
 	}
 	
 	
-	@Test
-	public void testCompareUnsigned() {
+	@Test public void testCompareUnsigned() {
 		assertTrue(IntegerMath.compareUnsigned(13, 72) < 0);
 		assertTrue(IntegerMath.compareUnsigned(0xBEEF0000, 0xDEAD0000) < 0);
 		assertTrue(IntegerMath.compareUnsigned(0xCAFE0000, 0xCAFE0000) == 0);
@@ -245,16 +234,14 @@ public final class IntegerMathTest {
 	}
 	
 	
-	@Test
-	public void testClamp() {
+	@Test public void testClamp() {
 		assertEquals(5, IntegerMath.clamp(5, 0, 10));
 		assertEquals(10, IntegerMath.clamp(12, 0, 10));
 		assertEquals(0, IntegerMath.clamp(-7, 0, 10));
 	}
 	
 	
-	@Test
-	public void testIsPowerOf2() {
+	@Test public void testIsPowerOf2() {
 		assertTrue(IntegerMath.isPowerOf2(1));
 		assertTrue(IntegerMath.isPowerOf2(2));
 		assertTrue(IntegerMath.isPowerOf2(4));
@@ -282,8 +269,7 @@ public final class IntegerMathTest {
 	
 	// Elementary functions
 	
-	@Test
-	public void testSqrt() {
+	@Test public void testSqrt() {
 		assertEquals(0, IntegerMath.sqrt(0));
 		assertEquals(1, IntegerMath.sqrt(1));
 		assertEquals(1, IntegerMath.sqrt(2));
@@ -298,8 +284,7 @@ public final class IntegerMathTest {
 	}
 	
 	
-	@Test
-	public void testSqrtRandomly() {
+	@Test public void testSqrtRandomly() {
 		for (int i = 0; i < 1000; i++) {
 			int x = RANDOM.uniformInt() & 0x7FFFFFFF;
 			int y = IntegerMath.sqrt(x);
@@ -308,8 +293,7 @@ public final class IntegerMathTest {
 	}
 	
 	
-	@Test
-	public void testCbrt() {
+	@Test public void testCbrt() {
 		assertEquals(0, IntegerMath.cbrt(0));
 		assertEquals(1, IntegerMath.cbrt(1));
 		assertEquals(1, IntegerMath.cbrt(2));
@@ -337,8 +321,7 @@ public final class IntegerMathTest {
 	}
 	
 	
-	@Test
-	public void testCbrtRandomly() {
+	@Test public void testCbrtRandomly() {
 		for (int i = 0; i < 1000; i++) {
 			int x = RANDOM.uniformInt();
 			int y = IntegerMath.cbrt(x);
@@ -350,8 +333,7 @@ public final class IntegerMathTest {
 	}
 	
 	
-	@Test
-	public void testLog2Floor() {
+	@Test public void testLog2Floor() {
 		assertEquals(0, IntegerMath.log2Floor(1));
 		assertEquals(1, IntegerMath.log2Floor(2));
 		assertEquals(1, IntegerMath.log2Floor(3));
@@ -364,8 +346,7 @@ public final class IntegerMathTest {
 	}
 	
 	
-	@Test
-	public void testLog2FloorRandomly() {
+	@Test public void testLog2FloorRandomly() {
 		for (int i = 0; i < 1000; i++) {
 			int x = RANDOM.uniformInt(Integer.MAX_VALUE - 1) + 1;  // In the range [1, Integer.MAX_VALUE]
 			int y = IntegerMath.log2Floor(x);
@@ -374,8 +355,7 @@ public final class IntegerMathTest {
 	}
 	
 	
-	@Test
-	public void testLog2Ceiling() {
+	@Test public void testLog2Ceiling() {
 		assertEquals(0, IntegerMath.log2Ceiling(1));
 		assertEquals(1, IntegerMath.log2Ceiling(2));
 		assertEquals(2, IntegerMath.log2Ceiling(3));
@@ -388,8 +368,7 @@ public final class IntegerMathTest {
 	}
 	
 	
-	@Test
-	public void testLog2CeilingRandomly() {
+	@Test public void testLog2CeilingRandomly() {
 		for (int i = 0; i < 1000; i++) {
 			int x = RANDOM.uniformInt(Integer.MAX_VALUE - 1) + 1;  // In the range [1, Integer.MAX_VALUE]
 			int y = IntegerMath.log2Ceiling(x);
@@ -398,8 +377,7 @@ public final class IntegerMathTest {
 	}
 	
 	
-	@Test
-	public void testFloorToPowerOf2() {
+	@Test public void testFloorToPowerOf2() {
 		assertEquals(1, IntegerMath.floorToPowerOf2(1));
 		assertEquals(2, IntegerMath.floorToPowerOf2(2));
 		assertEquals(2, IntegerMath.floorToPowerOf2(3));
@@ -414,8 +392,7 @@ public final class IntegerMathTest {
 	}
 	
 	
-	@Test
-	public void testFloorToPowerOf2Randomly() {
+	@Test public void testFloorToPowerOf2Randomly() {
 		for (int i = 0; i < 1000; i++) {
 			int x = RANDOM.uniformInt(Integer.MAX_VALUE - 1) + 1;  // In the range [1, Integer.MAX_VALUE]
 			int y = IntegerMath.floorToPowerOf2(x);
@@ -425,8 +402,7 @@ public final class IntegerMathTest {
 	}
 	
 	
-	@Test
-	public void testCeilingToPowerOf2() {
+	@Test public void testCeilingToPowerOf2() {
 		assertEquals(1, IntegerMath.ceilingToPowerOf2(1));
 		assertEquals(2, IntegerMath.ceilingToPowerOf2(2));
 		assertEquals(4, IntegerMath.ceilingToPowerOf2(3));
@@ -440,8 +416,7 @@ public final class IntegerMathTest {
 	}
 	
 	
-	@Test
-	public void testCeilingToPowerOf2Randomly() {
+	@Test public void testCeilingToPowerOf2Randomly() {
 		for (int i = 0; i < 1000; i++) {
 			int x = RANDOM.uniformInt(0x3FFFFFFF) + 1;
 			int y = IntegerMath.ceilingToPowerOf2(x);
@@ -451,8 +426,7 @@ public final class IntegerMathTest {
 	}
 	
 	
-	@Test
-	public void testIsPrime() {
+	@Test public void testIsPrime() {
 		int[] primes = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101};
 		for (int i = -20, j = 0; j < primes.length; i++) {  // i is the number to test, j is the index into 'primes' such that i <= primes[j]
 			if (i == primes[j]) {
@@ -464,8 +438,7 @@ public final class IntegerMathTest {
 	}
 	
 	
-	@Test
-	public void testGcd() {
+	@Test public void testGcd() {
 		assertEquals(0, IntegerMath.gcd(0, 0));
 		assertEquals(5, IntegerMath.gcd(5, 0));
 		assertEquals(2, IntegerMath.gcd(0, 2));
@@ -483,8 +456,7 @@ public final class IntegerMathTest {
 	}
 	
 	
-	@Test
-	public void testGcdRandomly() {
+	@Test public void testGcdRandomly() {
 		for (int i = 0; i < 1000; i++) {
 			// This tests only some of the properties of the GCD - necessary but not sufficient
 			int xbits = RANDOM.uniformInt(32);
