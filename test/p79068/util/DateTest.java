@@ -267,7 +267,7 @@ public final class DateTest {
 				refComp = IntegerMath.compare(y0, y1);
 			else if (m0 != m1)
 				refComp = IntegerMath.compare(m0, m1);
-			else 
+			else
 				refComp = IntegerMath.compare(d0, d1);
 			
 			assertEquals(IntegerMath.sign(refComp), IntegerMath.sign(new Date(y0, m0, d0).compareTo(new Date(y1, m1, d1))));
