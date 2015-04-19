@@ -223,7 +223,7 @@ public final class DateTime implements Comparable<DateTime> {
 	
 	
 	/**
-	 * Returns this date as a string: e.g., {@code <var>yyyy</var>-<var>mm</var>-<var>dd</var> <var>HH</var>:<var>MM</var>:<var>SS</var>.<var>SSSSSS</var> UTC}. This format is subject to change.
+	 * Returns this date as a string: for example {@code "2015-01-31 23:59:04.012345 UTC"}. This format is subject to change.
 	 */
 	@Override
 	public String toString() {

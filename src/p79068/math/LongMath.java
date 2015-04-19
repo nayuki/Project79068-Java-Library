@@ -176,7 +176,7 @@ public final class LongMath {
 	
 	/**
 	 * Tests whether the specified integer is a power of 2. The powers of 2 are 1, 2, 4, ..., 4611686018427387904.
-	 * <p>Note that Long.MIN_VALUE (-9223372036854775808) is not a power of 2 because it is negative.</p>
+	 * <p>Note that Long.MIN_VALUE (−9223372036854775808) is not a power of 2 because it is negative.</p>
 	 * 
 	 * @param x the integer to test
 	 * @return <samp>true</samp> if x is positive and is a power of 2

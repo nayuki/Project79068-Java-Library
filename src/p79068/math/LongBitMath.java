@@ -23,8 +23,12 @@ public final class LongBitMath {
 	
 	
 	/**
-	 * Returns a contiguous group of bits extracted from the specified bit sequence and placed xxx.
+	 * Returns a contiguous group of bits extracted from the specified bit sequence and shifted down to the lowest significant bits.
 	 * For example: {@code extractBits(0xC0FFEEL, 8, 16)} yields {@code 0xC0FFL}.
+	 * @param x the input bit sequence
+	 * @param bitOffset the number of least significant bits to skip (between 0 and 64)
+	 * @param bitLength the number of bits to extract (between 0 and 64)
+	 * throws IndexOutOfBoundsException if the offset or length lie outside the interval [0, 64]
 	 */
 	public static long extractBits(long x, int bitOffset, int bitLength) {
 		Assert.assertRangeInBounds(64, bitOffset, bitLength);

@@ -6,6 +6,7 @@ import p79068.Assert;
 /**
  * Contains methods for math functions that deal with bits in integers.
  * <p>Instantiability: <em>Not applicable</em></p>
+ * @see LongBitMath
  */
 public final class IntegerBitMath {
 	
@@ -22,8 +23,12 @@ public final class IntegerBitMath {
 	
 	
 	/**
-	 * Returns a contiguous group of bits extracted from the specified bit sequence and placed xxx.
+	 * Returns a contiguous group of bits extracted from the specified bit sequence and shifted down to the lowest significant bits.
 	 * For example: {@code extractBits(0xCAFE, 4, 8)} yields {@code 0xAF}.
+	 * @param x the input bit sequence
+	 * @param bitOffset the number of least significant bits to skip (between 0 and 32)
+	 * @param bitLength the number of bits to extract (between 0 and 32)
+	 * throws IndexOutOfBoundsException if the offset or length lie outside the interval [0, 32]
 	 */
 	public static int extractBits(int x, int bitOffset, int bitLength) {
 		Assert.assertRangeInBounds(32, bitOffset, bitLength);

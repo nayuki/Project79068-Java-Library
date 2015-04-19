@@ -282,7 +282,7 @@ public final class Date implements Comparable<Date> {
 	
 	
 	/**
-	 * Returns this date as a string: e.g., {@code <var>yyyy</var>-<var>mm</var>-<var>dd</var>}. This format is subject to change.
+	 * Returns this date as a string: for example {@code "2015-01-31"}. This format is subject to change.
 	 */
 	@Override
 	public String toString() {
