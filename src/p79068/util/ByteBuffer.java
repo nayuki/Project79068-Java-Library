@@ -1,7 +1,6 @@
 package p79068.util;
 
 import java.util.Arrays;
-
 import p79068.Assert;
 import p79068.math.IntegerMath;
 

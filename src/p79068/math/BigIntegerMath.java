@@ -1,7 +1,6 @@
 package p79068.math;
 
 import java.math.BigInteger;
-
 import p79068.Assert;
 
 

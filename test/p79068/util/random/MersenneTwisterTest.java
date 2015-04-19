@@ -1,7 +1,6 @@
 package p79068.util.random;
 
 import static org.junit.Assert.assertEquals;
-
 import org.junit.Test;
 
 

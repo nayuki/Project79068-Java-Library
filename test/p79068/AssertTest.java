@@ -2,7 +2,6 @@ package p79068;
 
 import static org.junit.Assert.fail;
 import org.junit.Test;
-
 import p79068.Assert;
 
 
