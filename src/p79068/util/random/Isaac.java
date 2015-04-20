@@ -14,7 +14,7 @@ public final class Isaac extends AbstractRandom implements Cloneable {
 	private int cc;
 	
 	// Buffer of generated output
-	private int[] gen;  // Length 256
+	private int[] gen;  // Length 256, read in backward order
 	private int count;  // In the range [0, 256]
 	
 	
@@ -125,9 +125,8 @@ public final class Isaac extends AbstractRandom implements Cloneable {
 	private void nextState() {
 		cc++;
 		bb += cc;
-		int x, y;
 		for (int i = 0; i < mm.length; i++) {
-			x = mm[i];
+			int x = mm[i];
 			switch (i & 3) {
 				case 0:  aa ^= aa <<  13;  break;
 				case 1:  aa ^= aa >>>  6;  break;
@@ -135,8 +134,8 @@ public final class Isaac extends AbstractRandom implements Cloneable {
 				case 3:  aa ^= aa >>> 16;  break;
 				default:  throw new AssertionError();
 			}
-			aa = mm[(i + 128) & 0xFF] + aa;
-			mm[i] = y = mm[(x >>> 2) & 0xFF] + aa + bb;
+			aa += mm[(i + 128) & 0xFF];
+			int y = mm[i] = mm[(x >>> 2) & 0xFF] + aa + bb;
 			gen[i] = bb = mm[(y >>> 10) & 0xFF] + x;
 		}
 		count = gen.length;
