@@ -236,7 +236,10 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 	 */
 	@Override
 	public float floatValue() {
-		return Float.intBitsToFloat((int)toFloatingPointBits(23, 8));
+		if (numerator.bitLength() <= 24 && denominator.bitLength() <= 24)
+			return (float)numerator.intValue() / denominator.intValue();
+		else
+			return Float.intBitsToFloat((int)toFloatingPointBits(23, 8));
 	}
 	
 	
@@ -246,7 +249,10 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 	 */
 	@Override
 	public double doubleValue() {
-		return Double.longBitsToDouble(toFloatingPointBits(52, 11));
+		if (numerator.bitLength() <= 53 && denominator.bitLength() <= 53)
+			return (double)numerator.longValue() / denominator.longValue();
+		else
+			return Double.longBitsToDouble(toFloatingPointBits(52, 11));
 	}
 	
 	
