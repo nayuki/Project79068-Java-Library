@@ -121,6 +121,9 @@ public final class BigFractionTest {
 		
 		assertEquals(Float.intBitsToFloat(0x3DCCCCCD), new BigFraction(1, 10).floatValue(), 0);
 		assertEquals(Float.intBitsToFloat(0xBF333333), new BigFraction(-7, 10).floatValue(), 0);
+		assertEquals( 0x1.232326p+3f, new BigFraction( 3093933733L,  340065947L).floatValue(), 0);
+		assertEquals( 0x1.F80FA4p+0f, new BigFraction( 1770076229L,  898977342L).floatValue(), 0);
+		assertEquals(-0x1.F019C0p-2f, new BigFraction(-2025072778L, 4179947737L).floatValue(), 0);
 	}
 	
 	
@@ -188,6 +191,9 @@ public final class BigFractionTest {
 		
 		assertEquals(Double.longBitsToDouble(0x3FB999999999999AL), new BigFraction(1, 10).doubleValue(), 0);
 		assertEquals(Double.longBitsToDouble(0xBFE6666666666666L), new BigFraction(-7, 10).doubleValue(), 0);
+		assertEquals(-0x1.EFE0F17270CC3p+5, new BigFraction(-7539464082038877348L,   121634009646760394L).doubleValue(), 0);
+		assertEquals( 0x1.58A9DF6E40850p-1, new BigFraction( 5645438936109099612L,  8386336776939482015L).doubleValue(), 0);
+		assertEquals(-0x1.03E3906CA7D53p-4, new BigFraction(  545132426004656884L, -8591602887513528206L).doubleValue(), 0);
 	}
 	
 	
