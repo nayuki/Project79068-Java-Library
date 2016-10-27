@@ -105,7 +105,7 @@ public final class BigFractionTest {
 	
 	
 	@Test public void testFloatValue() {
-		assertEquals(0.0f, new BigFraction(0, 1).floatValue(), 0);
+		assertEquals(0, Float.floatToIntBits(new BigFraction(0, 1).floatValue()));
 		assertEquals(-5.0f, new BigFraction(-5, 1).floatValue(), 0);
 		
 		assertEquals(1.0f, new BigFraction(1, 1).floatValue(), 0);
@@ -136,7 +136,7 @@ public final class BigFractionTest {
 		assertEquals(Float.intBitsToFloat(0x00000002), new BigFraction(BigInteger.valueOf(3), BigInteger.ONE.shiftLeft(150)).floatValue(), 0);
 		assertEquals(Float.intBitsToFloat(0x00000001), new BigFraction(BigInteger.valueOf(5), BigInteger.ONE.shiftLeft(152)).floatValue(), 0);
 		assertEquals(Float.intBitsToFloat(0x00000001), new BigFraction(BigInteger.valueOf(5), BigInteger.ONE.shiftLeft(151)).floatValue(), 0);
-		assertEquals(0.0f, new BigFraction(BigInteger.ONE, BigInteger.ONE.shiftLeft(150)).floatValue(), 0);
+		assertEquals(0x00000000, Float.floatToIntBits(new BigFraction(BigInteger.ONE, BigInteger.ONE.shiftLeft(150)).floatValue()));
 	}
 	
 	
@@ -171,7 +171,7 @@ public final class BigFractionTest {
 	
 	
 	@Test public void testDoubleValue() {
-		assertEquals(0.0, new BigFraction(0, 1).doubleValue(), 0);
+		assertEquals(0, Double.doubleToLongBits(new BigFraction(0, 1).doubleValue()));
 		assertEquals(-5.0, new BigFraction(-5, 1).doubleValue(), 0);
 		
 		assertEquals(1.0, new BigFraction(1, 1).doubleValue(), 0);
@@ -202,7 +202,7 @@ public final class BigFractionTest {
 		assertEquals(Double.longBitsToDouble(0x0000000000000002), new BigFraction(BigInteger.valueOf(3), BigInteger.ONE.shiftLeft(1075)).doubleValue(), 0);
 		assertEquals(Double.longBitsToDouble(0x0000000000000001), new BigFraction(BigInteger.valueOf(5), BigInteger.ONE.shiftLeft(1077)).doubleValue(), 0);
 		assertEquals(Double.longBitsToDouble(0x0000000000000001), new BigFraction(BigInteger.valueOf(5), BigInteger.ONE.shiftLeft(1076)).doubleValue(), 0);
-		assertEquals(0.0, new BigFraction(BigInteger.ONE, BigInteger.ONE.shiftLeft(1075)).doubleValue(), 0);
+		assertEquals(0x0000000000000000L, Double.doubleToLongBits(new BigFraction(BigInteger.ONE, BigInteger.ONE.shiftLeft(1075)).doubleValue()));
 	}
 	
 	
