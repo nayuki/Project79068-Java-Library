@@ -260,12 +260,6 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 		if (mantissaBits < 1 || exponentBits < 1 || (long)mantissaBits + exponentBits > 63)
 			throw new IllegalArgumentException();
 		
-		// Every finite floating-point number has an exponent in the range [minExponent, maxExponent].
-		// A subnormal number has exponent = minExponent and no implicit leading 1 bit.
-		// The maximum exponent is also the same value as the exponent bias.
-		int maxExponent = (1 << (exponentBits - 1)) - 1;
-		int minExponent = 1 - maxExponent;
-		
 		// Make the fraction mutable and give shorter variable names
 		BigInteger num = numerator;
 		BigInteger den = denominator;
@@ -275,7 +269,7 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 			return 0;
 		
 		// Make the number strictly positive
-		long signBit;
+		final long signBit;
 		if (num.signum() == 1)
 			signBit = 0;
 		else {
@@ -298,6 +292,12 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 			exponent--;
 		}
 		
+		// Every finite floating-point number has an exponent in the range [minExponent, maxExponent].
+		// A subnormal number has exponent = minExponent and no implicit leading 1 bit.
+		// The maximum exponent is also the same value as the exponent bias.
+		final int maxExponent = (1 << (exponentBits - 1)) - 1;
+		final int minExponent = 1 - maxExponent;
+		
 		// Quickly exclude definite infinity and zero
 		if (exponent > maxExponent)
 			return signBit | ((1L << exponentBits) - 1) << mantissaBits;  // Infinity
@@ -311,22 +311,20 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 			else if (mantissa == (1L << (mantissaBits + 1))) {
 				mantissa >>>= 1;
 				exponent++;
+				if (exponent > maxExponent)
+					return signBit | ((1L << exponentBits) - 1) << mantissaBits;  // Infinity
 			}
 			mantissa ^= 1L << mantissaBits;  // Remove implicit leading 1 bit
-			
-			if (exponent <= maxExponent)
-				return signBit | (long)(exponent + maxExponent) << mantissaBits | mantissa;  // Normal
-			else
-				return signBit | ((1L << exponentBits) - 1) << mantissaBits;  // Infinity
+			return signBit | (long)(exponent + maxExponent) << mantissaBits | mantissa;  // Normal
 			
 		} else {  // Subnormal (common) or the smallest normal number (if rounded up)
 			long mantissa = round(num.shiftLeft(exponent - (minExponent - mantissaBits)), den).longValue();
-			if (mantissa > (1L << mantissaBits))
-				throw new AssertionError();
+			if (mantissa < (1L << mantissaBits))
+				return signBit | mantissa;  // Subnormal
 			else if (mantissa == 1L << mantissaBits)
 				return signBit | 1L << mantissaBits;  // Normal
 			else
-				return signBit | mantissa;  // Subnormal
+				throw new AssertionError();
 		}
 	}
 	
@@ -343,13 +341,9 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 		BigInteger[] temp = num.divideAndRemainder(den);
 		BigInteger quot = temp[0];
 		BigInteger rem  = temp[1];
-		
 		int cmp = rem.shiftLeft(1).compareTo(den);
-		if (cmp > 0)  // Greater than half
+		if (cmp > 0 || cmp == 0 && quot.testBit(0))
 			quot = quot.add(BigInteger.ONE);
-		else if (cmp == 0 && quot.and(BigInteger.ONE).intValue() == 1)  // Exactly half, and quotient is odd
-			quot = quot.add(BigInteger.ONE);
-		
 		return quot;
 	}
 	
