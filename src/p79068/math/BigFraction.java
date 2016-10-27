@@ -231,8 +231,9 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 	
 	
 	/**
-	 * Converts this fraction to a {@code float}. The result has the maximum accuracy possible and uses round-half-even.
-	 * @return this fraction converted to a {@code float}
+	 * Converts this fraction to a {@code float} with correct rounding. The result has the maximum accuracy possible using round-half-even.
+	 * <p>The result value can be positive/negative {zero, a subnormal number, a normal number, or infinity}, but never NaN.</p>
+	 * @return this nearest {@code float} value to this fraction
 	 */
 	@Override
 	public float floatValue() {
@@ -244,8 +245,9 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 	
 	
 	/**
-	 * Converts this fraction to a {@code double}. The result has the maximum accuracy possible and uses round-half-even.
-	 * @return this fraction converted to a {@code double}
+	 * Converts this fraction to a {@code double} with correct rounding. The result has the maximum accuracy possible using round-half-even.
+	 * <p>The result value can be positive/negative {zero, a subnormal number, a normal number, or infinity}, but never NaN.</p>
+	 * @return this nearest {@code double} value to this fraction
 	 */
 	@Override
 	public double doubleValue() {
