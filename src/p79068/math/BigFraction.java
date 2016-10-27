@@ -239,7 +239,7 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 		if (numerator.bitLength() <= 24 && denominator.bitLength() <= 24)
 			return (float)numerator.intValue() / denominator.intValue();
 		else
-			return Float.intBitsToFloat((int)toFloatingPointBits(23, 8));
+			return Float.intBitsToFloat((int)toFloatingPointBits(numerator, denominator, 23, 8));
 	}
 	
 	
@@ -252,32 +252,23 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 		if (numerator.bitLength() <= 53 && denominator.bitLength() <= 53)
 			return (double)numerator.longValue() / denominator.longValue();
 		else
-			return Double.longBitsToDouble(toFloatingPointBits(52, 11));
+			return Double.longBitsToDouble(toFloatingPointBits(numerator, denominator, 52, 11));
 	}
 	
 	
-	private long toFloatingPointBits(int mantissaBits, int exponentBits) {
+	// Note: This can return zero, a subnormal number, a normal number, or infinity, but never not-a-number (NaN).
+	private long toFloatingPointBits(BigInteger num, BigInteger den, int mantissaBits, int exponentBits) {
 		if (mantissaBits < 1 || exponentBits < 1 || (long)mantissaBits + exponentBits > 63)
 			throw new IllegalArgumentException();
 		
-		// Make the fraction mutable and give shorter variable names
-		BigInteger num = numerator;
-		BigInteger den = denominator;
-		
-		// Eliminate exact zero (because it can't be normalized)
-		if (num.signum() == 0)
+		// Handle zero and negative numbers specially
+		if (num.signum() == 0)  // Eliminate exact zero (because it can't be normalized)
 			return 0;
+		else if (num.signum() == -1)  // Recurse on negative numbers
+			return 1L << (mantissaBits + exponentBits) | toFloatingPointBits(num.negate(), den, mantissaBits, exponentBits);
+		// Reaching this point in the code, num > 0 and den > 0, so the number is strictly positive
 		
-		// Make the number strictly positive
-		final long signBit;
-		if (num.signum() == 1)
-			signBit = 0;
-		else {
-			num = num.negate();
-			signBit = 1L << (mantissaBits + exponentBits);
-		}
-		
-		// Roughly normalize the number
+		// Roughly normalize the number to somewhere near the range [1, 2)
 		int exponent = num.bitLength() - 1 - den.bitLength();
 		if      (exponent > 0) den = den.shiftLeft( exponent);
 		else if (exponent < 0) num = num.shiftLeft(-exponent);
@@ -300,7 +291,7 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 		
 		// Quickly exclude definite infinity and zero
 		if (exponent > maxExponent)
-			return signBit | ((1L << exponentBits) - 1) << mantissaBits;  // Infinity
+			return ((1L << exponentBits) - 1) << mantissaBits;  // Infinity
 		if (exponent < minExponent - mantissaBits - 1)
 			return 0;
 		
@@ -312,17 +303,17 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 				mantissa >>>= 1;
 				exponent++;
 				if (exponent > maxExponent)
-					return signBit | ((1L << exponentBits) - 1) << mantissaBits;  // Infinity
+					return ((1L << exponentBits) - 1) << mantissaBits;  // Infinity
 			}
 			mantissa ^= 1L << mantissaBits;  // Remove implicit leading 1 bit
-			return signBit | (long)(exponent + maxExponent) << mantissaBits | mantissa;  // Normal
+			return (long)(exponent + maxExponent) << mantissaBits | mantissa;  // Normal
 			
 		} else {  // Subnormal (common) or the smallest normal number (if rounded up)
 			long mantissa = round(num.shiftLeft(exponent - (minExponent - mantissaBits)), den).longValue();
 			if (mantissa < (1L << mantissaBits))
-				return signBit | mantissa;  // Subnormal
+				return mantissa;  // Subnormal
 			else if (mantissa == 1L << mantissaBits)
-				return signBit | 1L << mantissaBits;  // Normal
+				return 1L << mantissaBits;  // Normal
 			else
 				throw new AssertionError();
 		}
