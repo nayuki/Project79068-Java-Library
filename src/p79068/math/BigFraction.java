@@ -257,6 +257,9 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 	
 	
 	private long toFloatingPointBits(int mantissaBits, int exponentBits) {
+		if (mantissaBits < 1 || exponentBits < 1 || (long)mantissaBits + exponentBits > 63)
+			throw new IllegalArgumentException();
+		
 		int maxExponent = (1 << (exponentBits - 1)) - 1;  // This is the same value as the exponent bias
 		int minExponent = 1 - maxExponent;  // For normal numbers
 		
