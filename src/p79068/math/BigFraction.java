@@ -257,15 +257,15 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 	
 	
 	// Note: This can return zero, a subnormal number, a normal number, or infinity, but never not-a-number (NaN).
-	private long toFloatingPointBits(BigInteger num, BigInteger den, int mantissaBits, int exponentBits) {
-		if (mantissaBits < 1 || exponentBits < 1 || (long)mantissaBits + exponentBits > 63)
+	private long toFloatingPointBits(BigInteger num, BigInteger den, int mantissaWidth, int exponentWidth) {
+		if (mantissaWidth < 1 || exponentWidth < 1 || (long)mantissaWidth + exponentWidth > 63)
 			throw new IllegalArgumentException();
 		
 		// Handle zero and negative numbers specially
 		if (num.signum() == 0)  // Eliminate exact zero (because it can't be normalized)
 			return 0;
 		else if (num.signum() == -1)  // Recurse on negative numbers
-			return 1L << (mantissaBits + exponentBits) | toFloatingPointBits(num.negate(), den, mantissaBits, exponentBits);
+			return 1L << (mantissaWidth + exponentWidth) | toFloatingPointBits(num.negate(), den, mantissaWidth, exponentWidth);
 		// Reaching this point in the code, num > 0 and den > 0, so the number is strictly positive
 		
 		// Roughly normalize the number to somewhere near the range [1, 2)
@@ -286,34 +286,34 @@ public final class BigFraction extends Number implements Comparable<BigFraction>
 		// Every finite floating-point number has an exponent in the range [minExponent, maxExponent].
 		// A subnormal number has exponent = minExponent and no implicit leading 1 bit.
 		// The maximum exponent is also the same value as the exponent bias.
-		final int maxExponent = (1 << (exponentBits - 1)) - 1;
+		final int maxExponent = (1 << (exponentWidth - 1)) - 1;
 		final int minExponent = 1 - maxExponent;
 		
 		// Quickly exclude definite infinity and zero
 		if (exponent > maxExponent)
-			return ((1L << exponentBits) - 1) << mantissaBits;  // Infinity
-		if (exponent < minExponent - mantissaBits - 1)
+			return ((1L << exponentWidth) - 1) << mantissaWidth;  // Infinity
+		if (exponent < minExponent - mantissaWidth - 1)
 			return 0;
 		
 		if (exponent >= minExponent) {  // Normal (common) or infinity (if rounded up)
-			long mantissa = round(num.shiftLeft(mantissaBits), den).longValue();
-			if (mantissa < (1L << mantissaBits) || mantissa > (1L << (mantissaBits + 1)))
+			long mantissa = round(num.shiftLeft(mantissaWidth), den).longValue();
+			if (mantissa < (1L << mantissaWidth) || mantissa > (1L << (mantissaWidth + 1)))
 				throw new AssertionError();
-			else if (mantissa == (1L << (mantissaBits + 1))) {
+			else if (mantissa == (1L << (mantissaWidth + 1))) {
 				mantissa >>>= 1;
 				exponent++;
 				if (exponent > maxExponent)
-					return ((1L << exponentBits) - 1) << mantissaBits;  // Infinity
+					return ((1L << exponentWidth) - 1) << mantissaWidth;  // Infinity
 			}
-			mantissa ^= 1L << mantissaBits;  // Remove implicit leading 1 bit
-			return (long)(exponent + maxExponent) << mantissaBits | mantissa;  // Normal
+			mantissa ^= 1L << mantissaWidth;  // Remove implicit leading 1 bit
+			return (long)(exponent + maxExponent) << mantissaWidth | mantissa;  // Normal
 			
 		} else {  // Subnormal (common) or the smallest normal number (if rounded up)
-			long mantissa = round(num.shiftLeft(exponent - (minExponent - mantissaBits)), den).longValue();
-			if (mantissa < (1L << mantissaBits))
+			long mantissa = round(num.shiftLeft(exponent - (minExponent - mantissaWidth)), den).longValue();
+			if (mantissa < (1L << mantissaWidth))
 				return mantissa;  // Subnormal
-			else if (mantissa == 1L << mantissaBits)
-				return 1L << mantissaBits;  // Normal
+			else if (mantissa == 1L << mantissaWidth)
+				return 1L << mantissaWidth;  // Normal
 			else
 				throw new AssertionError();
 		}
