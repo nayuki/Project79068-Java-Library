@@ -11,7 +11,7 @@ public final class AssertTest {
 		try {
 			Assert.assertNotNull(new Object());
 			Assert.assertNotNull(new String("a"));
-			Assert.assertNotNull(new Integer(3));
+			Assert.assertNotNull(Integer.valueOf(3));
 		} catch (NullPointerException e) {
 			fail();
 		}
@@ -26,7 +26,7 @@ public final class AssertTest {
 	
 	@Test public void testAssertVarargNotNull() {
 		try {
-			Assert.assertNotNull(new Object(), new String("a"), new Integer(3));
+			Assert.assertNotNull(new Object(), new String("a"), Integer.valueOf(3));
 		} catch (NullPointerException e) {
 			fail();
 		}
